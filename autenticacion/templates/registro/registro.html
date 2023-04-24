@@ -1,0 +1,12 @@
+{% extends 'index.html'%}
+
+{% block titulo %}
+{% endblock %}
+
+{% block cuerpo %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button class="btn btn-primary" type="submit">Registrar</button>
+    </form>
+{% endblock %}

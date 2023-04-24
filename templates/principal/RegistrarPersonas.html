@@ -1,0 +1,107 @@
+{% extends 'index.html' %}
+
+{% block titulo1 %}
+<h2><strong>REGISTRO DE PERSONAS</strong></h2>
+{% endblock %}
+
+{% block cuerpo %}
+<form style="text-align: center;" action="{% url 'principal-nueva-persona' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-4">C.I.:</label>
+        <div class="col-md-10 col-sm-12 col-xs-12 form-group">
+            {{ form.ci }}
+            <p id="Alerta"></p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-4">Nombres:</label>
+        <div class="col-md-10 col-sm-12 col-xs-12 form-group">
+            {{ form.nombres }}
+            <p id="Alerta"></p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-4">Apellido Paterno:</label>
+        <div class="col-md-10 col-sm-12 col-xs-12 form-group">
+            {{ form.apellido_paterno }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-4">Apellido Materno:</label>
+        <div class="col-md-10 col-sm-12 col-xs-12 form-group">
+            {{ form.apellido_materno }}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2 col-sm-2 col-xs-4">Direccion:</label>
+        <div class="col-md-10 col-sm-12 col-xs-12 form-group">
+            {{ form.direccion }}
+        </div>
+    </div>
+    <!--<div class="form-group">-->
+        <label class="control-label col-md-2 col-sm-2 col-xs-4">Telefono:</label>
+        <div class="col-md-10 col-sm-12 col-xs-12 form-group">
+            {{ form.telefono }}
+        </div>
+    <!--</div>-->
+
+    <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+        <button type="submit" id="submit" style="width: 20%" class="btn btn-primary antosubmit" >Guardar</button>
+        <button type="button" class="btn btn-default antoclose" data-dismiss="modal">Cancelar</button>
+    </div>
+
+</form>
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+    /*Llama a la funcion para que se ejecute*/
+    try {function duplicados() 
+        {
+          /*Hagarra el valor del campo donde se realizara el control de valores duplicados*/
+          var item_duplicado = document.getElementById('id_ci').value; 
+          /*Aplicamos la funcion de Ajax*/
+          $.ajax({
+              /*Compara los valores*/
+              data:{'item': item_duplicado},
+              /*URL a utilizar*/
+              url:'principal/nueva/persona',
+              /*Utiliza el metodo GET para traer el dato*/ 
+              type: 'get',
+              /* Si la consulta es satisfactoria procede a ejecutarla*/
+              success: function(data){
+                /*Determina un Valor*/
+                var duplicados = ''
+                /*Ejecuta un ciclo for para determina el valor de un Objeto*/
+                for (var i = 0; i < data.length;i++)
+                {
+                  duplicados = data[i].fields.item
+                }
+                /*Compara lo valor de campo seleccionado con el del Objeto */
+                if (item_duplicado == duplicados && item_duplicado != ''){
+                  /*Determina el valor que tomar ese variable*/
+                  var roja = '<p><code>El ITEM '+ duplicados + ' ya existe </code></p>';
+                  /*Selecciona donde ira el valor de la Variable */
+                  $('#Alerta').html(roja);
+                  /*Desactiva el la funcion del Submit que ejecuta el formulario*/
+                  $('#submit').prop('disabled', true);
+                  /*Genera una alerta
+                  alert("El ITEM "+ duplicados + " ya existe ");*/
+                }else{
+                  /*Determina el valor que tomar ese variable*/
+                  var roja = '<p></p>';
+                  /*Selecciona donde ira el valor de la Variable */
+                  $('#Alerta').html(roja);
+                  /*Activa el la funcion del Submit que ejecuta el formulario*/
+                  $('#submit').prop('disabled', false);
+                }            
+              }
+            });
+        }
+    } 
+    catch(error) {
+     throw error; 
+   }
+  </script>
+{% endblock %}
