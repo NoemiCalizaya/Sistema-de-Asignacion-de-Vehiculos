@@ -13,7 +13,8 @@ function listadoPersonas(){
                 fila += '<td>'+response[i]["fields"]['nombres']+'</td>';
                 fila += '<td>'+response[i]["fields"]['apellido_paterno']+'</td>';
                 fila += '<td>'+response[i]["fields"]['direccion']+'</td>';
-                fila += '<td><button type="button" class="btn btn-primary">EDITAR</button>';
+                fila += '<td><button type = "button" class = "btn btn-primary btn-sm tableButton"';
+                fila += ' onclick = "abrir_modal_edicion(\'/principal/actualizar/' + response[i]['pk']+'/persona\');"> EDITAR </button>';
                 fila += '<button type="button" class="btn btn-danger"';
                 fila += 'onclick="abrir_modal_eliminacion(\'/principal/eliminar/'+response[i]['pk']+'/persona\');">ELIMINAR</button></td>';
                 fila += '</tr>';
@@ -49,6 +50,43 @@ function listadoPersonas(){
         },
         error: function(error){
             console.log(error);
+        }
+    });
+}
+
+function editar(){
+    activarBoton();
+    $.ajax({
+        data: $('#form_edicion').serialize(),
+        url: $('#form_edicion').attr('action'),
+        type: $('#form_edicion').attr('method'),
+        success: function (response) {
+            notificacionSuccess(response.mensaje);
+            listadoPersonas();
+            cerrar_modal_edicion();
+        },
+        error: function (error) {
+            notificacionError(error.responseJSON.mensaje);
+            mostrarErroresEdicion(error);
+            activarBoton();
+        }
+    });
+}
+
+function eliminar(pk) {
+    $.ajax({
+        data:{
+            csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
+        },
+        url: '/principal/eliminar/'+pk+'/persona',
+        type: 'post',
+        success: function (response) {
+            notificacionSuccess(response.mensaje);
+            listadoPersonas();
+            cerrar_modal_eliminacion();
+        },
+        error: function (error) {
+            notificacionError(error.responseJSON.mensaje);
         }
     });
 }

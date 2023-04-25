@@ -1,15 +1,16 @@
 <div class="modal-dialog modal-default nk-red">
     <div class="modal-content">
         <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"></button>
+            Eliminación de {{ object }}.
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
-        <div class="modal-body text-center">
-            <p id="texto_modal_eliminacion">¿Desea eliminar {{ object }} ?</p>
+        <div class="modal-body text-center">{% csrf_token %}
+            <h3><strong>¿Desea eliminar {{ object }} ?</strong></h3>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-danger" class="btn btn-default" data-dismiss="modal" data-from="button" data-align="rigth"
-                onclick="eliminar()"><strong>CONFIRMAR ELIMINACIÓN</strong></button>
-            <button type="button" class="btn btn-primary" class="btn btn-default" data-dismiss="modal"><strong>CANCELAR</strong></button>
+            <button type="button" class="btn btn-danger" data-align="rigth"
+                onclick="eliminar('{{ object.pk }}');"><strong>CONFIRMAR ELIMINACIÓN</strong></button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal"><strong>CANCELAR</strong></button>
         </div>
     </div>
 </div>

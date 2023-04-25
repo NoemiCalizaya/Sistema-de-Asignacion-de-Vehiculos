@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     path('nueva/persona', views.CreatePersona, name='principal-nueva-persona'),
     path('lista/personas', views.ListaPersona.as_view(), name='principal-index-persona'),
+    path('actualizar/<int:pk>/persona',views.EditarPersona.as_view(), name = 'principal-actualizar-persona'),
     path('eliminar/<int:pk>/persona', views.EliminarPersona.as_view(), name='pricipal-eliminar-persona'),
     path('lista/secretarias', views.Lista_Secretarias, name='secretarias'),
     path('lista_unidades', views.Lista_Unidades, name='lista_unidades'),

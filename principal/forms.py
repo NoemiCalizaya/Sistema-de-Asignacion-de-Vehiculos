@@ -27,7 +27,7 @@ class PersonaForm(forms.ModelForm):
             'nombres' : forms.TextInput(attrs={'class':'form-control','required': 'true'}),
             'apellido_paterno' : forms.TextInput(attrs={ 'class': 'form-control','required': 'true'}), 
             'apellido_materno' : forms.TextInput(attrs={'class':'form-control','required': 'true'}),
-            'direccion' : forms.Textarea(attrs={'class':'form-control','rows':3, 'required': 'true','type':'hidden'}), 
+            'direccion' : forms.Textarea(attrs={'class':'form-control','rows':3,'type':'hidden'}), 
             'telefono' : forms.TextInput(attrs={'class':'form-control','required': 'true'}),
         }
     # ci = forms.CharField(label='CI',max_length=10)

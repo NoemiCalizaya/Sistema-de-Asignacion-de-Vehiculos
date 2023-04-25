@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.views.generic import CreateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView
 from django.contrib.auth.forms import UserCreationForm
@@ -8,7 +8,7 @@ from .forms import PersonaForm
 
 from django.core import serializers
 from django.core.serializers import serialize
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.urls import reverse_lazy
 # Create your views here.
 
@@ -54,10 +54,45 @@ class ListaPersona(ListView):
         else:
             return redirect('principal-inicio-persona')
     
+class EditarPersona(UpdateView):
+    model = Persona
+    form_class = PersonaForm
+    template_name = 'principal/editarPersona.html'
+
+    def post(self,request,*args,**kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST,instance = self.get_object())
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} actualizada correctamente!'
+                error = 'No hay error!'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se ha podido actualizar!'
+                error = form.errors
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('principal-inicio-persona')
+
 class EliminarPersona(DeleteView):
     model = Persona
     template_name = 'principal/eliminarPersona.html'
-    print(object)
+
+    def delete(self,request,*args,**kwargs):
+        if request.is_ajax():
+            persona = self.get_object()
+            persona.delete()
+            mensaje = f'{self.model.__name__} eliminada correctamente!'
+            error = 'No hay error!'
+            response = JsonResponse({'mensaje': mensaje, 'error': error})
+            response.status_code = 201
+            return response
+        else:
+            return redirect('principal-inicio-persona')
     # def get_context_data(self, **kwargs):
     #     context = {}
     #     context['object'] = ''
