@@ -1,17 +1,18 @@
+import json
 from django.shortcuts import render,redirect
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from django.views.generic import TemplateView
 from django.contrib.auth.forms import UserCreationForm
-from .models import *
-from .forms import PersonaForm
-
 from django.core import serializers
 from django.core.serializers import serialize
 from django.http import HttpResponse, JsonResponse
 from django.urls import reverse_lazy
-# Create your views here.
+from .models import *
+from .forms import PersonaForm
 
+# Create your views here.
+'''VISTA PARA PERSONAS-CHOFERES'''
 def CreatePersona(request):
     form = PersonaForm()
     if request.method == 'POST':
@@ -36,11 +37,29 @@ def CreatePersona(request):
             form = PersonaForm()
     return render(request, 'principal/RegistrarPersonas.html', {'form': form})
 
-# class CrearPersonas(CreateView):
-#     model= Persona
-#     template_name= 'principal/RegistrarPersonas.html'
-#     form_class=PersonaForm
-#     success_url=reverse_lazy('principal-inicio-persona')
+class RegistrarPersona(CreateView):
+    model = Persona
+    form_class = PersonaForm
+    template_name = 'principal/crearPersona.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} registrada correctamente!'
+                error = 'No hay error!'
+                response = JsonResponse({'mensaje':mensaje,'error':error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se ha podido registrar!'
+                error = form.errors
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('principal-inicio-persona')
 
 class ListaPersona(ListView):
     model = Persona
@@ -103,11 +122,23 @@ class EliminarPersona(DeleteView):
     # persona = Persona.objects.get(pk=id)
     # persona.delete()
     # return redirect('principal-index-persona')
+'''VISTAS PARA SECRETARIAS'''
+class ListadoSecretaria(ListView):
+    model = Secretaria
+
+    def get_queryset(self):
+        return self.model.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            return HttpResponse(serialize('json', self.get_queryset()), 'application/json')
+        else:
+            return redirect('principal-inicio-secretaria')
 
 def Lista_Secretarias(request):
     secretaria = Secretaria.objects.all()
     unidad = Unidad.objects.all()
-    return render(request, 'principal/secretarias.html', {'secre': secretaria, 'uni': unidad})
+    return render(request, 'secretaria/listaSecretaria.html', {'secre': secretaria, 'uni': unidad})
 
 def Lista_Unidades(request):
     ids = request.GET['id']

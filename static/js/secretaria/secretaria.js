@@ -1,25 +1,22 @@
-function listadoPersonas(){
+function listadoSecretarias() {
     $.ajax({
-        url: "/principal/lista/personas",
+        url: "/principal/listar/secretarias",
         type: "get",
         dataType: "json",
-        success: function(response){
-            console.log(response);
-            // if($.fn.DataTable.isDataTable('#datatable-keytable')){
-            //     $('#datatable-keytable').DataTable().destroy();
+        success: function (response) {
+            // if ($.fn.DataTable.isDataTable('#tabla_libros')) {
+            //     $('#tabla_libros').DataTable().destroy();
             // }
             $('#datatable-keytable').html("");
-            for(let i=0; i<response.length; i++){
+            for (let i = 0; i < response.length; i++) {
                 let fila = '<tr>';
-                fila += '<td>'+(i+1)+'</td>';
-                fila += '<td>'+response[i]["fields"]['ci']+'</td>';
-                fila += '<td>'+response[i]["fields"]['nombres']+'</td>';
-                fila += '<td>'+response[i]["fields"]['apellido_paterno']+'</td>';
-                fila += '<td>'+response[i]["fields"]['direccion']+'</td>';
+                fila += '<td>' + (i + 1) + '</td>';
+                fila += '<td>' + response[i]["fields"]['nombre_secretaria'] + '</td>';
+                fila += '<td>' + response[i]["fields"]['direccion'] + '</td>';
                 fila += '<td><button type = "button" class = "btn btn-primary btn-sm tableButton"';
-                fila += ' onclick = "abrir_modal_edicion(\'/principal/actualizar/' + response[i]['pk']+'/persona\');"> EDITAR </button>';
-                fila += '<button type="button" class="btn btn-danger"';
-                fila += 'onclick="abrir_modal_eliminacion(\'/principal/eliminar/'+response[i]['pk']+'/persona\');">ELIMINAR</button></td>';
+                fila += ' onclick = "abrir_modal_edicion(\'\');"> EDITAR </button>';
+                fila += '<button type = "button" class = "btn btn-danger tableButton  btn-sm" ';
+                fila += 'onclick = "abrir_modal_eliminacion(\'\');"> ELIMINAR </buttton></td>';
                 fila += '</tr>';
                 $('#datatable-keytable').append(fila);
             }
@@ -46,26 +43,28 @@ function listadoPersonas(){
                         "last": "Ultimo",
                         "next": "Siguiente",
                         "previous": "Anterior"
-                    }
+                    },
                 },
-        
             });
         },
-        error: function(error){
+        error: function (error) {
             console.log(error);
         }
     });
 }
-
 function registrar() {
     activarBoton();
-    $.ajax({
-        data: $('#form_creacion').serialize(),
+    var data = new FormData($('#form_creacion').get(0));
+    $.ajax({        
         url: $('#form_creacion').attr('action'),
-        type: $('#form_creacion').attr('method'),
+        type: $('#form_creacion').attr('method'), 
+        data: data,
+        cache: false,
+        processData: false,
+        contentType: false, 
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listadoPersonas();
+            listadoLibros();
             cerrar_modal_creacion();
         },
         error: function (error) {
@@ -75,36 +74,38 @@ function registrar() {
         }
     });
 }
-
-function editar(){
+function editar() {
     activarBoton();
-    $.ajax({
-        data: $('#form_edicion').serialize(),
+    var data = new FormData($('#form_edicion').get(0));
+    $.ajax({        
         url: $('#form_edicion').attr('action'),
-        type: $('#form_edicion').attr('method'),
+        type: $('#form_edicion').attr('method'), 
+        data: data,
+        cache: false,
+        processData: false,
+        contentType: false, 
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listadoPersonas();
+            listadoLibros();
             cerrar_modal_edicion();
         },
         error: function (error) {
             notificacionError(error.responseJSON.mensaje);
             mostrarErroresEdicion(error);
             activarBoton();
-        }
+        },        
     });
 }
-
 function eliminar(pk) {
     $.ajax({
-        data:{
+        data: {
             csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
         },
-        url: '/principal/eliminar/'+pk+'/persona',
+        url: '/libro/eliminar_libro/' + pk + '/',
         type: 'post',
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listadoPersonas();
+            listadoLibros();
             cerrar_modal_eliminacion();
         },
         error: function (error) {
@@ -112,7 +113,6 @@ function eliminar(pk) {
         }
     });
 }
-
-$(document).ready(function(){
-    listadoPersonas();
+$(document).ready(function () {
+    listadoSecretarias();
 });

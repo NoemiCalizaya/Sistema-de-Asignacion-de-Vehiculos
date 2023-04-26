@@ -23,7 +23,7 @@ class PersonaForm(forms.ModelForm):
         model = Persona
         fields = ['ci', 'nombres','apellido_paterno', 'apellido_materno', 'direccion', 'telefono']
         widgets = {
-            'ci' : forms.TextInput(attrs={'class':'form-control','required': 'true', 'oninput':'duplicados()'}),
+            'ci' : forms.TextInput(attrs={'class':'form-control', 'placeholder' : 'Introduzca el numero de C.I.', 'required': 'true', 'oninput':'duplicados()'}),
             'nombres' : forms.TextInput(attrs={'class':'form-control','required': 'true'}),
             'apellido_paterno' : forms.TextInput(attrs={ 'class': 'form-control','required': 'true'}), 
             'apellido_materno' : forms.TextInput(attrs={'class':'form-control','required': 'true'}),
