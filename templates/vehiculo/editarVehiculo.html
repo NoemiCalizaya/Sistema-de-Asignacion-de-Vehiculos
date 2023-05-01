@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block extracss %}
+<!---Custom CSS-->
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block titulo1 %}
+<h2><strong>EDICIÓN DE {{ object }}</strong></h2>
+{% endblock %}
+
+{% block cuerpo %}
+<form id="form_edicion" action="{% url 'principal-actualizar-vehiculo' object.pk %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-danger" type="button" onclick="">Cancelar</button>
+    <button id="boton_creacion" class="btn btn-primary" type="submit">Confirmar</button>
+</form>
+{% endblock %}
+
+{% block extrajs %}
+    <!---Custom JS-->
+    <script src="{% static 'js/vehiculo/vehiculo.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

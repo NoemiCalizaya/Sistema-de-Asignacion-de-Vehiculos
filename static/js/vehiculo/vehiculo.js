@@ -1,22 +1,32 @@
-function listadoSecretarias() {
+function listadoVehiculos() {
     $.ajax({
-        url: "/principal/listar/secretarias",
+        url: "/principal/listar/vehiculos",
         type: "get",
         dataType: "json",
         success: function (response) {
-            // if ($.fn.DataTable.isDataTable('#tabla_libros')) {
-            //     $('#tabla_libros').DataTable().destroy();
+            // if ($.fn.DataTable.isDataTable('#datatable-keytable')) {
+            //     $('#datatable-keytable').DataTable().destroy();
             // }
+            console.log(response);
             $('#datatable-keytable').html("");
             for (let i = 0; i < response.length; i++) {
                 let fila = '<tr>';
                 fila += '<td>' + (i + 1) + '</td>';
-                fila += '<td>' + response[i]["fields"]['nombre_secretaria'] + '</td>';
-                fila += '<td>' + response[i]["fields"]['direccion'] + '</td>';
-                fila += '<td><button type = "button" class = "btn btn-primary btn-sm tableButton"';
-                fila += ' onclick = "abrir_modal_edicion(\'/principal/actualizar/' + response[i]['pk'] + '/secretaria\');"> EDITAR </button>';
+                fila += '<td>' + response[i]["fields"]['clase_vehiculo'] + '</td>';
+                fila += '<td>' + response[i]["fields"]['marca'] + '</td>';
+                fila += '<td>' + response[i]["fields"]['tipo_vehiculo'] + '</td>';
+                fila += '<td>' + response[i]["fields"]['procedencia'] + '</td>';
+                fila += '<td>' + response[i]["fields"]['modelo'] + '</td>';
+                fila += '<td>' + response[i]["fields"]['color'] + '</td>';
+                fila += '<td>' + response[i]["fields"]['placa'] + '</td>';
+                fila += '<td>' + response[i]["fields"]['cilindrada'] + '</td>';
+                fila += '<td>' + response[i]["fields"]['numero_motor'] + '</td>';
+                fila += '<td>' + response[i]["fields"]['numero_chasis'] + '</td>';
+                fila += '<td>' + response[i]["fields"]['estado_vehiculo'] + '</td>';
+                fila += '<td>' + response[i]["fields"]['observaciones'] + '</td>';
+                fila += '<td><a href="/principal/actualizar/' + response[i]['pk'] + '/vehiculo" class="btn btn-primary" role="button"> EDITAR </a>';
                 fila += '<button type = "button" class = "btn btn-danger tableButton  btn-sm" ';
-                fila += 'onclick = "abrir_modal_eliminacion(\'/principal/eliminar/' + response[i]['pk'] + '/secretaria\');"> ELIMINAR </buttton></td>';
+                fila += 'onclick = "abrir_modal_eliminacion(\'/principal/eliminar/' + response[i]['pk'] + '/vehiculo\');"> ELIMINAR </buttton></td>';
                 fila += '</tr>';
                 $('#datatable-keytable').append(fila);
             }
@@ -52,19 +62,16 @@ function listadoSecretarias() {
         }
     });
 }
+
 function registrar() {
     activarBoton();
-    var data = new FormData($('#form_creacion').get(0));
-    $.ajax({        
+    $.ajax({
+        data: $('#form_creacion').serialize(),
         url: $('#form_creacion').attr('action'),
-        type: $('#form_creacion').attr('method'), 
-        data: data,
-        cache: false,
-        processData: false,
-        contentType: false, 
+        type: $('#form_creacion').attr('method'),
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listadoSecretarias();
+            listadoVehiculos();
             cerrar_modal_creacion();
         },
         error: function (error) {
@@ -74,38 +81,17 @@ function registrar() {
         }
     });
 }
-function editar() {
-    activarBoton();
-    var data = new FormData($('#form_edicion').get(0));
-    $.ajax({        
-        url: $('#form_edicion').attr('action'),
-        type: $('#form_edicion').attr('method'), 
-        data: data,
-        cache: false,
-        processData: false,
-        contentType: false, 
-        success: function (response) {
-            notificacionSuccess(response.mensaje);
-            listadoSecretarias();
-            cerrar_modal_edicion();
-        },
-        error: function (error) {
-            notificacionError(error.responseJSON.mensaje);
-            mostrarErroresEdicion(error);
-            activarBoton();
-        },        
-    });
-}
+
 function eliminar(pk) {
     $.ajax({
-        data: {
+        data:{
             csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
         },
-        url: '/principal/eliminar/'+pk+'/secretaria',
+        url: '/principal/eliminar/'+pk+'/vehiculo',
         type: 'post',
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listadoSecretarias();
+            listadoVehiculos();
             cerrar_modal_eliminacion();
         },
         error: function (error) {
@@ -113,6 +99,7 @@ function eliminar(pk) {
         }
     });
 }
+
 $(document).ready(function () {
-    listadoSecretarias();
+    listadoVehiculos();
 });

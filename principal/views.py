@@ -9,7 +9,7 @@ from django.core.serializers import serialize
 from django.http import HttpResponse, JsonResponse
 from django.urls import reverse_lazy
 from .models import *
-from .forms import PersonaForm
+from .forms import *
 
 # Create your views here.
 '''VISTA PARA PERSONAS-CHOFERES'''
@@ -122,16 +122,80 @@ class EliminarPersona(DeleteView):
     # persona = Persona.objects.get(pk=id)
     # persona.delete()
     # return redirect('principal-index-persona')
-'''VISTAS PARA SECRETARIAS'''
+'''VISTAS PARA SECRETARÍAS'''
 class ListadoSecretaria(ListView):
     model = Secretaria
 
     def get_queryset(self):
-        return self.model.objects.all()
+        return self.model.objects.all().order_by('-id')
 
     def get(self, request, *args, **kwargs):
         if request.is_ajax():
             return HttpResponse(serialize('json', self.get_queryset()), 'application/json')
+        else:
+            return redirect('principal-inicio-secretaria')
+
+class RegistrarSecretaria(CreateView):
+    model = Secretaria
+    form_class = SecretariaForm
+    template_name = 'secretaria/crearSecretaria.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} registrada correctamente!'
+                error = 'No hay error!'
+                response = JsonResponse({'mensaje':mensaje,'error':error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se ha podido registrar!'
+                error = form.errors
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('principal-inicio-secretaria')
+
+class EditarSecretaria(UpdateView):
+    model = Secretaria
+    form_class = SecretariaForm
+    template_name = 'secretaria/editarSecretaria.html'
+
+    def post(self,request,*args,**kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST,instance = self.get_object())
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} actualizada correctamente!'
+                error = 'No hay error!'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se ha podido actualizar!'
+                error = form.errors
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('principal-inicio-secretaria')
+
+class EliminarSecretaria(DeleteView):
+    model = Secretaria
+    template_name = 'secretaria/eliminarSecretaria.html'
+
+    def delete(self,request,*args,**kwargs):
+        if request.is_ajax():
+            secretaria = self.get_object()
+            secretaria.delete()
+            mensaje = f'{self.model.__name__} eliminada correctamente!'
+            error = 'No hay error!'
+            response = JsonResponse({'mensaje': mensaje, 'error': error})
+            response.status_code = 201
+            return response
         else:
             return redirect('principal-inicio-secretaria')
 
@@ -145,6 +209,66 @@ def Lista_Unidades(request):
     datos = Unidad.objects.filter(secretaria_id__id=ids)
     otro = serializers.serialize('json', datos, fields= ('id','nombre_unidad'))
     return HttpResponse(otro,'application/json')
+
+'''VISTAS PARA VEHÍCULOS'''
+class ListadoVehiculos(ListView):
+    model = Vehiculo
+
+    def get_queryset(self):
+        return self.model.objects.all().order_by('-id')
+
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            return HttpResponse(serialize('json', self.get_queryset()), 'application/json')
+        else:
+            return redirect('principal-inicio-vehiculo')
+
+class RegistrarVehiculo(CreateView):
+    model = Vehiculo
+    form_class = VehiculoForm
+    template_name = 'vehiculo/crearVehiculo.html'
+    success_url = reverse_lazy('principal-inicio-vehiculo')
+
+    # def post(self, request, *args, **kwargs):
+    #     if request.is_ajax():
+    #         form = self.form_class(request.POST)
+    #         if form.is_valid():
+    #             form.save()
+    #             mensaje = f'{self.model.__name__} registrada correctamente!'
+    #             error = 'No hay error!'
+    #             response = JsonResponse({'mensaje':mensaje,'error':error})
+    #             response.status_code = 201
+    #             return response
+    #         else:
+    #             mensaje = f'{self.model.__name__} no se ha podido registrar!'
+    #             error = form.errors
+    #             response = JsonResponse({'mensaje': mensaje, 'error': error})
+    #             response.status_code = 400
+    #             return response
+    #     else:
+    #         return redirect('principal-index-vehiculo')
+
+class EditarVehiculo(UpdateView):
+    model = Vehiculo
+    form_class = VehiculoForm
+    template_name = 'vehiculo/editarVehiculo.html'
+    success_url = reverse_lazy('principal-inicio-vehiculo')
+
+class EliminarVehiculo(DeleteView):
+    model = Vehiculo
+    template_name = 'vehiculo/eliminarVehiculo.html'
+
+    def delete(self,request,*args,**kwargs):
+        if request.is_ajax():
+            vehiculo = self.get_object()
+            vehiculo.delete()
+            mensaje = f'{self.model.__name__} eliminado correctamente!'
+            error = 'No hay error!'
+            response = JsonResponse({'mensaje': mensaje, 'error': error})
+            response.status_code = 201
+            return response
+        else:
+            return redirect('principal-inicio-vehiculo')
 
 '''VISTAS PARA CLIENTES Y USUARIOS'''
 from django.contrib.auth.models import User

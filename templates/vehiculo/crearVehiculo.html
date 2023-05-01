@@ -1,0 +1,37 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block titulo1 %}
+<h2><strong>REGISTRO DE VEHÍCULOS</strong></h2>
+{% endblock %}
+
+{% block cuerpo %}
+<form id="form_creacion" method="post">
+    {% csrf_token %}
+    <div id="errores">
+
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4" align="center">
+            <label for="proveedor">PRODUCTO</label>
+            {{ form.clase_vehiculo }}
+        </div>
+        <div class="form-group col-md-4" align="center">
+            <label for="producto">ITEM</label>
+            {{ form.marca }}
+        </div>
+        <div class="form-group col-md-4" align="center">
+            <label for="direccion">UNIDAD</label>
+            {{ form.tipo_vehiculo }}
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+        <button class="btn btn-danger" type="button" onclick="">Cancelar</button>
+        <button id="boton_creacion" class="btn btn-primary" type="submit">Guardar</button>
+    </div>
+</form>
+{% endblock %}
+{% block extrajs %}
+    <!---Custom JS-->
+    <script src="{% static 'js/vehiculo/vehiculo.js' %}"></script>
+{% endblock %}
