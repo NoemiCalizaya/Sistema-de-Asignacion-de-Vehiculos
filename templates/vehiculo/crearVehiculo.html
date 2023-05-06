@@ -12,22 +12,65 @@
 
     </div>
     <div class="form-row">
-        <div class="form-group col-md-4" align="center">
-            <label for="proveedor">PRODUCTO</label>
+        <div class="form-group col-md-4">
+            <label for="proveedor">CLASE DE VEHÍCULO:</label>
             {{ form.clase_vehiculo }}
         </div>
-        <div class="form-group col-md-4" align="center">
-            <label for="producto">ITEM</label>
+        <div class="form-group col-md-4">
+            <label for="producto">MARCA:</label>
             {{ form.marca }}
         </div>
-        <div class="form-group col-md-4" align="center">
-            <label for="direccion">UNIDAD</label>
+        <div class="form-group col-md-4">
+            <label for="direccion">TIPO DE VEHÍCULO:</label>
             {{ form.tipo_vehiculo }}
         </div>
     </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="proveedor">PROCEDENCIA:</label>
+            {{ form.procedencia }}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="producto">MODELO DEL VEHÍCULO:</label>
+            {{ form.modelo}}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="direccion">COLOR:</label>
+            {{ form.color }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="proveedor">PLACA:</label>
+            {{ form.placa }}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="producto">CILINDRADA:</label>
+            {{ form.cilindrada }}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="direccion">NÚMERO DE MOTOR:</label>
+            {{ form.numero_motor }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="proveedor">NÚMERO DE CHASIS:</label>
+            {{ form.numero_chasis }}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="producto">ESTADO DEL VEHÍCULO:</label>
+            {{ form.estado_vehiculo }}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="direccion">OBSERVACIONES:</label>
+            {{ form.observaciones }}
+        </div>
+    </div>
     <div class="col-md-4 col-sm-12 col-xs-12 form-group">
-        <button class="btn btn-danger" type="button" onclick="">Cancelar</button>
-        <button id="boton_creacion" class="btn btn-primary" type="submit">Guardar</button>
+        <!--<a href="/principal/listar/vehiculos" class="btn btn-danger" role="button">CANCELAR</a>-->
+        <button class="btn btn-danger" type="button" onclick="">CANCELAR</button>
+        <button id="boton_creacion" class="btn btn-primary" type="submit">GUARDAR</button>
     </div>
 </form>
 {% endblock %}

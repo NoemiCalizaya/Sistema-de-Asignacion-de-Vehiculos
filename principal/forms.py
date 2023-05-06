@@ -134,6 +134,42 @@ class VehiculoForm(forms.ModelForm):
             ),
         }
 
+class UnidadForm(forms.ModelForm):
+    # nombre_unidad = forms.CharField(label='Nombre Unidad', widget=forms.TextInput(
+    #                 attrs={
+    #                     'class':'form-control', 
+    #                     'placeholder' : 'Introduzca el nombre de la Unidad',
+    #                     'required': 'true'
+    #                 }))
+    # secretaria_id = forms.ChoiceField(label='Nombre Secretaria', widget=forms.Select(
+    #                 attrs={
+    #                     'class':'chosen',
+    #                     'required': 'true',
+    #                 }))
+    class Meta:
+        model = Unidad
+        fields = ['nombre_unidad', 'secretaria_id']
+        labels = { 
+            'nombre_unidad': 'Nombre Unidad',
+            'secretaria_id': 'Nombre Secretaria' 
+        }
+        widgets = {
+            'nombre_unidad': forms.TextInput(
+                    attrs={
+                        'class':'form-control', 
+                        'placeholder' : 'Introduzca el nombre de la Unidad',
+                        'required': 'true',
+                        'style':'width:70% !important;'
+                    }
+            ),
+			'secretaria_id' : forms.Select(
+                    attrs={
+                        'class':'from-control',
+                        'required': 'true',
+                        'style':'width:70% !important; display:block;'
+                    }
+            ),
+		}
     # ci = forms.CharField(label='CI',max_length=10)
     # nombre = forms.CharField(label='Nombres',max_length=20,required=True)
     # apellido_paterno = forms.CharField(label='Apellido Paterno',max_length=20,required=True)

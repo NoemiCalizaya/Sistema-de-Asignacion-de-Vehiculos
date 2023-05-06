@@ -1,0 +1,72 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block titulo1 %}
+<h2><strong>DETALLE DEL VEHÍCULO</strong></h2>
+{% endblock %}
+
+{% block cuerpo %}
+<div class="form-row">
+    <div class="form-group col-md-6 col-sm-4">
+        <label for="proveedor">CLASE DE VEHÍCULO:</label>
+        {{ vehiculo.clase_vehiculo }}
+    </div>
+    <div class="form-group col-md-6 col-sm-4">
+        <label for="producto">MARCA:</label>
+        {{ vehiculo.marca }}
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="direccion">TIPO DE VEHÍCULO:</label>
+        {{ vehiculo.tipo_vehiculo }}
+    </div>
+    <div class="form-group col-md-6">
+        <label for="proveedor">PROCEDENCIA:</label>
+        {{ vehiculo.procedencia }}
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="producto">MODELO DEL VEHÍCULO:</label>
+        {{ vehiculo.modelo}}
+    </div>
+    <div class="form-group col-md-6">
+        <label for="direccion">COLOR:</label>
+        {{ vehiculo.color }}
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="proveedor">PLACA:</label>
+        {{ vehiculo.placa }}
+    </div>
+    <div class="form-group col-md-6">
+        <label for="producto">CILINDRADA:</label>
+        {{ vehiculo.cilindrada }}
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="direccion">NÚMERO DE MOTOR:</label>
+        {{ vehiculo.numero_motor }}
+    </div>
+    <div class="form-group col-md-6">
+        <label for="proveedor">NÚMERO DE CHASIS:</label>
+        {{ vehiculo.numero_chasis }}
+    </div>
+</div>
+<div class="form-row">
+    <div class="form-group col-md-6">
+        <label for="producto">ESTADO DEL VEHÍCULO:</label>
+        {{ vehiculo.estado_vehiculo }}
+    </div>
+    <div class="form-group col-md-6">
+        <label for="direccion">OBSERVACIONES:</label>
+        {{ vehiculo.observaciones }}
+    </div>
+</div>
+<div class="col-md-4 col-sm-12 col-xs-12 form-group">
+    <a href="/principal/listar/vehiculos" class="btn btn-primary" role="button">VOLVER</a>
+</div>
+{% endblock %}

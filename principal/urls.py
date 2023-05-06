@@ -20,8 +20,13 @@ urlpatterns = [
     #URLS VEHÍCULOS
     path('registrar/vehiculo',views.RegistrarVehiculo.as_view(),name ='principal-registrar-vehiculo'),
     path('listar/vehiculos', views.ListadoVehiculos.as_view(), name='principal-index-vehiculo'),
+    path('detalle/<int:pk>/vehiculo', views.VehiculoDetailView.as_view(), name='principal-detalle-vehiculo'),
     path('eliminar/<int:pk>/vehiculo', views.EliminarVehiculo.as_view(), name='principal-eliminar-vehiculo'),
     path('actualizar/<int:pk>/vehiculo', views.EditarVehiculo.as_view(), name='principal-actualizar-vehiculo'),
+    #URLS UNIDADES
+    path('inicio/unidades',views.InicioUnidad.as_view(), name = 'principal-inicio-unidad'),
+    path('registrar/unidad',views.RegistrarUnidad.as_view(),name ='principal-registrar-unidad'),
+    path('listar/unidades', views.ListadoUnidades.as_view(), name='principal-index-unidad'),
     path('crearUsuario', views.crearUsuario, name='crearUsuario'),
     path('actualizar/cliente', views.actualizarCliente, name='actualizar/cliente'),
     path('login', views.loginUsuario, name="loginUsuario"),
@@ -39,4 +44,7 @@ urlpatterns += [
     path('inicio/vehiculos', TemplateView.as_view(
                                 template_name='vehiculo/listaVehiculos.html'
     ), name='principal-inicio-vehiculo'),
+    # path('inicio/unidades', TemplateView.as_view(
+    #                             template_name='unidad/listaUnidades.html'
+    # ), name = 'principal-inicio-unidad'),
 ]

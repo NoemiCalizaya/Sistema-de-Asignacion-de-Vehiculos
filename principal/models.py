@@ -6,30 +6,35 @@ class Secretaria(models.Model):
     nombre_secretaria = models.CharField(max_length=100)
     direccion = models.CharField(max_length=50)
 
+    def natural_key(self):
+        return self.nombre_secretaria
+
     def __str__(self):
         return self.nombre_secretaria
 
 class Unidad(models.Model):
     nombre_unidad = models.CharField(max_length=100)
     secretaria_id = models.ForeignKey(Secretaria, on_delete=models.CASCADE)
+    estado = models.BooleanField(default = True, verbose_name = 'Estado')
 
     def __str__(self):
         return self.nombre_unidad
-
+#nombre choferes
 class Persona(models.Model):
     ci = models.CharField(max_length=10, unique=True, help_text='Introduzca el numero de C.I.')
     nombres = models.CharField(max_length=20, help_text='Introduzca los nombres')
     apellido_paterno = models.CharField(max_length=20, help_text='Introduzca el apellido paterno')
     apellido_materno = models.CharField(max_length=20, help_text='Introduzca el apellido materno')
-    direccion = models.CharField(max_length=50, help_text='Introduzca la direccion', null=True, blank=True)
+    direccion = models.CharField(max_length=50, help_text='Introduzca la direccion', null=True, blank=True)#charfield
     telefono = models.CharField(max_length=10, help_text='Introduzca el numero de telefono')
+    #categoria seleccion A, B, C, M, T, A,M,T
 
     def __str__(self):
         return self.nombres+' '+self.apellido_paterno+' '+self.apellido_materno
     
     class Meta:
         ordering = ['apellido_paterno', 'apellido_materno', 'nombres']
-
+#ELIMINAR ESTE MODELO
 class CategoriaLic(models.Model):
     cat_lic = models.CharField(max_length=30)
     persona_id = models.ForeignKey(Persona, on_delete=models.CASCADE)
@@ -45,18 +50,24 @@ class Vehiculo(models.Model):
     modelo = models.CharField(max_length=30, help_text='Introduzca el modelo de vehiculo')
     color = models.CharField(max_length=10, help_text='Introduzca el color del vehiculo')
     placa = models.CharField(max_length=15, help_text='Introduzca la placa del vehiculo')
-    cilindrada = models.CharField(max_length=20, help_text='Introduzca la cilindrada del vehiculo')
-    numero_motor = models.IntegerField(default=0, help_text='Introduzca el numero de motor')
-    numero_chasis = models.IntegerField(default=0, help_text='Introduzca el numero de chasis')
-    estado_vehiculo = models.CharField(max_length=10, help_text='Introduzca el estado del vehiculo')
-    observaciones = models.CharField(max_length=250, help_text='Introduzca las observaciones del vehiculo')
-    
+    cilindrada = models.CharField(max_length=20, help_text='Introduzca la cilindrada del vehiculo')#numerico
+    numero_motor = models.IntegerField(default=0, help_text='Introduzca el numero de motor')#caracter
+    numero_chasis = models.IntegerField(default=0, help_text='Introduzca el numero de chasis')#caracter
+    estado_vehiculo = models.CharField(max_length=10, help_text='Introduzca el estado del vehiculo')#bueno, malo. regular
+    observaciones = models.CharField(max_length=250, help_text='Introduzca las observaciones del vehiculo')#textfield comentario
+
     def __str__(self):
         return self.clase_vehiculo+' '+self.marca+' '+self.tipo_vehiculo
     
     class Meta:
         ordering = ['clase_vehiculo', 'marca', 'tipo_vehiculo']
-    
+#detalle en modal
+#Modelo cambio de aceite
+#idvehiculo foreignkey
+#kilometraje int 0defecto
+#proximocambioaceite int +5000defecto
+#estado defecto pendiente, aprobado, checkbox 
+
 class Cliente(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.RESTRICT)
     ci = models.CharField(max_length=10, unique=True)

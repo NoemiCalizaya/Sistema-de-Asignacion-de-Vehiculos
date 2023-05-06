@@ -2,6 +2,7 @@ import json
 from django.shortcuts import render,redirect
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic import TemplateView
 from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
@@ -248,6 +249,16 @@ class RegistrarVehiculo(CreateView):
     #     else:
     #         return redirect('principal-index-vehiculo')
 
+class VehiculoDetailView(DetailView):
+    model = Vehiculo
+    template_name = 'vehiculo/detalleVehiculo.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        vehiculo = self.model.objects.get(id = self.kwargs['pk'])
+        context['vehiculo'] = vehiculo
+        return context
+
 class EditarVehiculo(UpdateView):
     model = Vehiculo
     form_class = VehiculoForm
@@ -269,6 +280,89 @@ class EliminarVehiculo(DeleteView):
             return response
         else:
             return redirect('principal-inicio-vehiculo')
+
+'''VISTAS PARA UNIDAD'''
+class InicioUnidad(TemplateView):
+    template_name = 'unidad/listaUnidades.html'
+
+class RegistrarUnidad(CreateView):
+    model = Unidad
+    form_class = UnidadForm
+    template_name = 'unidad/crearUnidad.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} registrado correctamente!'
+                error = 'No hay error!'
+                response = JsonResponse({'mensaje':mensaje,'error':error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se ha podido registrar!'
+                error = form.errors
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('principal-index-unidad')
+    # model = Unidad
+    # template_name = 'unidad/crearUnidad.html'
+    # form_class = UnidadForm
+    # success_url = reverse_lazy('principal-index-unidad')
+
+    # def form_invalid(self,form):
+    #     return HttpResponse(str(form))
+    # #Direcciona a la URL con la ID generada
+    # def get_success_url(self):
+    #     return reverse_lazy('ingresos:ingreso_32200', kwargs = {
+    #         'pk': self.object.ingresos.id
+    #         })
+
+class ListadoUnidades(ListView):
+    model = Unidad
+
+    def get_queryset(self):
+        return self.model.objects.filter(estado = True).order_by('-id')
+    
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            return HttpResponse(serialize('json', self.get_queryset(), use_natural_foreign_keys = True), 'application/json')
+        else:
+            return redirect('principal-inicio-unidad')
+    
+    '''def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        unidades = self.model.objects.filter(estado = True).order_by('-id')
+        context['unidades'] = unidades
+        return context'''
+    '''
+    def get_context_data(self, **kwargs):
+        context = super(ListadoUnidades, self).get_context_data(**kwargs)
+        print('kbk')
+        context ['unid'] = Unidad.objects.filter(id=1)
+        print(context ['unid'])
+        return context
+
+    def get_queryset(self):
+        return self.model.objects.filter(estado = True)
+
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            lista_unidades = []
+            for unidad in self.get_queryset():
+                data_unidad = {}
+                data_unidad['id'] = unidad.id
+                data_unidad['nombre_unidad'] = unidad.nombre_unidad
+                data_unidad['secretaria_id'] = unidad.secretaria_id_id
+                lista_unidades.append(data_unidad)
+            data = json.dumps(lista_unidades)
+            print(data)
+            return HttpResponse(data, 'aplication/json')
+        else:
+            return render(request, self.template_name)'''
 
 '''VISTAS PARA CLIENTES Y USUARIOS'''
 from django.contrib.auth.models import User

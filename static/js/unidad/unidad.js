@@ -1,6 +1,6 @@
-function listadoVehiculos() {
+function listadoUnidades() {
     $.ajax({
-        url: "/principal/listar/vehiculos",
+        url: "/principal/listar/unidades",
         type: "get",
         dataType: "json",
         success: function (response) {
@@ -12,20 +12,9 @@ function listadoVehiculos() {
             for (let i = 0; i < response.length; i++) {
                 let fila = '<tr>';
                 fila += '<td>' + (i + 1) + '</td>';
-                fila += '<td>' + response[i]["fields"]['clase_vehiculo'] + '</td>';
-                fila += '<td>' + response[i]["fields"]['marca'] + '</td>';
-                fila += '<td>' + response[i]["fields"]['tipo_vehiculo'] + '</td>';
-                fila += '<td>' + response[i]["fields"]['procedencia'] + '</td>';
-                fila += '<td>' + response[i]["fields"]['modelo'] + '</td>';
-                // fila += '<td>' + response[i]["fields"]['color'] + '</td>';
-                // fila += '<td>' + response[i]["fields"]['placa'] + '</td>';
-                // fila += '<td>' + response[i]["fields"]['cilindrada'] + '</td>';
-                // fila += '<td>' + response[i]["fields"]['numero_motor'] + '</td>';
-                // fila += '<td>' + response[i]["fields"]['numero_chasis'] + '</td>';
-                // fila += '<td>' + response[i]["fields"]['estado_vehiculo'] + '</td>';
-                // fila += '<td>' + response[i]["fields"]['observaciones'] + '</td>';
-                fila += '<td><a href="/principal/detalle/' + response[i]['pk'] + '/vehiculo" class="btn btn-info" role="button"> DETALLE </a>';
-                fila += '<a href="/principal/actualizar/' + response[i]['pk'] + '/vehiculo" class="btn btn-primary" role="button"> EDITAR </a>';
+                fila += '<td>' + response[i]['fields']['nombre_unidad'] + '</td>';
+                fila += '<td>' + response[i]['fields']['secretaria_id'] + '</td>';
+                fila += '<td><a href="/principal/actualizar/' + response[i]['pk'] + '/vehiculo" class="btn btn-primary" role="button"> EDITAR </a>';
                 fila += '<button type = "button" class = "btn btn-danger tableButton  btn-sm" ';
                 fila += 'onclick = "abrir_modal_eliminacion(\'/principal/eliminar/' + response[i]['pk'] + '/vehiculo\');"> ELIMINAR </buttton></td>';
                 fila += '</tr>';
@@ -72,7 +61,7 @@ function registrar() {
         type: $('#form_creacion').attr('method'),
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listadoVehiculos();
+            listadoUnidades();
             cerrar_modal_creacion();
         },
         error: function (error) {
@@ -102,5 +91,5 @@ function eliminar(pk) {
 }
 
 $(document).ready(function () {
-    listadoVehiculos();
+    listadoUnidades();
 });
