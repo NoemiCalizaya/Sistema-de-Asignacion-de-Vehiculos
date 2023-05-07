@@ -17,6 +17,9 @@ class Unidad(models.Model):
     secretaria_id = models.ForeignKey(Secretaria, on_delete=models.CASCADE)
     estado = models.BooleanField(default = True, verbose_name = 'Estado')
 
+    def natural_key(self):
+        return [self.nombre_unidad, str(self.secretaria_id)]
+
     def __str__(self):
         return self.nombre_unidad
 #nombre choferes
@@ -28,6 +31,9 @@ class Persona(models.Model):
     direccion = models.CharField(max_length=50, help_text='Introduzca la direccion', null=True, blank=True)#charfield
     telefono = models.CharField(max_length=10, help_text='Introduzca el numero de telefono')
     #categoria seleccion A, B, C, M, T, A,M,T
+
+    def natural_key(self):
+        return self.nombres+' '+self.apellido_paterno+' '+self.apellido_materno 
 
     def __str__(self):
         return self.nombres+' '+self.apellido_paterno+' '+self.apellido_materno
@@ -55,6 +61,9 @@ class Vehiculo(models.Model):
     numero_chasis = models.IntegerField(default=0, help_text='Introduzca el numero de chasis')#caracter
     estado_vehiculo = models.CharField(max_length=10, help_text='Introduzca el estado del vehiculo')#bueno, malo. regular
     observaciones = models.CharField(max_length=250, help_text='Introduzca las observaciones del vehiculo')#textfield comentario
+
+    def natural_key(self):
+        return self.tipo_vehiculo
 
     def __str__(self):
         return self.clase_vehiculo+' '+self.marca+' '+self.tipo_vehiculo

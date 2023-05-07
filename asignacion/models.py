@@ -12,6 +12,7 @@ class Asignacion_Vehiculo(models.Model):
     persona_id = models.ForeignKey(Persona, on_delete=models.CASCADE)
     unidad_id = models.ForeignKey(Unidad, on_delete=models.CASCADE)
     vehiculo_id = models.ForeignKey(Vehiculo, on_delete=models.CASCADE)
+    estado = models.BooleanField(default = True, verbose_name = 'Estado')
 
     def __str__(self):
         return str(self.persona_id)

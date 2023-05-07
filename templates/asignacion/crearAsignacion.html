@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block titulo1 %}
+<h2><strong>REGISTRO DE ASIGNACIÓN DE VEHÍCULOS A CHOFERES</strong></h2>
+{% endblock %}
+
+{% block cuerpo %}
+<form id="form_creacion" method="post">
+    {% csrf_token %}
+    <div id="errores">
+
+    </div>
+    {{ form.as_p }}
+    <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+        <!--<a href="/principal/listar/vehiculos" class="btn btn-danger" role="button">CANCELAR</a>-->
+        <button class="btn btn-danger" type="button" onclick="">CANCELAR</button>
+        <button id="boton_creacion" class="btn btn-primary" type="submit">GUARDAR</button>
+    </div>
+</form>
+{% endblock %}
+{% block extrajs %}
+    <!---Custom JS-->
+    <script src=""></script>
+{% endblock %}
