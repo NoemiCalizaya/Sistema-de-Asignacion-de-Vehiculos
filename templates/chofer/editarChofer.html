@@ -6,7 +6,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <form id="form_edicion" action="{% url 'principal-actualizar-persona' object.pk %}" method="POST">
+        <form id="form_edicion" action="{% url 'principal-actualizar-chofer' object.pk %}" method="POST">
             {% csrf_token %}
             <div class="modal-body">
                 <div id="erroresEdicion">
@@ -15,9 +15,8 @@
                 {{ form.as_p }}
             </div>
             <div class="modal-footer">
+                <button id="boton_creacion" class="btn btn-primary" type="button" onclick="editar();">Confirmar</button>
                 <button class="btn btn-danger" type="button" onclick="cerrar_modal_edicion();">Cancelar</button>
-                <button id="boton_creacion" class="btn btn-primary" type="button"
-                    onclick="editar();">Confirmar</button>
             </div>
         </form>
     </div>

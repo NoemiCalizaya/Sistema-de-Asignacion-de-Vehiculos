@@ -1,13 +1,9 @@
-function listadoPersonas(){
+function listadoChoferes(){
     $.ajax({
-        url: "/principal/lista/personas",
+        url: "/principal/lista/choferes",
         type: "get",
         dataType: "json",
         success: function(response){
-            console.log(response);
-            // if($.fn.DataTable.isDataTable('#datatable-keytable')){
-            //     $('#datatable-keytable').DataTable().destroy();
-            // }
             $('#datatable-keytable').html("");
             for(let i=0; i<response.length; i++){
                 let fila = '<tr>';
@@ -15,11 +11,14 @@ function listadoPersonas(){
                 fila += '<td>'+response[i]["fields"]['ci']+'</td>';
                 fila += '<td>'+response[i]["fields"]['nombres']+'</td>';
                 fila += '<td>'+response[i]["fields"]['apellido_paterno']+'</td>';
-                fila += '<td>'+response[i]["fields"]['direccion']+'</td>';
-                fila += '<td><button type = "button" class = "btn btn-primary btn-sm tableButton"';
-                fila += ' onclick = "abrir_modal_edicion(\'/principal/actualizar/' + response[i]['pk']+'/persona\');"> EDITAR </button>';
+                fila += '<td>'+response[i]["fields"]['apellido_materno']+'</td>';
+                fila += '<td>'+response[i]["fields"]['categoria_lic']+'</td>';
+                fila += '<td><button type = "button" class="btn btn-info btn-sm tableButton"';
+                fila += ' onclick = "abrir_modal_detalle(\'/principal/detalle/' + response[i]['pk']+'/chofer\');"> DETALLE </button>';
+                fila += '<button type = "button" class = "btn btn-primary btn-sm tableButton"';
+                fila += ' onclick = "abrir_modal_edicion(\'/principal/actualizar/' + response[i]['pk']+'/chofer\');"> EDITAR </button>';
                 fila += '<button type="button" class="btn btn-danger"';
-                fila += 'onclick="abrir_modal_eliminacion(\'/principal/eliminar/'+response[i]['pk']+'/persona\');">ELIMINAR</button></td>';
+                fila += 'onclick="abrir_modal_eliminacion(\'/principal/eliminar/'+response[i]['pk']+'/chofer\');">ELIMINAR</button></td>';
                 fila += '</tr>';
                 $('#datatable-keytable').append(fila);
             }
@@ -65,7 +64,7 @@ function registrar() {
         type: $('#form_creacion').attr('method'),
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listadoPersonas();
+            listadoChoferes();
             cerrar_modal_creacion();
         },
         error: function (error) {
@@ -84,7 +83,7 @@ function editar(){
         type: $('#form_edicion').attr('method'),
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listadoPersonas();
+            listadoChoferes();
             cerrar_modal_edicion();
         },
         error: function (error) {
@@ -100,11 +99,11 @@ function eliminar(pk) {
         data:{
             csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
         },
-        url: '/principal/eliminar/'+pk+'/persona',
+        url: '/principal/eliminar/'+pk+'/chofer',
         type: 'post',
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listadoPersonas();
+            listadoChoferes();
             cerrar_modal_eliminacion();
         },
         error: function (error) {
@@ -114,5 +113,5 @@ function eliminar(pk) {
 }
 
 $(document).ready(function(){
-    listadoPersonas();
+    listadoChoferes();
 });

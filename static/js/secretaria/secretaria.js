@@ -4,9 +4,6 @@ function listadoSecretarias() {
         type: "get",
         dataType: "json",
         success: function (response) {
-            // if ($.fn.DataTable.isDataTable('#tabla_libros')) {
-            //     $('#tabla_libros').DataTable().destroy();
-            // }
             $('#datatable-keytable').html("");
             for (let i = 0; i < response.length; i++) {
                 let fila = '<tr>';

@@ -6,10 +6,11 @@ from . import views
 urlpatterns = [
     #URLS PERSONAS
     path('nueva/persona', views.CreatePersona, name='principal-nueva-persona'),
-    path('registrar/persona',views.RegistrarPersona.as_view(),name = 'principal-registrar-persona'),
-    path('lista/personas', views.ListaPersona.as_view(), name='principal-index-persona'),
-    path('actualizar/<int:pk>/persona',views.EditarPersona.as_view(), name = 'principal-actualizar-persona'),
-    path('eliminar/<int:pk>/persona', views.EliminarPersona.as_view(), name='pricipal-eliminar-persona'),
+    path('registrar/chofer',views.RegistrarChofer.as_view(),name = 'principal-registrar-chofer'),
+    path('detalle/<int:pk>/chofer', views.ChoferDetailView.as_view(), name='principal-detalle-chofer'),
+    path('lista/choferes', views.ListaChofer.as_view(), name='principal-index-chofer'),
+    path('actualizar/<int:pk>/chofer',views.EditarChofer.as_view(), name = 'principal-actualizar-chofer'),
+    path('eliminar/<int:pk>/chofer', views.EliminarChofer.as_view(), name='pricipal-eliminar-chofer'),
     #URLS SECRETARÍAS
     path('registrar/secretaria',views.RegistrarSecretaria.as_view(),name = 'principal-registrar-secretaria'),
     path('listar/secretarias', views.ListadoSecretaria.as_view(), name='principal-index-secretaria'),
@@ -35,9 +36,9 @@ urlpatterns = [
 
 #URLS DE VISTAS IMPLÍCITAS
 urlpatterns += [
-    path('inicio/personas', TemplateView.as_view(
-                                template_name='principal/listaPersonas.html'
-    ), name='principal-inicio-persona'),
+    path('inicio/choferes', TemplateView.as_view(
+                                template_name='chofer/listaChoferes.html'
+    ), name='principal-inicio-chofer'),
     path('inicio/secretarias', TemplateView.as_view(
                                 template_name='secretaria/listaSecretaria.html'
     ), name='principal-inicio-secretaria'),

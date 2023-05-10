@@ -18,10 +18,10 @@ class RegistrarAsignacion(CreateView):
     form_class = AsignacionForm
     template_name = 'asignacion/crearAsignacion.html'
     success_url = reverse_lazy('index-asignacion')
-
+#placa y no secretaria
 class ListadoAsignacion(ListView):
     model = Asignacion_Vehiculo
-
+    
     def get_queryset(self):
         return self.model.objects.filter(estado = True).order_by('-id')
     
@@ -54,4 +54,21 @@ class EditarAsignacion(UpdateView):
                 return response
         else:
             return redirect('inicio-asignacion')
+
+class EliminarAsignacion(DeleteView):
+    model = Asignacion_Vehiculo
+    template_name = 'asignacion/eliminarAsignacion.html'
+
+    def delete(self,request,pk,*args,**kwargs):
+        if request.is_ajax():
+            asignacion = self.get_object()
+            asignacion.estado = False
+            asignacion.save()
+            mensaje = f'{self.model.__name__} eliminado correctamente!'
+            error = 'No hay error!'
+            response = JsonResponse({'mensaje': mensaje, 'error': error})
+            response.status_code = 201
+            return response
+        return redirect('inicio-asignacion')
+
 

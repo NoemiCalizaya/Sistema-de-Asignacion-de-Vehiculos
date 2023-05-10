@@ -65,9 +65,13 @@ class AsignacionForm(forms.ModelForm):
                         'style':'width:70% !important; display:block;'
                     }
             ),
-            'fecha': forms.DateTimeInput(
+            'fecha': forms.TextInput(
                     attrs={
-                        'type': 'datetime-local'
+                        'class': 'form-control date',
+                        'id': 'birthdatepicker',
+                        'type':'date',
+                        'data-toogle': 'date-picker',
+                        'data-single-date-picker': 'true'
                     }
             )
 		}

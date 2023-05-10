@@ -13,11 +13,11 @@ from .models import *
 from .forms import *
 
 # Create your views here.
-'''VISTA PARA PERSONAS-CHOFERES'''
+'''VISTAS PARA CHOFERES'''
 def CreatePersona(request):
-    form = PersonaForm()
+    form = ChoferForm()
     if request.method == 'POST':
-        form = PersonaForm(request.POST)
+        form = ChoferForm(request.POST)
         print(form)
         if form.is_valid():
             data_ci = request.POST['ci']
@@ -26,7 +26,7 @@ def CreatePersona(request):
             data_apellido_materno = request.POST['apellido_materno']
             data_direccion = request.POST['direccion']
             data_telefono = request.POST['telefono']
-            Persona.objects.create(
+            Chofer.objects.create(
                 ci=data_ci, 
                 nombres=data_nombres, 
                 apellido_paterno=data_apellido_paterno, 
@@ -35,20 +35,20 @@ def CreatePersona(request):
                 telefono=data_telefono)
             return redirect('principal-index-persona')
         else:
-            form = PersonaForm()
+            form = ChoferForm()
     return render(request, 'principal/RegistrarPersonas.html', {'form': form})
 
-class RegistrarPersona(CreateView):
-    model = Persona
-    form_class = PersonaForm
-    template_name = 'principal/crearPersona.html'
+class RegistrarChofer(CreateView):
+    model = Chofer
+    form_class = ChoferForm
+    template_name = 'chofer/crearChofer.html'
 
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
-            form = self.form_class(request.POST)
+            form = self.form_class(request.POST, files = request.FILES)
             if form.is_valid():
                 form.save()
-                mensaje = f'{self.model.__name__} registrada correctamente!'
+                mensaje = f'{self.model.__name__} registrado correctamente!'
                 error = 'No hay error!'
                 response = JsonResponse({'mensaje':mensaje,'error':error})
                 response.status_code = 201
@@ -60,31 +60,43 @@ class RegistrarPersona(CreateView):
                 response.status_code = 400
                 return response
         else:
-            return redirect('principal-inicio-persona')
+            return redirect('principal-inicio-chofer')
 
-class ListaPersona(ListView):
-    model = Persona
+class ListaChofer(ListView):
+    model = Chofer
 
     def get_queryset(self):
-        return self.model.objects.all().order_by('-id')
+        return self.model.objects.filter(estado = True).order_by('-id')
     #sobreescritura del metodo get
     def get(self, request, *args, **kwargs):
         if request.is_ajax():
             return HttpResponse(serialize('json', self.get_queryset()), 'application/json')
         else:
-            return redirect('principal-inicio-persona')
-    
-class EditarPersona(UpdateView):
-    model = Persona
-    form_class = PersonaForm
-    template_name = 'principal/editarPersona.html'
+            return redirect('principal-inicio-chofer')
+
+class ChoferDetailView(DetailView):
+    model = Chofer
+    template_name = 'chofer/detalleChofer.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        chofer = self.model.objects.get(id = self.kwargs['pk'])
+        if chofer.direccion is None:
+            chofer.direccion = " "
+        context['chofer'] = chofer
+        return context
+
+class EditarChofer(UpdateView):
+    model = Chofer
+    form_class = ChoferForm
+    template_name = 'chofer/editarChofer.html'
 
     def post(self,request,*args,**kwargs):
         if request.is_ajax():
-            form = self.form_class(request.POST,instance = self.get_object())
+            form = self.form_class(request.POST, files = request.FILES, instance = self.get_object())
             if form.is_valid():
                 form.save()
-                mensaje = f'{self.model.__name__} actualizada correctamente!'
+                mensaje = f'{self.model.__name__} actualizado correctamente!'
                 error = 'No hay error!'
                 response = JsonResponse({'mensaje': mensaje, 'error': error})
                 response.status_code = 201
@@ -96,23 +108,24 @@ class EditarPersona(UpdateView):
                 response.status_code = 400
                 return response
         else:
-            return redirect('principal-inicio-persona')
+            return redirect('principal-inicio-chofer')
 
-class EliminarPersona(DeleteView):
-    model = Persona
-    template_name = 'principal/eliminarPersona.html'
+class EliminarChofer(DeleteView):
+    model = Chofer
+    template_name = 'chofer/eliminarChofer.html'
 
     def delete(self,request,*args,**kwargs):
         if request.is_ajax():
-            persona = self.get_object()
-            persona.delete()
-            mensaje = f'{self.model.__name__} eliminada correctamente!'
+            chofer = self.get_object()
+            chofer.estado = False
+            chofer.save()
+            mensaje = f'{self.model.__name__} eliminado correctamente!'
             error = 'No hay error!'
             response = JsonResponse({'mensaje': mensaje, 'error': error})
             response.status_code = 201
             return response
         else:
-            return redirect('principal-inicio-persona')
+            return redirect('principal-inicio-chofer')
     # def get_context_data(self, **kwargs):
     #     context = {}
     #     context['object'] = ''
@@ -128,7 +141,7 @@ class ListadoSecretaria(ListView):
     model = Secretaria
 
     def get_queryset(self):
-        return self.model.objects.all().order_by('-id')
+        return self.model.objects.filter(estado = True).order_by('-id')
 
     def get(self, request, *args, **kwargs):
         if request.is_ajax():
@@ -143,7 +156,7 @@ class RegistrarSecretaria(CreateView):
 
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
-            form = self.form_class(request.POST)
+            form = self.form_class(request.POST, files = request.FILES)
             if form.is_valid():
                 form.save()
                 mensaje = f'{self.model.__name__} registrada correctamente!'
@@ -167,7 +180,7 @@ class EditarSecretaria(UpdateView):
 
     def post(self,request,*args,**kwargs):
         if request.is_ajax():
-            form = self.form_class(request.POST,instance = self.get_object())
+            form = self.form_class(request.POST, files = request.FILES, instance = self.get_object())
             if form.is_valid():
                 form.save()
                 mensaje = f'{self.model.__name__} actualizada correctamente!'
@@ -191,7 +204,9 @@ class EliminarSecretaria(DeleteView):
     def delete(self,request,*args,**kwargs):
         if request.is_ajax():
             secretaria = self.get_object()
-            secretaria.delete()
+            print(secretaria)
+            secretaria.estado = False
+            secretaria.save()
             mensaje = f'{self.model.__name__} eliminada correctamente!'
             error = 'No hay error!'
             response = JsonResponse({'mensaje': mensaje, 'error': error})

@@ -8,5 +8,6 @@ urlpatterns = [
     path('inicio/asignaciones',InicioAsignacion.as_view(), name ='inicio-asignacion'),
     path('nueva/asignacion', RegistrarAsignacion.as_view(), name='nueva-asignacion'),
     path('listar/asignaciones', ListadoAsignacion.as_view(), name='index-asignacion'),
-    path('actualizar/<int:pk>/asignacion', EditarAsignacion.as_view(), name="actualizar-asignacion"),
+    path('actualizar/<int:pk>/asignacion', EditarAsignacion.as_view(), name='actualizar-asignacion'),
+    path('eliminar/<int:pk>/asignacion', EliminarAsignacion.as_view(), name='eliminar-asignacion')
 ]

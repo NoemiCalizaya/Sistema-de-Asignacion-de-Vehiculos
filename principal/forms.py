@@ -18,26 +18,38 @@ class ClienteForm(forms.Form):
     sexo = forms.ChoiceField(label='Sexo',choices=SEXO_CHOICES)
     fecha_nacimiento = forms.DateField(label='Fecha Nacimiento',input_formats=['%Y-%m-%d'], widget=DateInput())
 
-class PersonaForm(forms.ModelForm):
+class ChoferForm(forms.ModelForm):
     class Meta:
-        model = Persona
-        fields = ['ci', 'nombres','apellido_paterno', 'apellido_materno', 'direccion', 'telefono']
+        model = Chofer
+        fields = ['ci', 'nombres','apellido_paterno', 'apellido_materno', 'direccion', 'telefono', 'categoria_lic']
+        labels = { 
+            'ci': 'C.I.',
+            'direccion': 'Dirección',
+            'telefono': 'Teléfono',
+            'categoria_lic': 'Categoría de Licencia'
+        }
         widgets = {
-            'ci' : forms.TextInput(attrs={'class':'form-control', 'placeholder' : 'Introduzca el numero de C.I.', 'required': 'true', 'oninput':'duplicados()'}),
+            #'placeholder' : 'Introduzca el numero de C.I.'
+            'ci' : forms.TextInput(attrs={'class':'form-control', 'required': 'true', 'oninput':'duplicados()'}),
             'nombres' : forms.TextInput(attrs={'class':'form-control','required': 'true'}),
             'apellido_paterno' : forms.TextInput(attrs={ 'class': 'form-control','required': 'true'}), 
             'apellido_materno' : forms.TextInput(attrs={'class':'form-control','required': 'true'}),
-            'direccion' : forms.Textarea(attrs={'class':'form-control','rows':3,'type':'hidden'}), 
-            'telefono' : forms.TextInput(attrs={'class':'form-control','required': 'true'}),
+            'direccion' : forms.Textarea(attrs={'class':'form-control','rows':2}), 
+            'telefono' : forms.NumberInput(attrs={'class':'form-control','required': 'true'}),
+            'categoria_lic': forms.Select(attrs={'class':'form-control '})
         }
 
 class SecretariaForm(forms.ModelForm):
     class Meta:
         model = Secretaria
         fields = ['nombre_secretaria', 'direccion']
+        labels = {
+            'nombre_secretaria': 'Nombre secretaría',
+            'direccion': 'Dirección'
+        }
         widgets = {
             'nombre_secretaria' : forms.TextInput(attrs={'class':'form-control', 'placeholder' : 'Introduzca el nombre de la secretaría', 'required': 'true'}),
-            'direccion' : forms.Textarea(attrs={'class':'form-control', 'rows':3, 'placeholder' : 'Introduzca la dirección de la secretaría','required': 'true'}),
+            'direccion' : forms.Textarea(attrs={'class':'form-control', 'rows':2, 'placeholder' : 'Introduzca la dirección de la secretaría','required': 'true'}),
         }
 
 class VehiculoForm(forms.ModelForm):

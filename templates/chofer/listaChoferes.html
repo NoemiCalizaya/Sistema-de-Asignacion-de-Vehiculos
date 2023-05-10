@@ -15,7 +15,10 @@
     <div class="card-header">
         <div class="row">
             <div style="float: left;">                  
-                <button type="button" class="btn btn-primary" onclick="abrir_modal_creacion('/principal/registrar/persona');">REGISTRAR CHOFER</button>
+                <button type="button" class="btn btn-primary" 
+                    onclick="abrir_modal_creacion('/principal/registrar/chofer');">
+                    REGISTRAR CHOFER
+                </button>
             </div>
         </div>
     </div>
@@ -28,11 +31,12 @@
                 <th class="centered">C.I.</th>
                 <th class="centered">Nombres</th>
                 <th class="centered">Apellido Paterno</th>
-                <th class="centered">Dirección</th>
+                <th class="centered">Apellido Materno</th>
+                <th class="centered">Categoría de Licencia</th>
                 <th class="centered">Opciones</th>
             </tr>
         </thead>
-        <tbody id="table-personas">
+        <tbody>
             
         </tbody>
     </table>
@@ -42,6 +46,9 @@
 
 </div>
 <div class="modal fade" id="edicion" role="dialog">
+
+</div>
+<div class="modal fade" id="detalle" role="dialog" >
 
 </div>
 <div class="modal fade" id="eliminacion" rol="dialog">
@@ -79,5 +86,5 @@
 
 {% block extrajs %}
     <!---Custom JS-->
-    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/chofer/chofer.js' %}"></script>
 {% endblock %}

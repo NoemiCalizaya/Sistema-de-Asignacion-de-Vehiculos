@@ -10,6 +10,16 @@ function cerrar_modal_creacion(){
 	$('#creacion').modal('hide');
 }
 
+function abrir_modal_detalle(url) {
+	$('#detalle').load(url, function () {
+		$(this).modal('show');
+	});
+}
+
+function cerrar_modal_detalle(){
+	$('#detalle').modal('hide');
+}
+
 function abrir_modal_edicion(url) {
 	$('#edicion').load(url, function () {
 		$(this).modal('show');

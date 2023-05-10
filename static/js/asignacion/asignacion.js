@@ -5,17 +5,18 @@ function listadoAsignaciones() {
         dataType: "json",
         success: function (response) {
             $('#datatable-keytable').html("");
+            console.log(response)
             for (let i = 0; i < response.length; i++) {
                 let fila = '<tr>';
                 fila += '<td>' + (i + 1) + '</td>';
                 fila += '<td>' + response[i]['fields']['persona_id'] + '</td>';
-                fila += '<td>' + response[i]['fields']['vehiculo_id'] + '</td>';
-                fila += '<td>' + response[i]['fields']['unidad_id'][0] + '</td>';
-                fila += '<td>' + response[i]['fields']['unidad_id'][1] + '</td>';
+                fila += '<td>' + response[i]['fields']['vehiculo_id'][0] + '</td>';
+                fila += '<td>' + response[i]['fields']['vehiculo_id'][1] + '</td>';
+                fila += '<td>' + response[i]['fields']['unidad_id'] + '</td>';
                 fila += '<td><button type = "button" class = "btn btn-primary btn-sm tableButton"';
                 fila += ' onclick = "abrir_modal_edicion(\'/asignacion/actualizar/' + response[i]['pk'] + '/asignacion\');"> EDITAR </button>';
                 fila += '<button type = "button" class = "btn btn-danger tableButton  btn-sm" ';
-                fila += 'onclick = "abrir_modal_eliminacion(\'/principal/eliminar/' + response[i]['pk'] + '/vehiculo\');"> ELIMINAR </buttton></td>';
+                fila += 'onclick = "abrir_modal_eliminacion(\'/asignacion/eliminar/' + response[i]['pk'] + '/asignacion\');"> ELIMINAR </buttton></td>';
                 fila += '</tr>';
                 $('#datatable-keytable').append(fila);
             }
@@ -100,11 +101,11 @@ function eliminar(pk) {
         data:{
             csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
         },
-        url: '/principal/eliminar/'+pk+'/vehiculo',
+        url: '/asignacion/eliminar/'+pk+'/asignacion',
         type: 'post',
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listadoVehiculos();
+            listadoAsignaciones();
             cerrar_modal_eliminacion();
         },
         error: function (error) {
