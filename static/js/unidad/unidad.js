@@ -4,19 +4,16 @@ function listadoUnidades() {
         type: "get",
         dataType: "json",
         success: function (response) {
-            // if ($.fn.DataTable.isDataTable('#datatable-keytable')) {
-            //     $('#datatable-keytable').DataTable().destroy();
-            // }
-            console.log(response);
             $('#datatable-keytable').html("");
             for (let i = 0; i < response.length; i++) {
                 let fila = '<tr>';
                 fila += '<td>' + (i + 1) + '</td>';
                 fila += '<td>' + response[i]['fields']['nombre_unidad'] + '</td>';
                 fila += '<td>' + response[i]['fields']['secretaria_id'] + '</td>';
-                fila += '<td><a href="/principal/actualizar/' + response[i]['pk'] + '/vehiculo" class="btn btn-primary" role="button"> EDITAR </a>';
+                fila += '<td><button type = "button" class = "btn btn-primary btn-sm tableButton"';
+                fila += ' onclick = "abrir_modal_edicion(\'/principal/actualizar/' + response[i]['pk'] + '/unidad\');"> EDITAR </button>';
                 fila += '<button type = "button" class = "btn btn-danger tableButton  btn-sm" ';
-                fila += 'onclick = "abrir_modal_eliminacion(\'/principal/eliminar/' + response[i]['pk'] + '/vehiculo\');"> ELIMINAR </buttton></td>';
+                fila += 'onclick = "abrir_modal_eliminacion(\'/principal/eliminar/' + response[i]['pk'] + '/unidad\');"> ELIMINAR </buttton></td>';
                 fila += '</tr>';
                 $('#datatable-keytable').append(fila);
             }
@@ -72,16 +69,40 @@ function registrar() {
     });
 }
 
+function editar() {
+    activarBoton();
+    var data = new FormData($('#form_edicion').get(0));
+    console.log(data)
+    $.ajax({        
+        url: $('#form_edicion').attr('action'),
+        type: $('#form_edicion').attr('method'), 
+        data: data,
+        cache: false,
+        processData: false,
+        contentType: false, 
+        success: function (response) {
+            notificacionSuccess(response.mensaje);
+            listadoUnidades();
+            cerrar_modal_edicion();
+        },
+        error: function (error) {
+            notificacionError(error.responseJSON.mensaje);
+            mostrarErroresEdicion(error);
+            activarBoton();
+        },        
+    });
+}
+
 function eliminar(pk) {
     $.ajax({
         data:{
             csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
         },
-        url: '/principal/eliminar/'+pk+'/vehiculo',
+        url: '/principal/eliminar/'+pk+'/unidad',
         type: 'post',
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listadoVehiculos();
+            listadoUnidades();
             cerrar_modal_eliminacion();
         },
         error: function (error) {

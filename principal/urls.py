@@ -28,8 +28,11 @@ urlpatterns = [
     path('inicio/unidades',views.InicioUnidad.as_view(), name = 'principal-inicio-unidad'),
     path('registrar/unidad',views.RegistrarUnidad.as_view(),name ='principal-registrar-unidad'),
     path('listar/unidades', views.ListadoUnidades.as_view(), name='principal-index-unidad'),
+    path('actualizar/<int:pk>/unidad', views.EditarUnidad.as_view(), name='principal-actualizar-unidad'),
+    path('eliminar/<int:pk>/unidad', views.EliminarUnidad.as_view(), name='principal-eliminar-unidad'),
     path('crearUsuario', views.crearUsuario, name='crearUsuario'),
     path('actualizar/cliente', views.actualizarCliente, name='actualizar/cliente'),
+    path('cuenta/usuario', views.cuentaUsuario, name='cuenta/usuario'),
     path('login', views.loginUsuario, name="loginUsuario"),
     path('logout', views.logoutUsuario, name='logoutUsuario')
 ]
@@ -40,7 +43,7 @@ urlpatterns += [
                                 template_name='chofer/listaChoferes.html'
     ), name='principal-inicio-chofer'),
     path('inicio/secretarias', TemplateView.as_view(
-                                template_name='secretaria/listaSecretaria.html'
+                                template_name='secretaria/listaSecretarias.html'
     ), name='principal-inicio-secretaria'),
     path('inicio/vehiculos', TemplateView.as_view(
                                 template_name='vehiculo/listaVehiculos.html'

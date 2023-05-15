@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Secretaria(models.Model):
-    nombre_secretaria = models.CharField(max_length=100)
+    nombre_secretaria = models.CharField(max_length=150, unique=True)
     direccion = models.CharField(max_length=50)
     estado = models.BooleanField(default = True, verbose_name = 'Estado')
 
@@ -14,7 +14,7 @@ class Secretaria(models.Model):
         return self.nombre_secretaria
 
 class Unidad(models.Model):
-    nombre_unidad = models.CharField(max_length=100)
+    nombre_unidad = models.CharField(max_length=150, unique=True)
     secretaria_id = models.ForeignKey(Secretaria, on_delete=models.CASCADE)
     estado = models.BooleanField(default = True, verbose_name = 'Estado')
 
@@ -40,37 +40,49 @@ class Chofer(models.Model):
         ('BMT', 'BMT'),
         ('CMT', 'CMT')
     )
-    ci = models.CharField(max_length=10, unique=True, help_text='Introduzca el número de C.I.')
-    nombres = models.CharField(max_length=20, help_text='Introduzca los nombres')
-    apellido_paterno = models.CharField(max_length=20, help_text='Introduzca el apellido paterno')
-    apellido_materno = models.CharField(max_length=20, help_text='Introduzca el apellido materno')
-    direccion = models.CharField(max_length=50, help_text='Introduzca la dirección', null=True, blank=True, default=" ")
-    telefono = models.PositiveIntegerField(help_text='Introduzca el número de teléfono')
+    ci = models.CharField(max_length=10, unique=True)
+    nombres = models.CharField(max_length=20)
+    apellido_paterno = models.CharField(max_length=20)
+    apellido_materno = models.CharField(max_length=20, null=True, blank=True, default=" ")
+    direccion = models.CharField(max_length=50, null=True, blank=True, default=" ")
+    telefono = models.PositiveIntegerField(unique=True)
     categoria_lic = models.CharField(max_length=5, choices=CATEGORIA_CHOICES, default='', help_text='Seleccione una categoría de licencia')
     estado = models.BooleanField(default = True, verbose_name = 'Estado')
 
     def natural_key(self):
-        return self.nombres+' '+self.apellido_paterno+' '+self.apellido_materno 
+        if self.apellido_materno is None:
+            return self.nombres+' '+self.apellido_paterno+' '+" "
+        else:
+            return self.nombres+' '+self.apellido_paterno+' '+self.apellido_materno
 
     def __str__(self):
-        return self.nombres+' '+self.apellido_paterno+' '+self.apellido_materno
+        if self.apellido_materno is None:
+            return self.nombres+' '+self.apellido_paterno+' '+" "
+        else:
+            return self.nombres+' '+self.apellido_paterno+' '+self.apellido_materno
 
     class Meta:
         ordering = ['apellido_paterno', 'apellido_materno', 'nombres']
 
 class Vehiculo(models.Model):
-    clase_vehiculo = models.CharField(max_length=30, help_text='Introduzca la clase de vehiculo')
-    marca = models.CharField(max_length=15, help_text='Introduzca la marca del vehiculo')
-    tipo_vehiculo = models.CharField(max_length=15, help_text='Introduzca el tipo de vehiculo')
-    procedencia = models.CharField(max_length=30, help_text='Introduzca la procedencia del vehiculo')
-    modelo = models.CharField(max_length=30, help_text='Introduzca el modelo de vehiculo')
-    color = models.CharField(max_length=10, help_text='Introduzca el color del vehiculo')
-    placa = models.CharField(max_length=15, help_text='Introduzca la placa del vehiculo')
-    cilindrada = models.CharField(max_length=20, help_text='Introduzca la cilindrada del vehiculo')#numerico
-    numero_motor = models.IntegerField(default=0, help_text='Introduzca el numero de motor')#caracter
-    numero_chasis = models.IntegerField(default=0, help_text='Introduzca el numero de chasis')#caracter
-    estado_vehiculo = models.CharField(max_length=10, help_text='Introduzca el estado del vehiculo')#bueno, malo. regular
-    observaciones = models.CharField(max_length=250, help_text='Introduzca las observaciones del vehiculo')#textfield comentario
+    ESTADO_CHOICES = (
+        ('BUENO', 'BUENO'),
+        ('REGULAR', 'REGULAR'),
+        ('MALO', 'MALO')
+    )
+    clase_vehiculo = models.CharField(max_length=30)
+    marca = models.CharField(max_length=15)
+    tipo_vehiculo = models.CharField(max_length=15)
+    procedencia = models.CharField(max_length=30)
+    modelo = models.CharField(max_length=4)
+    color = models.CharField(max_length=10)
+    placa = models.CharField(max_length=15, unique=True)
+    cilindrada = models.PositiveIntegerField()
+    numero_motor = models.CharField(max_length=10)
+    numero_chasis = models.CharField(max_length=10)
+    estado_vehiculo = models.CharField(max_length=7, choices=ESTADO_CHOICES, default='', help_text='Seleccione el estado del vehículo')
+    observaciones = models.TextField()
+    estado = models.BooleanField(default = True, verbose_name = 'Estado')
 
     def natural_key(self):
         return [self.tipo_vehiculo, self.placa]
@@ -80,6 +92,7 @@ class Vehiculo(models.Model):
     
     class Meta:
         ordering = ['clase_vehiculo', 'marca', 'tipo_vehiculo']
+
 #detalle en modal
 #Modelo cambio de aceite
 #idvehiculo foreignkey

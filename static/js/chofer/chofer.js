@@ -11,7 +11,12 @@ function listadoChoferes(){
                 fila += '<td>'+response[i]["fields"]['ci']+'</td>';
                 fila += '<td>'+response[i]["fields"]['nombres']+'</td>';
                 fila += '<td>'+response[i]["fields"]['apellido_paterno']+'</td>';
-                fila += '<td>'+response[i]["fields"]['apellido_materno']+'</td>';
+                if (response[i]["fields"]['apellido_materno'] === null){
+                    response[i]["fields"]['apellido_materno'] = " ";
+                    fila += '<td>'+response[i]["fields"]['apellido_materno']+'</td>';
+                }
+                else
+                    fila += '<td>'+response[i]["fields"]['apellido_materno']+'</td>';
                 fila += '<td>'+response[i]["fields"]['categoria_lic']+'</td>';
                 fila += '<td><button type = "button" class="btn btn-info btn-sm tableButton"';
                 fila += ' onclick = "abrir_modal_detalle(\'/principal/detalle/' + response[i]['pk']+'/chofer\');"> DETALLE </button>';

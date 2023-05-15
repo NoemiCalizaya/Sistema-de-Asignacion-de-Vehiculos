@@ -81,6 +81,8 @@ class ChoferDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         chofer = self.model.objects.get(id = self.kwargs['pk'])
+        if chofer.apellido_materno is None:
+            chofer.apellido_materno = " "
         if chofer.direccion is None:
             chofer.direccion = " "
         context['chofer'] = chofer
@@ -218,7 +220,7 @@ class EliminarSecretaria(DeleteView):
 def Lista_Secretarias(request):
     secretaria = Secretaria.objects.all()
     unidad = Unidad.objects.all()
-    return render(request, 'secretaria/listaSecretaria.html', {'secre': secretaria, 'uni': unidad})
+    return render(request, 'secretaria/listaSecretarias.html', {'secre': secretaria, 'uni': unidad})
 
 def Lista_Unidades(request):
     ids = request.GET['id']
@@ -226,12 +228,136 @@ def Lista_Unidades(request):
     otro = serializers.serialize('json', datos, fields= ('id','nombre_unidad'))
     return HttpResponse(otro,'application/json')
 
+'''VISTAS PARA UNIDAD'''
+class InicioUnidad(TemplateView):
+    template_name = 'unidad/listaUnidades.html'
+
+class RegistrarUnidad(CreateView):
+    model = Unidad
+    form_class = UnidadForm
+    template_name = 'unidad/crearUnidad.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} registrado correctamente!'
+                error = 'No hay error!'
+                response = JsonResponse({'mensaje':mensaje,'error':error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se ha podido registrar!'
+                error = form.errors
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('principal-index-unidad')
+    # model = Unidad
+    # template_name = 'unidad/crearUnidad.html'
+    # form_class = UnidadForm
+    # success_url = reverse_lazy('principal-index-unidad')
+
+    # def form_invalid(self,form):
+    #     return HttpResponse(str(form))
+    # #Direcciona a la URL con la ID generada
+    # def get_success_url(self):
+    #     return reverse_lazy('ingresos:ingreso_32200', kwargs = {
+    #         'pk': self.object.ingresos.id
+    #         })
+
+class ListadoUnidades(ListView):
+    model = Unidad
+
+    def get_queryset(self):
+        return self.model.objects.filter(estado = True).order_by('-id')
+    
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            return HttpResponse(serialize('json', self.get_queryset(), use_natural_foreign_keys = True), 'application/json')
+        else:
+            return redirect('principal-inicio-unidad')
+
+class EditarUnidad(UpdateView):
+    model = Unidad
+    form_class = UnidadForm
+    template_name = 'unidad/editarUnidad.html'
+
+    def post(self,request,*args,**kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST, files = request.FILES, instance = self.get_object())
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} actualizada correctamente!'
+                error = 'No hay error!'
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se ha podido actualizar!'
+                error = form.errors
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('principal-index-unidad')
+
+class EliminarUnidad(DeleteView):
+    model = Unidad
+    template_name = 'unidad/eliminarUnidad.html'
+
+    def delete(self,request,*args,**kwargs):
+        if request.is_ajax():
+            unidad = self.get_object()
+            unidad.estado = False
+            unidad.save()
+            mensaje = f'{self.model.__name__} eliminada correctamente!'
+            error = 'No hay error!'
+            response = JsonResponse({'mensaje': mensaje, 'error': error})
+            response.status_code = 201
+            return response
+        else:
+            return redirect('principal-inicio-unidad')
+
+    '''def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        unidades = self.model.objects.filter(estado = True).order_by('-id')
+        context['unidades'] = unidades
+        return context'''
+    '''
+    def get_context_data(self, **kwargs):
+        context = super(ListadoUnidades, self).get_context_data(**kwargs)
+        print('kbk')
+        context ['unid'] = Unidad.objects.filter(id=1)
+        print(context ['unid'])
+        return context
+
+    def get_queryset(self):
+        return self.model.objects.filter(estado = True)
+
+    def get(self, request, *args, **kwargs):
+        if request.is_ajax():
+            lista_unidades = []
+            for unidad in self.get_queryset():
+                data_unidad = {}
+                data_unidad['id'] = unidad.id
+                data_unidad['nombre_unidad'] = unidad.nombre_unidad
+                data_unidad['secretaria_id'] = unidad.secretaria_id_id
+                lista_unidades.append(data_unidad)
+            data = json.dumps(lista_unidades)
+            print(data)
+            return HttpResponse(data, 'aplication/json')
+        else:
+            return render(request, self.template_name)'''
+
 '''VISTAS PARA VEHÍCULOS'''
 class ListadoVehiculos(ListView):
     model = Vehiculo
 
     def get_queryset(self):
-        return self.model.objects.all().order_by('-id')
+        return self.model.objects.filter(estado = True).order_by('-id')
 
     def get(self, request, *args, **kwargs):
         if request.is_ajax():
@@ -295,89 +421,6 @@ class EliminarVehiculo(DeleteView):
             return response
         else:
             return redirect('principal-inicio-vehiculo')
-
-'''VISTAS PARA UNIDAD'''
-class InicioUnidad(TemplateView):
-    template_name = 'unidad/listaUnidades.html'
-
-class RegistrarUnidad(CreateView):
-    model = Unidad
-    form_class = UnidadForm
-    template_name = 'unidad/crearUnidad.html'
-
-    def post(self, request, *args, **kwargs):
-        if request.is_ajax():
-            form = self.form_class(request.POST)
-            if form.is_valid():
-                form.save()
-                mensaje = f'{self.model.__name__} registrado correctamente!'
-                error = 'No hay error!'
-                response = JsonResponse({'mensaje':mensaje,'error':error})
-                response.status_code = 201
-                return response
-            else:
-                mensaje = f'{self.model.__name__} no se ha podido registrar!'
-                error = form.errors
-                response = JsonResponse({'mensaje': mensaje, 'error': error})
-                response.status_code = 400
-                return response
-        else:
-            return redirect('principal-index-unidad')
-    # model = Unidad
-    # template_name = 'unidad/crearUnidad.html'
-    # form_class = UnidadForm
-    # success_url = reverse_lazy('principal-index-unidad')
-
-    # def form_invalid(self,form):
-    #     return HttpResponse(str(form))
-    # #Direcciona a la URL con la ID generada
-    # def get_success_url(self):
-    #     return reverse_lazy('ingresos:ingreso_32200', kwargs = {
-    #         'pk': self.object.ingresos.id
-    #         })
-
-class ListadoUnidades(ListView):
-    model = Unidad
-
-    def get_queryset(self):
-        return self.model.objects.filter(estado = True).order_by('-id')
-    
-    def get(self, request, *args, **kwargs):
-        if request.is_ajax():
-            return HttpResponse(serialize('json', self.get_queryset(), use_natural_foreign_keys = True), 'application/json')
-        else:
-            return redirect('principal-inicio-unidad')
-    
-    '''def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        unidades = self.model.objects.filter(estado = True).order_by('-id')
-        context['unidades'] = unidades
-        return context'''
-    '''
-    def get_context_data(self, **kwargs):
-        context = super(ListadoUnidades, self).get_context_data(**kwargs)
-        print('kbk')
-        context ['unid'] = Unidad.objects.filter(id=1)
-        print(context ['unid'])
-        return context
-
-    def get_queryset(self):
-        return self.model.objects.filter(estado = True)
-
-    def get(self, request, *args, **kwargs):
-        if request.is_ajax():
-            lista_unidades = []
-            for unidad in self.get_queryset():
-                data_unidad = {}
-                data_unidad['id'] = unidad.id
-                data_unidad['nombre_unidad'] = unidad.nombre_unidad
-                data_unidad['secretaria_id'] = unidad.secretaria_id_id
-                lista_unidades.append(data_unidad)
-            data = json.dumps(lista_unidades)
-            print(data)
-            return HttpResponse(data, 'aplication/json')
-        else:
-            return render(request, self.template_name)'''
 
 '''VISTAS PARA CLIENTES Y USUARIOS'''
 from django.contrib.auth.models import User
@@ -452,7 +495,7 @@ def cuentaUsuario(request):
 
 def actualizarCliente(request):
     mensaje = ""
-    #frmCliente = ClienteForm()
+    frmCliente = ClienteForm()
     
     if request.method == "POST":
         frmCliente = ClienteForm(request.POST)

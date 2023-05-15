@@ -46,22 +46,30 @@ function activarBoton(){
 	}
 }
 
-function mostrarErroresCreacion(errores){
-	$('#errores').html("");
-	let error = "";
-	for(let item in errores.responseJSON.error){
-		error += '<div class = "alert alert-danger" <strong>' + errores.responseJSON.error[item] + '</strong></div>';
+function mostrarErrores(er, formulario){
+	$("div").remove(".error");
+	for(let item in er){
+		let idElemento = formulario.elements[item].id;
+		let element = document.getElementById(idElemento);
+		let newElement = document.createElement('div');
+		let text = er[item];
+		let newContent = document.createTextNode(text);
+  		newElement.appendChild(newContent); //añade texto al div creado.
+		newElement.className = 'error';
+		newElement.style.color = 'red';
+		let elementParent = element.parentNode;
+		elementParent.insertBefore(newElement, idElemento.nextSibling);
 	}
-	$('#errores').append(error);
+}
+
+function mostrarErroresCreacion(errores){
+	let miformulario = document.getElementById("form_creacion");
+	mostrarErrores(errores.responseJSON.error, miformulario)
 }
 
 function mostrarErroresEdicion(errores) {
-	$('#erroresEdicion').html("");
-	let error = "";
-	for (let item in errores.responseJSON.error) {
-		error += '<div class = "alert alert-danger" <strong>' + errores.responseJSON.error[item] + '</strong></div>';
-	}
-	$('#erroresEdicion').append(error);
+	let miformulario = document.getElementById("form_edicion");
+	mostrarErrores(errores.responseJSON.error, miformulario)
 }
 
 function notificacionSuccess(mensaje) {
