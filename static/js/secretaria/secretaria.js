@@ -83,6 +83,7 @@ function editar() {
         contentType: false, 
         success: function (response) {
             notificacionSuccess(response.mensaje);
+            limpiarForm();
             listadoSecretarias();
             cerrar_modal_edicion();
         },

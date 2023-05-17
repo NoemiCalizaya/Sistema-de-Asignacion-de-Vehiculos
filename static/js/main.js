@@ -46,6 +46,23 @@ function activarBoton(){
 	}
 }
 
+function limpiarForm(){
+	document.getElementById("form_creacion").reset();
+}
+
+function limMessErr(){
+	$("input").change(function (e) { 
+        let element = document.getElementById(e.target.id);
+        if (element.nextElementSibling != null){
+            element.nextElementSibling.remove();
+        }
+    });
+}
+
+function limpiarEdicion(){
+	$("div").remove(".error");
+}
+
 function mostrarErrores(er, formulario){
 	$("div").remove(".error");
 	for(let item in er){

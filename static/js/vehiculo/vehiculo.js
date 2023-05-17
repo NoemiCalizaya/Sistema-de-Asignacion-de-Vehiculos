@@ -4,10 +4,6 @@ function listadoVehiculos() {
         type: "get",
         dataType: "json",
         success: function (response) {
-            // if ($.fn.DataTable.isDataTable('#datatable-keytable')) {
-            //     $('#datatable-keytable').DataTable().destroy();
-            // }
-            console.log(response);
             $('#datatable-keytable').html("");
             for (let i = 0; i < response.length; i++) {
                 let fila = '<tr>';
@@ -72,14 +68,40 @@ function registrar() {
         type: $('#form_creacion').attr('method'),
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listadoVehiculos();
-            cerrar_modal_creacion();
+            limpiarForm();
+            setTimeout(function() { 
+                window.location.replace(response.url)
+            }, 1800);
         },
         error: function (error) {
             notificacionError(error.responseJSON.mensaje);
             mostrarErroresCreacion(error);
             activarBoton();
         }
+    });
+}
+
+function editar() {
+    activarBoton();
+    var data = new FormData($('#form_edicion').get(0));
+    $.ajax({        
+        url: $('#form_edicion').attr('action'),
+        type: $('#form_edicion').attr('method'), 
+        data: data,
+        cache: false,
+        processData: false,
+        contentType: false, 
+        success: function (response) {
+            notificacionSuccess(response.mensaje);
+            setTimeout(() => { 
+                window.location.replace(response.url)
+            }, 1800);
+        },
+        error: function (error) {
+            notificacionError(error.responseJSON.mensaje);
+            mostrarErroresEdicion(error);
+            activarBoton();
+        },        
     });
 }
 
@@ -103,4 +125,5 @@ function eliminar(pk) {
 
 $(document).ready(function () {
     listadoVehiculos();
+    limMessErr();
 });

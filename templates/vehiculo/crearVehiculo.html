@@ -6,11 +6,8 @@
 {% endblock %}
 
 {% block cuerpo %}
-<form id="form_creacion" method="post">
+<form id="form_creacion" action="{% url 'principal-registrar-vehiculo' %}" method="POST">
     {% csrf_token %}
-    <div id="errores">
-
-    </div>
     <div class="form-row">
         <div class="form-group col-md-4 col-sm-8 col-xs-12">
             <label for="proveedor">CLASE DE VEHÍCULO:</label>
@@ -68,9 +65,9 @@
         </div>
     </div>
     <div class="col-md-4 col-sm-12 col-xs-12 form-group">
-        <!--<a href="/principal/listar/vehiculos" class="btn btn-danger" role="button">CANCELAR</a>-->
-        <button class="btn btn-danger" type="button" onclick="">CANCELAR</button>
-        <button id="boton_creacion" class="btn btn-primary" type="submit">GUARDAR</button>
+        <!-- <button id="boton_creacion" class="btn btn-primary" type="submit">GUARDAR</button>-->
+        <button id="boton_creacion" class="btn btn-primary" type="button" onclick="registrar();">Confirmar</button>
+        <a href="/principal/listar/vehiculos" class="btn btn-danger" role="button">Cancelar</a>
     </div>
 </form>
 {% endblock %}

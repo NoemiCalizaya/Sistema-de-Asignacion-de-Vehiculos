@@ -81,7 +81,7 @@ class Vehiculo(models.Model):
     numero_motor = models.CharField(max_length=10)
     numero_chasis = models.CharField(max_length=10)
     estado_vehiculo = models.CharField(max_length=7, choices=ESTADO_CHOICES, default='', help_text='Seleccione el estado del vehículo')
-    observaciones = models.TextField()
+    observaciones = models.TextField(null=True, blank=True)
     estado = models.BooleanField(default = True, verbose_name = 'Estado')
 
     def natural_key(self):

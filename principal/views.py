@@ -371,24 +371,24 @@ class RegistrarVehiculo(CreateView):
     template_name = 'vehiculo/crearVehiculo.html'
     success_url = reverse_lazy('principal-inicio-vehiculo')
 
-    # def post(self, request, *args, **kwargs):
-    #     if request.is_ajax():
-    #         form = self.form_class(request.POST)
-    #         if form.is_valid():
-    #             form.save()
-    #             mensaje = f'{self.model.__name__} registrada correctamente!'
-    #             error = 'No hay error!'
-    #             response = JsonResponse({'mensaje':mensaje,'error':error})
-    #             response.status_code = 201
-    #             return response
-    #         else:
-    #             mensaje = f'{self.model.__name__} no se ha podido registrar!'
-    #             error = form.errors
-    #             response = JsonResponse({'mensaje': mensaje, 'error': error})
-    #             response.status_code = 400
-    #             return response
-    #     else:
-    #         return redirect('principal-index-vehiculo')
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST, files = request.FILES)
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} registrado correctamente!'
+                error = 'No hay error!'
+                response = JsonResponse({'mensaje':mensaje,'error':error, 'url':self.success_url})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se ha podido registrar!'
+                error = form.errors
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('principal-inicio-vehiculo')
 
 class VehiculoDetailView(DetailView):
     model = Vehiculo
@@ -396,7 +396,7 @@ class VehiculoDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        vehiculo = self.model.objects.get(id = self.kwargs['pk'])
+        vehiculo = self.model.objects.get(id = self.kwargs['pk'], estado = True)
         context['vehiculo'] = vehiculo
         return context
 
@@ -406,6 +406,25 @@ class EditarVehiculo(UpdateView):
     template_name = 'vehiculo/editarVehiculo.html'
     success_url = reverse_lazy('principal-inicio-vehiculo')
 
+    def post(self,request,*args,**kwargs):
+        if request.is_ajax():
+            form = self.form_class(request.POST, files = request.FILES, instance = self.get_object())
+            if form.is_valid():
+                form.save()
+                mensaje = f'{self.model.__name__} actualizado correctamente!'
+                error = 'No hay error!'
+                response = JsonResponse({'mensaje': mensaje, 'error': error, 'url':self.success_url})
+                response.status_code = 201
+                return response
+            else:
+                mensaje = f'{self.model.__name__} no se ha podido actualizar!'
+                error = form.errors
+                response = JsonResponse({'mensaje': mensaje, 'error': error})
+                response.status_code = 400
+                return response
+        else:
+            return redirect('principal-inicio-vehiculo')
+
 class EliminarVehiculo(DeleteView):
     model = Vehiculo
     template_name = 'vehiculo/eliminarVehiculo.html'
@@ -413,7 +432,8 @@ class EliminarVehiculo(DeleteView):
     def delete(self,request,*args,**kwargs):
         if request.is_ajax():
             vehiculo = self.get_object()
-            vehiculo.delete()
+            vehiculo.estado = False
+            vehiculo.save()
             mensaje = f'{self.model.__name__} eliminado correctamente!'
             error = 'No hay error!'
             response = JsonResponse({'mensaje': mensaje, 'error': error})
