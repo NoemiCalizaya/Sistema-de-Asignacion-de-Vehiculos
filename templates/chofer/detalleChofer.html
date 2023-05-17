@@ -1,3 +1,9 @@
+{% load static %}
+{% block extracss %}
+<!---Custom CSS-->
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
 <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
         <div class="modal-header">
@@ -7,48 +13,43 @@
             </button>
         </div>
         <div class="modal-body">
-            <div class="row">
-                <div class="col-md-6 col-sm-8">
-                    <label for="ci">C.I.:</label>
-                    {{ chofer.ci }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-8">
-                    <label for="nombres">NOMBRES:</label>
-                    {{ chofer.nombres }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-8">
-                    <label for="apellido_paterno">APELLIDO PATERNO:</label>
-                    {{ chofer.apellido_paterno }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-8">
-                    <label for="apellido_materno">APELLIDO MATERNO:</label>
-                    {{ chofer.apellido_materno }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-8">
-                    <label for="direccion">DIRECCIÓN:</label>
-                        {{ chofer.direccion }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-8">
-                    <label for="telefono">TELÉFONO:</label>
-                    {{ chofer.telefono }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 col-sm-8">
-                    <label for="categoria_lic">CATEGORÍA DE LICENCIA:</label>
-                    {{ chofer.categoria_lic }}
-                </div>
-            </div>
+            <table class="table" id="table-detalle">
+                <thead>
+                    <tr>
+                        <th colspan="2">Información de {{ object }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">C.I.</th>
+                        <td>{{ chofer.ci }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">NOMBRES</th>
+                        <td>{{ chofer.nombres }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">APELLIDO PATERNO</th>
+                        <td>{{ chofer.apellido_paterno }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">APELLIDO MATERNO</th>
+                        <td>{{ chofer.apellido_materno }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">DIRECCIÓN</th>
+                        <td>{{ chofer.direccion }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">TELÉFONO</th>
+                        <td>{{ chofer.telefono }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">CATEGORÍA DE LICENCIA</th>
+                        <td>{{ chofer.categoria_lic }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="modal-footer">
             <button class="btn btn-danger" type="button" onclick="cerrar_modal_detalle();">Volver</button>

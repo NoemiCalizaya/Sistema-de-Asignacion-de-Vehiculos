@@ -113,4 +113,5 @@ function eliminar(pk) {
 
 $(document).ready(function () {
     listadoUnidades();
+    limMessErr();
 });

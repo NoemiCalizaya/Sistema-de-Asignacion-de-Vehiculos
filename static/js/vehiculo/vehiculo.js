@@ -20,7 +20,8 @@ function listadoVehiculos() {
                 // fila += '<td>' + response[i]["fields"]['numero_chasis'] + '</td>';
                 // fila += '<td>' + response[i]["fields"]['estado_vehiculo'] + '</td>';
                 // fila += '<td>' + response[i]["fields"]['observaciones'] + '</td>';
-                fila += '<td><a href="/principal/detalle/' + response[i]['pk'] + '/vehiculo" class="btn btn-info" role="button"> DETALLE </a>';
+                fila += '<td><button type = "button" class="btn btn-info btn-sm tableButton"';
+                fila += ' onclick = "abrir_modal_detalle(\'/principal/detalle/' + response[i]['pk']+'/vehiculo\');"> DETALLE </button>';
                 fila += '<a href="/principal/actualizar/' + response[i]['pk'] + '/vehiculo" class="btn btn-primary" role="button"> EDITAR </a>';
                 fila += '<button type = "button" class = "btn btn-danger tableButton  btn-sm" ';
                 fila += 'onclick = "abrir_modal_eliminacion(\'/principal/eliminar/' + response[i]['pk'] + '/vehiculo\');"> ELIMINAR </buttton></td>';

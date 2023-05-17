@@ -51,7 +51,7 @@ function limpiarForm(){
 }
 
 function limMessErr(){
-	$("input").change(function (e) { 
+	$("input, select").change(function (e) { 
         let element = document.getElementById(e.target.id);
         if (element.nextElementSibling != null){
             element.nextElementSibling.remove();

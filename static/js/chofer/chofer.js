@@ -119,4 +119,5 @@ function eliminar(pk) {
 
 $(document).ready(function(){
     listadoChoferes();
+    limMessErr();
 });

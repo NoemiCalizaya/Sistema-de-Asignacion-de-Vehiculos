@@ -1,72 +1,77 @@
-{% extends 'index.html' %}
 {% load static %}
-
-{% block titulo1 %}
-<h2><strong>DETALLE DEL VEHÍCULO</strong></h2>
+{% block extracss %}
+<!---Custom CSS-->
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock %}
 
-{% block cuerpo %}
-<div class="form-row">
-    <div class="form-group col-md-6 col-sm-4">
-        <label for="proveedor">CLASE DE VEHÍCULO:</label>
-        {{ vehiculo.clase_vehiculo }}
-    </div>
-    <div class="form-group col-md-6 col-sm-4">
-        <label for="producto">MARCA:</label>
-        {{ vehiculo.marca }}
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Detalle de Vehículo: {{ object.clase_vehiculo }}</h2>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <table class="table" id="table-detalle">
+                <thead>
+                    <tr>
+                        <th colspan="2">Información de {{ object.clase_vehiculo }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">CLASE DE VEHÍCULO</th>
+                        <td>{{ vehiculo.clase_vehiculo }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">MARCA</th>
+                        <td>{{ vehiculo.marca }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">TIPO DE VEHÍCULO</th>
+                        <td>{{ vehiculo.tipo_vehiculo }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">PROCEDENCIA</th>
+                        <td>{{ vehiculo.procedencia }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">MODELO DEL VEHÍCULO</th>
+                        <td>{{ vehiculo.modelo }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">COLOR</th>
+                        <td>{{ vehiculo.color }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">PLACA</th>
+                        <td>{{ vehiculo.placa }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">CILINDRADA</th>
+                        <td>{{ vehiculo.cilindrada }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">NÚMERO DE MOTOR</th>
+                        <td>{{ vehiculo.numero_motor }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">NÚMERO DE CHASIS</th>
+                        <td>{{ vehiculo.numero_chasis }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ESTADO DEL VEHÍCULO</th>
+                        <td>{{ vehiculo.estado_vehiculo }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">OBSERVACIONES</th>
+                        <td>{{ vehiculo.observaciones }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        <div class="modal-footer">
+            <button class="btn btn-danger" type="button" onclick="cerrar_modal_detalle();">Volver</button>
+        </div>
     </div>
 </div>
-<div class="form-row">
-    <div class="form-group col-md-6">
-        <label for="direccion">TIPO DE VEHÍCULO:</label>
-        {{ vehiculo.tipo_vehiculo }}
-    </div>
-    <div class="form-group col-md-6">
-        <label for="proveedor">PROCEDENCIA:</label>
-        {{ vehiculo.procedencia }}
-    </div>
-</div>
-<div class="form-row">
-    <div class="form-group col-md-6">
-        <label for="producto">MODELO DEL VEHÍCULO:</label>
-        {{ vehiculo.modelo}}
-    </div>
-    <div class="form-group col-md-6">
-        <label for="direccion">COLOR:</label>
-        {{ vehiculo.color }}
-    </div>
-</div>
-<div class="form-row">
-    <div class="form-group col-md-6">
-        <label for="proveedor">PLACA:</label>
-        {{ vehiculo.placa }}
-    </div>
-    <div class="form-group col-md-6">
-        <label for="producto">CILINDRADA:</label>
-        {{ vehiculo.cilindrada }}
-    </div>
-</div>
-<div class="form-row">
-    <div class="form-group col-md-6">
-        <label for="direccion">NÚMERO DE MOTOR:</label>
-        {{ vehiculo.numero_motor }}
-    </div>
-    <div class="form-group col-md-6">
-        <label for="proveedor">NÚMERO DE CHASIS:</label>
-        {{ vehiculo.numero_chasis }}
-    </div>
-</div>
-<div class="form-row">
-    <div class="form-group col-md-6">
-        <label for="producto">ESTADO DEL VEHÍCULO:</label>
-        {{ vehiculo.estado_vehiculo }}
-    </div>
-    <div class="form-group col-md-6">
-        <label for="direccion">OBSERVACIONES:</label>
-        {{ vehiculo.observaciones }}
-    </div>
-</div>
-<div class="col-md-4 col-sm-12 col-xs-12 form-group">
-    <a href="/principal/listar/vehiculos" class="btn btn-primary" role="button">VOLVER</a>
-</div>
-{% endblock %}
