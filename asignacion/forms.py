@@ -8,28 +8,56 @@ class AsignacionForm(forms.ModelForm):
             'verificacion', 
             'entrega',
             'devolucion',
+            'fecha',
+            'fecha_devolucion',
             'id_senape',
             'cod_vsiaf',
             'persona_id',
-            'unidad_id',
             'vehiculo_id',
-            'fecha'
+            'unidad_id'
             ]
         labels = { 
             'verificacion': 'Verificación',
             'entrega': 'Entrega',
             'devolucion': 'Devolución',
-            'id_senape': 'Senape',
-            'cod_vsiaf': 'Código Visiaf',
+            'id_senape': 'ID. SENAPE',
+            'cod_vsiaf': 'COD. VSIAF',
             'persona_id': 'Chofer',
-            'unidad_id': 'Unidad',
             'vehiculo_id': 'Vehículo',
-            'fecha': 'Fecha'
+            'unidad_id': 'Unidad',
+            'fecha': 'Fecha de Asignación',
+            'fecha_devolucion': 'Fecha de Devolución'
         }
         widgets = {
-            'verificacion': forms.CheckboxInput(),
-			'entrega' : forms.CheckboxInput(),
+            'verificacion': forms.CheckboxInput(
+                    attrs={
+                        'required': 'true'
+                    }
+            ),
+			'entrega' : forms.CheckboxInput(
+                    attrs={
+                        'required': 'true'
+                    }
+            ),
             'devolucion': forms.CheckboxInput(),
+            'fecha': forms.TextInput(
+                    attrs={
+                        'class':'form-control date',
+                        'id':'birthdatepicker',
+                        'type':'date',
+                        'data-toogle':'date-picker',
+                        'data-single-date-picker':'true'
+                    }
+            ),
+            'fecha_devolucion': forms.TextInput(
+                    attrs={
+                        'class':'form-control date',
+                        'id':'birthdatepicker2',
+                        'type':'date',
+                        'data-toogle':'date-picker',
+                        'data-single-date-picker':'true'
+                    }
+            ),
             'id_senape': forms.NumberInput(
                 attrs={
                     'class':'form-control', 
@@ -51,13 +79,6 @@ class AsignacionForm(forms.ModelForm):
                         'style':'width:70% !important; display:block;'
                     }
             ),
-            'unidad_id': forms.Select(
-                    attrs={
-                        'class':'from-control',
-                        'required': 'true',
-                        'style':'width:70% !important; display:block;'
-                    }
-            ),
             'vehiculo_id': forms.Select(
                     attrs={
                         'class':'from-control',
@@ -65,13 +86,11 @@ class AsignacionForm(forms.ModelForm):
                         'style':'width:70% !important; display:block;'
                     }
             ),
-            'fecha': forms.TextInput(
+            'unidad_id': forms.Select(
                     attrs={
-                        'class': 'form-control date',
-                        'id': 'birthdatepicker',
-                        'type':'date',
-                        'data-toogle': 'date-picker',
-                        'data-single-date-picker': 'true'
+                        'class':'from-control',
+                        'required': 'true',
+                        'style':'width:70% !important; display:block;'
                     }
             )
 		}

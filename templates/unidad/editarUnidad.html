@@ -10,9 +10,6 @@
         <form id="form_edicion" action="{% url 'principal-actualizar-unidad' object.id %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="modal-body">
-                <div id="erroresEdicion">
-                
-                </div>
                 {{ form.as_p }}
             </div>
             <div class="modal-footer">

@@ -85,10 +85,10 @@ class Vehiculo(models.Model):
     estado = models.BooleanField(default = True, verbose_name = 'Estado')
 
     def natural_key(self):
-        return [self.tipo_vehiculo, self.placa]
+        return [self.clase_vehiculo, self.placa]
 
     def __str__(self):
-        return self.clase_vehiculo+' '+self.marca+' '+self.tipo_vehiculo
+        return self.clase_vehiculo+'-'+self.marca+'-'+self.tipo_vehiculo
     
     class Meta:
         ordering = ['clase_vehiculo', 'marca', 'tipo_vehiculo']

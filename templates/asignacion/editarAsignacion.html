@@ -1,23 +1,24 @@
-<div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2 class="modal-title">Edición de Asignación: {{ object }}</h2>
-            <button class="close" type="button" data-dismiss = "modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+{% extends 'index.html' %}
+{% load static %}
+
+{% block titulo1 %}
+<h2><strong>Edición de asignación: {{ object }}</strong></h2>
+{% endblock %}
+
+{% block cuerpo %}
+<form id="form_edicion" action="{% url 'actualizar-asignacion' object.id %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="row">
+        <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+            <button id="boton_creacion" class="btn btn-primary" type="button" onclick="editar();">Confirmar</button>
+            <a href="/asignacion/listar/asignaciones" class="btn btn-danger" role="button">Cancelar</a>
         </div>
-        <form id="form_edicion" action="{% url 'actualizar-asignacion' object.id %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="modal-body">
-                <div id="erroresEdicion">
-                
-                </div>
-                {{ form.as_p }}
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger" type="button" onclick="cerrar_modal_edicion();">Cancelar</button>
-                <button id="boton_creacion" class="btn btn-primary" type="button" onclick="editar();">Confirmar</button>
-            </div>
-        </form>        
     </div>
-</div>
+</form>
+{% endblock %}
+
+{% block extrajs %}
+    <!---Custom JS-->
+    <script src="{% static 'js/vehiculo/vehiculo.js' %}"></script>
+{% endblock %}

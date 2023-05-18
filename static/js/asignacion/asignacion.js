@@ -5,7 +5,7 @@ function listadoAsignaciones() {
         dataType: "json",
         success: function (response) {
             $('#datatable-keytable').html("");
-            console.log(response)
+            //console.log(response)
             for (let i = 0; i < response.length; i++) {
                 let fila = '<tr>';
                 fila += '<td>' + (i + 1) + '</td>';
@@ -13,8 +13,9 @@ function listadoAsignaciones() {
                 fila += '<td>' + response[i]['fields']['vehiculo_id'][0] + '</td>';
                 fila += '<td>' + response[i]['fields']['vehiculo_id'][1] + '</td>';
                 fila += '<td>' + response[i]['fields']['unidad_id'] + '</td>';
-                fila += '<td><button type = "button" class = "btn btn-primary btn-sm tableButton"';
-                fila += ' onclick = "abrir_modal_edicion(\'/asignacion/actualizar/' + response[i]['pk'] + '/asignacion\');"> EDITAR </button>';
+                fila += '<td><button type = "button" class="btn btn-info btn-sm tableButton"';
+                fila += ' onclick = "abrir_modal_detalle(\'/asignacion/detalle/' + response[i]['pk']+'/asignacion\');"> DETALLE </button>';
+                fila += '<a href="/asignacion/actualizar/' + response[i]['pk'] + '/asignacion" class="btn btn-primary" role="button"> EDITAR </a>';
                 fila += '<button type = "button" class = "btn btn-danger tableButton  btn-sm" ';
                 fila += 'onclick = "abrir_modal_eliminacion(\'/asignacion/eliminar/' + response[i]['pk'] + '/asignacion\');"> ELIMINAR </buttton></td>';
                 fila += '</tr>';
@@ -61,8 +62,10 @@ function registrar() {
         type: $('#form_creacion').attr('method'),
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listadoAsignaciones();
-            cerrar_modal_creacion();
+            limpiarForm();
+            setTimeout(function() { 
+                window.location.replace(response.url)
+            }, 1800);
         },
         error: function (error) {
             notificacionError(error.responseJSON.mensaje);
@@ -85,8 +88,9 @@ function editar() {
         contentType: false, 
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listadoAsignaciones();
-            cerrar_modal_edicion();
+            setTimeout(function() { 
+                window.location.replace(response.url)
+            }, 1800);
         },
         error: function (error) {
             notificacionError(error.responseJSON.mensaje);
@@ -116,4 +120,5 @@ function eliminar(pk) {
 
 $(document).ready(function () {
     listadoAsignaciones();
+    limMessErr();
 });

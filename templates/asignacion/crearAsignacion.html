@@ -6,20 +6,25 @@
 {% endblock %}
 
 {% block cuerpo %}
-<form id="form_creacion" method="post">
+<form id="form_creacion" action="{% url 'registrar-asignacion' %}" method="post">
     {% csrf_token %}
-    <div id="errores">
-
-    </div>
     {{ form.as_p }}
     <div class="col-md-4 col-sm-12 col-xs-12 form-group">
-        <!--<a href="/principal/listar/vehiculos" class="btn btn-danger" role="button">CANCELAR</a>-->
-        <button class="btn btn-danger" type="button" onclick="">CANCELAR</button>
-        <button id="boton_creacion" class="btn btn-primary" type="submit">GUARDAR</button>
+        <button id="boton_creacion" class="btn btn-primary" type="button" onclick="registrar();">Confirmar</button>
+        <a href="/asignacion/listar/asignaciones" class="btn btn-danger" role="button">Cancelar</a>
     </div>
 </form>
 {% endblock %}
 {% block extrajs %}
     <!---Custom JS-->
-    <script src=""></script>
+    <script src="{% static 'js/asignacion/asignacion.js' %}"></script>
+    <script>
+        $(document).ready(function () 
+        {
+            if($("#id_devolucion").prop("disabled", false)) {
+                $("#id_devolucion").prop("disabled", true);
+                $("#birthdatepicker2").prop("disabled", true);    
+            }
+        });
+    </script>
 {% endblock %}

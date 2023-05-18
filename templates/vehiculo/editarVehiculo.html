@@ -1,13 +1,8 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block extracss %}
-<!---Custom CSS-->
-<link rel="stylesheet" href="{% static 'css/index.css' %}">
-{% endblock %}
-
 {% block titulo1 %}
-<h2><strong>EDICIÓN DE {{ object }}</strong></h2>
+<h2><strong>Edición de: {{ object }}</strong></h2>
 {% endblock %}
 
 {% block cuerpo %}
