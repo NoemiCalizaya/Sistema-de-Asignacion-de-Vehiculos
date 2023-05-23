@@ -1,6 +1,122 @@
+html, body{
+    height: 100%;
+}
+#body-login{
+    background-image: url("/static/images/vehiculo.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    margin: 0px;
+    padding: 0px;
+}
+
+#row-login{
+    margin-right: 0;
+    margin-left: 0;
+    height: 100%;
+}
+
+.d-flex{
+    height: 100%;
+    background-image: linear-gradient(to bottom, #555656,
+    #4e4f4f, #474849, #404242, #3a3b3c, #414244,
+    #48494c, #505054, #68686e, #828289, #9c9ca5, #b7b7c2);
+    opacity: 0.9;
+}
+
+#main-card{
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    /*flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;*/
+    flex-direction: column;
+    -ms-flex-pack: justify;
+    justify-content: space-around !important;
+    align-items: center;
+    height: 100%;
+}
+
+img[alt="logo-gobernacion"]{
+    object-fit: cover;
+    max-width: 500px;
+    max-height: 600px;
+    width: 100%;
+    height: 100%;
+    border-radius: 0px 40px 0px;
+    opacity: 0.9;
+}
+
+#titulo-login {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    padding-left: 10px;
+    width: 100%;
+    border-radius: 15px;
+    background-color: #2a3f54;
+    color: white;
+}
+
+.contenido-login{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-login{
+    width: 430px;
+    margin-top: 100px;
+    background-color: #DDEAEE;
+    padding: 10px;
+    border-radius: 10px;
+    opacity: 0.88;
+}
+
+.text-login{
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+#id_username, #id_password{
+    padding: 25px 5px;
+}
+
+input[type=submit]{
+    background-color: #194176;
+    color: white;
+    padding: 15px 12px;
+    float: right;
+    border-radius: 8px;
+    border-style: none;
+}
+
+input[type=submit]:hover {
+    box-shadow: inset 0 0 20px rgba(49, 138, 172, 0.5), 0 0 20px rgba(49, 138, 172, 0.4);
+    outline-color: rgba(49, 138, 172, 0);
+    outline-offset: 80px;
+    text-shadow: 1px 1px 6px #fff;
+}
+
 .centered {
     text-align: center !important;
     vertical-align: middle !important;
+}
+
+.title-app{
+    font-family: Helvetica, Verdana, 'Geneva', sans-serif;
+    font-size: 25px;
+    word-spacing: 0.15em;
+}
+
+button[class="btn btn-primary create"]{
+    border-radius: 20px;
+}
+
+.table-enc{
+    background-color: #2A3F54;
+    color: #EEFBFF;
 }
 
 #table-detalle th[colspan]{

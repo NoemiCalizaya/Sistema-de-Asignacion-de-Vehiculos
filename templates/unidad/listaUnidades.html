@@ -7,25 +7,30 @@
 {% endblock %}
 
 {% block titulo1 %}
-<h2><strong>LISTA DE UNIDADES</strong></h2>
+<h2 class="title-app">
+    <strong>
+        <i class="fa fa-folder-open" aria-hidden="true"></i>  INFORMACIÓN DE UNIDADES
+    </strong>
+</h2>
 {% endblock %}
 
 {% block cuerpo %}
 <div class="card">
     <div class="card-header">
         <div class="row">
-            <div style="float: left;">
-                <button type="button" class="btn btn-primary" onclick="abrir_modal_creacion('/principal/registrar/unidad');">REGISTRAR UNIDAD</button>
+            <div style="float: right;">
+                <button type="button" class="btn btn-primary create" onclick="abrir_modal_creacion('/principal/registrar/unidad');">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                    Crear Nuevo
+                </button>
             </div>
         </div>
     </div>
 </div>
 <div class="table-responsive">
-    
-    
     <table id="datatable-keytable" class="table table-striped table-bordered">
         <thead>
-            <tr>
+            <tr class="table-enc">
                 <th class="centered">Nro.</th>
                 <th class="centered">Unidad</th>
                 <th class="centered">Secretaria</th>
@@ -33,17 +38,6 @@
             </tr>
         </thead>
         <tbody id="table-unidades">
-            <!-- {% for i in unidades %}
-            <tr>
-                <td></td>
-                <td>{{ i.nombre_unidad }}</td>
-                <td>{{ i.secretaria_id.nombre_secretaria }}</td>
-                <td>
-                    botones para editar y eliminar
-                </td>
-            </tr>
-            {% endfor %} -->
-            
         </tbody>
     </table>
 </div>

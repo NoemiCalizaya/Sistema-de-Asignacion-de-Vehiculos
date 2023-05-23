@@ -18,12 +18,12 @@ function listadoChoferes(){
                 else
                     fila += '<td>'+response[i]["fields"]['apellido_materno']+'</td>';
                 fila += '<td>'+response[i]["fields"]['categoria_lic']+'</td>';
-                fila += '<td><button type = "button" class="btn btn-info btn-sm tableButton"';
-                fila += ' onclick = "abrir_modal_detalle(\'/principal/detalle/' + response[i]['pk']+'/chofer\');"> DETALLE </button>';
-                fila += '<button type = "button" class = "btn btn-primary btn-sm tableButton"';
-                fila += ' onclick = "abrir_modal_edicion(\'/principal/actualizar/' + response[i]['pk']+'/chofer\');"> EDITAR </button>';
+                fila += '<td><button type="button" class="btn btn-success btn-sm tableButton"';
+                fila += ' onclick="abrir_modal_detalle(\'/principal/detalle/' + response[i]['pk']+'/chofer\');"><i class="fa fa-eye" aria-hidden="true"></i></button>';
+                fila += '<button type="button" class = "btn btn-primary btn-sm tableButton"';
+                fila += ' onclick="abrir_modal_edicion(\'/principal/actualizar/' + response[i]['pk']+'/chofer\');"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
                 fila += '<button type="button" class="btn btn-danger"';
-                fila += 'onclick="abrir_modal_eliminacion(\'/principal/eliminar/'+response[i]['pk']+'/chofer\');">ELIMINAR</button></td>';
+                fila += 'onclick="abrir_modal_eliminacion(\'/principal/eliminar/'+response[i]['pk']+'/chofer\');"><i class="fa fa-trash" aria-hidden="true"></i></button></td>';
                 fila += '</tr>';
                 $('#datatable-keytable').append(fila);
             }

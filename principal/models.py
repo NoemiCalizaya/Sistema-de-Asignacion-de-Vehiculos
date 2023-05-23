@@ -98,7 +98,7 @@ class Vehiculo(models.Model):
 #idvehiculo foreignkey
 #kilometraje int 0defecto
 #proximocambioaceite int +5000defecto
-#estado defecto pendiente, aprobado, checkbox 
+#estado defecto pendiente, aprobado, checkbox
 
 class Cliente(models.Model):
     usuario = models.OneToOneField(User, on_delete=models.RESTRICT)

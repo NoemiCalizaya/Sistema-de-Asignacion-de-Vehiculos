@@ -31,10 +31,10 @@ urlpatterns = [
     path('actualizar/<int:pk>/unidad', views.EditarUnidad.as_view(), name='principal-actualizar-unidad'),
     path('eliminar/<int:pk>/unidad', views.EliminarUnidad.as_view(), name='principal-eliminar-unidad'),
     path('crearUsuario', views.crearUsuario, name='crearUsuario'),
-    path('actualizar/cliente', views.actualizarCliente, name='actualizar/cliente'),
-    path('cuenta/usuario', views.cuentaUsuario, name='cuenta/usuario'),
-    path('login', views.loginUsuario, name="loginUsuario"),
-    path('logout', views.logoutUsuario, name='logoutUsuario')
+    #path('actualizar/cliente', views.actualizarCliente, name='actualizar/cliente'),
+    #path('cuenta/usuario', views.cuentaUsuario, name='cuenta/usuario'),
+    #path('login', views.loginUsuario, name="loginUsuario"),
+    #path('logout', views.logoutUsuario, name='logoutUsuario')
 ]
 
 #URLS DE VISTAS IMPLÍCITAS

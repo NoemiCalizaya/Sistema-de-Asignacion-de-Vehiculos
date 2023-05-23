@@ -1,60 +1,84 @@
 {% extends 'index.html' %}
-{%block titulo%}
-{%endblock%}
-{% block cuerpo %}
-    <h1 class="maincont-ttl">Registration / Login</h1>
-    <ul class="b-crumbs">
-        <li><a href="index.html">Home</a></li>
-        <li>Registration & Login</li>
-    </ul>                                                <article class="page-cont">
-    <div class="page-styling">
+{% load static %}
 
+{% block link %}
 
-        <div class="auth-wrap">
-            <div class="auth-col">
-                <h2>Login</h2>
-                <form method="post" class="login" action="{% url 'loginUsuario' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="destino" value=""/>
-                    <p>
-                        <label for="username">E-mail <span class="required">*</span></label>
-                        <input type="text" id="username" name="usuario">
-                    </p>
-                    <p>
-                        <label for="password">Password <span class="required">*</span></label>
-                        <input type="password" id="password" name="password">
-                    </p>
-                    <p class="auth-submit">
-                        <input type="submit" value="Login">
-                        <input type="checkbox" id="rememberme" value="forever">
-                        <label for="rememberme">Remember me</label>
-                    </p>
-                    <p>
-                        <label for="alert-danger">{{mensajeError}}</label>
-                    </p>
-                </form>
-            </div>
-            <div class="auth-col">
-                <h2>Registro</h2>
-                <form method="post" class="register" action="{% url 'crearUsuario' %}">
-                    {% csrf_token %}
-                    <p>
-                        <label for="reg_email">Email <span class="required">*</span></label>
-                        <input type="email" id="reg_email" name="nuevoUsuario">
-                    </p>
-                    <p>
-                        <label for="reg_password">Password <span class="required">*</span></label>
-                        <input type="password" id="reg_password" name="nuevoPassword">
-                    </p>
-                    <p class="auth-submit">
-                        <input type="submit" value="Crear Cuenta">
-                    </p>
-                </form>
+{% endblock %}
+{% block extracss %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@1,300&display=swap" rel="stylesheet">
+<!---Custom CSS-->
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block body %}
+<body id="body-login">
+    <div id="row-login" class="row">
+        <div class="col-md-4 col-sm-12 col-xs-12 d-flex">
+            <div id="main-card" class="card">
+                <div>
+                    <img class="card-img-top" src="{% static 'images/logo.png' %}" alt="logo-gobernacion">
+                </div>
+                <div id="titulo-login" class="card-body">
+                    <h2 style="margin-top: 10px; ">
+                        <strong>SICOVE</strong>
+                    </h2>
+                    <strong>Sistema Web de Control de Choferes y Vehículos</strong>
+                    <div style="font-family: Arial, Helvetica, sans-serif; margin-top: 10px;">
+                        Gobierno Autónomo Departamental de Potosí
+                    </div>
+                </div>
             </div>
         </div>
-
-
+        <div class="col-md-8 col-sm-12 col-xs-12">
+            <div class="contenido-login">
+                <div class="form-login">
+                    <div class="text-login">
+                        <h3><strong>Iniciar Sesión</strong></h3>
+                        <p>Ingrese su Nombre de Usuario y Contraseña</p>
+                    </div>
+                    <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {% if form.error_messages %}
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" aria-label="Close" onclick="eliminar_ad();">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <strong>Advertencia: </strong> {{ form.get_invalid_login_error }}
+                                </div>
+                            {% endif %}
+                            <label>Nombre de Usuario:</label>
+                            {{ form.username }}
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña:</label>
+                            {{ form.password }}
+                        </div>
+                        <p class="auth-submit">
+                            <input type="submit" value="Iniciar Sesión">
+                        </p>
+                        <p>
+                            <label for="alert-danger">{{mensajeError}}</label>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-</article>
-
+    <!-- jQuery -->
+    <script src="{% static 'vendors/jquery/dist/jquery.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static 'vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+    {% block extrajs %}
+    <script type="text/javascript">
+        var $ = jQuery.noConflict();
+        function eliminar_ad(){
+            $(".alert").alert('close');
+            //$(".alert").remove();
+        }
+    </script>
+    {% endblock %}
+</body>
 {% endblock %}

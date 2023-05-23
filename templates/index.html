@@ -18,22 +18,23 @@
     <link href="{% static 'vendors/nprogress/nprogress.css' %}" rel="stylesheet">
     <!-- jQuery custom content scroller -->
     <link href="{% static 'vendors/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.min.css' %}" rel="stylesheet"/>
+    {% block link %}
     <!-- Datatables -->
     <link href="{% static 'vendors/datatables.net-bs/css/dataTables.bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css' %}" rel="stylesheet">
-    
     <!-- Custom Theme Style -->
     <link href="{% static 'build/css/custom.min.css' %}" rel="stylesheet">
-    
+    {% endblock %}
+
     {% block extracss %}
 
     {% endblock %}
-    
   </head>
 
+  {% block body %}
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
@@ -112,13 +113,12 @@
           </div>
         </div>
         <!-- /page content -->
-
-        <!-- footer content -->
-        {% include 'includes/footer.html' %}
-        <!-- /footer content -->
       </div>
+      <!-- footer content -->
+      {% include 'includes/footer.html' %}
+      <!-- /footer content -->
     </div>
-
+    
     <!-- jQuery -->
     <script src="{% static 'vendors/jquery/dist/jquery.min.js' %}"></script>
     <!-- Bootstrap -->
@@ -183,4 +183,5 @@
 
     {% endblock %}
   </body>
+  {% endblock %}
 </html>

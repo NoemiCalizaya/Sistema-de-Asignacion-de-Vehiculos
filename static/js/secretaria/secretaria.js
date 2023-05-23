@@ -10,10 +10,10 @@ function listadoSecretarias() {
                 fila += '<td>' + (i + 1) + '</td>';
                 fila += '<td>' + response[i]["fields"]['nombre_secretaria'] + '</td>';
                 fila += '<td>' + response[i]["fields"]['direccion'] + '</td>';
-                fila += '<td><button type = "button" class = "btn btn-primary btn-sm tableButton"';
-                fila += ' onclick = "abrir_modal_edicion(\'/principal/actualizar/' + response[i]['pk'] + '/secretaria\');"> EDITAR </button>';
-                fila += '<button type = "button" class = "btn btn-danger tableButton  btn-sm" ';
-                fila += 'onclick = "abrir_modal_eliminacion(\'/principal/eliminar/' + response[i]['pk'] + '/secretaria\');"> ELIMINAR </buttton></td>';
+                fila += '<td><button type="button" class="btn btn-primary btn-sm tableButton"';
+                fila += ' onclick="abrir_modal_edicion(\'/principal/actualizar/' + response[i]['pk'] + '/secretaria\');"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
+                fila += '<button type="button" class="btn btn-danger tableButton  btn-sm"';
+                fila += 'onclick="abrir_modal_eliminacion(\'/principal/eliminar/' + response[i]['pk'] + '/secretaria\');"><i class="fa fa-trash" aria-hidden="true"></i></buttton></td>';
                 fila += '</tr>';
                 $('#datatable-keytable').append(fila);
             }
