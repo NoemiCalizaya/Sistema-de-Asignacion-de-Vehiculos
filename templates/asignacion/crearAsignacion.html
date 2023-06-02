@@ -6,9 +6,60 @@
 {% endblock %}
 
 {% block cuerpo %}
-<form id="form_creacion" action="{% url 'registrar-asignacion' %}" method="post">
+<form id="form_creacion" action="{% url 'asignacion-registrar-cambioaceite' %}" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    <div class="form-row">
+        <div class="form-group col-md-3 col-sm-3 col-xs-12">
+            <label for="id_verificacion_entrega">VERIFICACIÓN ENTREGA:</label>
+            {{ form.verificacion_entrega }}
+        </div>
+        <div class="form-group col-md-3 col-sm-3 col-xs-12">
+            <label for="id_entrega">ENTREGA:</label>
+            {{ form.entrega }}
+        </div>
+        <div class="form-group col-md-3 col-sm-3 col-xs-12">
+            <label for="id_verificacion_devolucion">VERIFICACIÓN DEVOLUCIÓN:</label>
+            {{ form.verificacion_devolucion }}
+        </div>
+        <div class="form-group col-md-3 col-sm-3 col-xs-12">
+            <label for="id_devolucion">DEVOLUCIÓN:</label>
+            {{ form.devolucion }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+            <label for="birthdatepicker">FECHA DE ASIGNACIÓN:</label>
+            {{ form.fecha }}
+        </div>
+        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+            <label for="birthdatepicker2">FECHA DE DEVOLUCIÓN:</label>
+            {{ form.fecha_devolucion }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+            <label for="id_id_senape">ID. SENAPE:</label>
+            {{ form.id_senape }}
+        </div>
+        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+            <label for="id_cod_vsiaf">COD. VSIAF:</label>
+            {{ form.cod_vsiaf }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4 col-sm-12 col-xs-12">
+            <label for="id_chofer_id">CHOFER:</label>
+            {{ form.chofer_id }}
+        </div>
+        <div class="form-group col-md-4 col-sm-12 col-xs-12">
+            <label for="id_vehiculo_id">VEHÍCULO:</label>
+            {{ form.vehiculo_id }}
+        </div>
+        <div class="form-group col-md-4 col-sm-12 col-xs-12">
+            <label for="id_unidad_id">UNIDAD:</label>
+            {{ form.unidad_id }}
+        </div>
+    </div>
     <div class="col-md-4 col-sm-12 col-xs-12 form-group">
         <button id="boton_creacion" class="btn btn-primary" type="button" onclick="registrar();">Confirmar</button>
         <a href="/asignacion/listar/asignaciones" class="btn btn-danger" role="button">Cancelar</a>
@@ -21,10 +72,18 @@
     <script>
         $(document).ready(function () 
         {
-            if($("#id_devolucion").prop("disabled", false)) {
+            if($("#id_verificacion_devolucion").prop("disabled", false)) {
+                $("#id_verificacion_devolucion").prop("disabled", true);
                 $("#id_devolucion").prop("disabled", true);
                 $("#birthdatepicker2").prop("disabled", true);    
             }
+
+            var currentDate = new Date();
+            var year = currentDate.getFullYear();
+            var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+            var day = currentDate.getDate().toString().padStart(2, '0');
+            var formattedDate = `${year}-${month}-${day}`;
+            $("#birthdatepicker").val(formattedDate);
         });
     </script>
 {% endblock %}

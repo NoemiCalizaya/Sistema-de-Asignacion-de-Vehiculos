@@ -1,0 +1,25 @@
+{% load static %}
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Creación de Mecánicos</h2>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form id="form_creacion" action="{% url 'asignacion-registrar-mecanico' %}" method="POST">
+            {% csrf_token %}
+            <div class="modal-body">
+                {{ form.as_p }}
+            </div>
+            <div class="modal-footer">
+                <button id="boton_creacion" class="btn btn-primary" type="button" onclick="registrar();">Confirmar</button>
+                <button class="btn btn-danger" type="button" onclick="cerrar_modal_creacion();">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% block extrajs %}
+    <!---Custom JS-->
+    <script src="{% static 'js/mecanico/mecanico.js' %}"></script>
+{% endblock %}

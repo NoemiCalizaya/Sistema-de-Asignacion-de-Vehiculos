@@ -321,11 +321,6 @@ class EliminarUnidad(DeleteView):
         else:
             return redirect('principal-inicio-unidad')
 
-    '''def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        unidades = self.model.objects.filter(estado = True).order_by('-id')
-        context['unidades'] = unidades
-        return context'''
     '''
     def get_context_data(self, **kwargs):
         context = super(ListadoUnidades, self).get_context_data(**kwargs)
@@ -350,7 +345,8 @@ class EliminarUnidad(DeleteView):
             print(data)
             return HttpResponse(data, 'aplication/json')
         else:
-            return render(request, self.template_name)'''
+            return render(request, self.template_name)
+    '''
 
 '''VISTAS PARA VEHÍCULOS'''
 class ListadoVehiculos(ListView):
@@ -446,7 +442,6 @@ class EliminarVehiculo(DeleteView):
 from django.contrib.auth.models import User
 
 from django.contrib.auth import login,logout,authenticate
-from .forms import ClienteForm
 
 def crearUsuario(request):
     form=UserCreationForm()
@@ -483,67 +478,66 @@ def logoutUsuario(request):
     logout(request)
     return render(request, 'login.html')
 
-def cuentaUsuario(request):
-
-    try:
-        clienteEditar = Cliente.objects.get(usuario = request.user)
-        print(Cliente.objects.get(usuario = request.user))
-        dataCliente = {
-            'nombre':request.user.first_name,
-            'apellidos':request.user.last_name,
-            'email':request.user.email,
-            'ci':clienteEditar.ci,
-            'direccion':clienteEditar.direccion,
-            'telefono':clienteEditar.telefono,
-            'sexo':clienteEditar.sexo,
-            'fecha_nacimiento':clienteEditar.fecha_nacimiento
-        }
+# def cuentaUsuario(request):
+#     try:
+#         clienteEditar = Cliente.objects.get(usuario = request.user)
+#         print(Cliente.objects.get(usuario = request.user))
+#         dataCliente = {
+#             'nombre':request.user.first_name,
+#             'apellidos':request.user.last_name,
+#             'email':request.user.email,
+#             'ci':clienteEditar.ci,
+#             'direccion':clienteEditar.direccion,
+#             'telefono':clienteEditar.telefono,
+#             'sexo':clienteEditar.sexo,
+#             'fecha_nacimiento':clienteEditar.fecha_nacimiento
+#         }
         
-    except:
-        dataCliente = {
-            'nombre':request.user.first_name,
-            'apellidos':request.user.last_name,
-            'email':request.user.email
-        }
+#     except:
+#         dataCliente = {
+#             'nombre':request.user.first_name,
+#             'apellidos':request.user.last_name,
+#             'email':request.user.email
+#         }
     
-    frmCliente = ClienteForm(dataCliente)
-    context = {
-        'frmCliente':frmCliente
-    }
+#     frmCliente = ClienteForm(dataCliente)
+#     context = {
+#         'frmCliente':frmCliente
+#     }
     
-    return render(request,'cuenta.html',context)
+#     return render(request,'cuenta.html',context)
 
-def actualizarCliente(request):
-    mensaje = ""
-    frmCliente = ClienteForm()
+# def actualizarCliente(request):
+#     mensaje = ""
+#     frmCliente = ClienteForm()
     
-    if request.method == "POST":
-        frmCliente = ClienteForm(request.POST)
-        if frmCliente.is_valid():
-            dataCliente = frmCliente.cleaned_data
+#     if request.method == "POST":
+#         frmCliente = ClienteForm(request.POST)
+#         if frmCliente.is_valid():
+#             dataCliente = frmCliente.cleaned_data
             
-            #actualizar usuario
-            actUsuario = User.objects.get(pk=request.user.id)
-            actUsuario.first_name = dataCliente["nombre"]
-            actUsuario.last_name = dataCliente["apellidos"]
-            actUsuario.email = dataCliente["email"]
-            actUsuario.save()
+#             #actualizar usuario
+#             actUsuario = User.objects.get(pk=request.user.id)
+#             actUsuario.first_name = dataCliente["nombre"]
+#             actUsuario.last_name = dataCliente["apellidos"]
+#             actUsuario.email = dataCliente["email"]
+#             actUsuario.save()
             
-            #registrar Cliente
-            nuevoCliente = Cliente()
-            nuevoCliente.usuario = actUsuario
-            nuevoCliente.ci = dataCliente["ci"]
-            nuevoCliente.direccion = dataCliente["direccion"]
-            nuevoCliente.telefono = dataCliente["telefono"]
-            nuevoCliente.sexo = dataCliente["sexo"]
-            nuevoCliente.fecha_nacimiento = dataCliente["fecha_nacimiento"]
-            nuevoCliente.save()
+#             #registrar Cliente
+#             nuevoCliente = Cliente()
+#             nuevoCliente.usuario = actUsuario
+#             nuevoCliente.ci = dataCliente["ci"]
+#             nuevoCliente.direccion = dataCliente["direccion"]
+#             nuevoCliente.telefono = dataCliente["telefono"]
+#             nuevoCliente.sexo = dataCliente["sexo"]
+#             nuevoCliente.fecha_nacimiento = dataCliente["fecha_nacimiento"]
+#             nuevoCliente.save()
             
-            mensaje = "Datos Actualizados"
+#             mensaje = "Datos Actualizados"
             
-    context ={
-        'mensaje':mensaje,
-        'frmCliente':frmCliente
-    }
+#     context ={
+#         'mensaje':mensaje,
+#         'frmCliente':frmCliente
+#     }
 
-    return render(request,'cuenta.html',context)
+#     return render(request,'cuenta.html',context)

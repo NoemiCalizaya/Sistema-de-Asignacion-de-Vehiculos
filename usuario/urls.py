@@ -4,6 +4,5 @@ from . import views
 
 #localhost:8000/.../
 urlpatterns = [
-    #URLS PERSONAS
-    path('nueva/persona', views.CreatePersona, name='principal-nueva-persona'),
+    path(),
 ]

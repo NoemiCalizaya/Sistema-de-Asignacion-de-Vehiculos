@@ -1,0 +1,92 @@
+{% load static %}
+{% block extracss %}
+<!---Custom CSS-->
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 class="modal-title">Detalle de cambio de aceite: {{ object }}</h2>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <table class="table" id="table-detalle">
+                <thead>
+                    <tr>
+                        <th colspan="2">Información de cambio de aceite: {{ object }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">VEHÍCULO</th>
+                        <td>{{ cambioaceite.vehiculo_id }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">CHOFER</th>
+                        <td>{{ cambioaceite.chofer_id }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">MECÁNICO</th>
+                        <td>{{ cambioaceite.mecanico_id }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">KM ACTUAL</th>
+                        <td>{{ cambioaceite.km_actual }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">PRÓXIMO CAMBIO</th>
+                        <td>{{ cambioaceite.proximo_cambio }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">MAESTRANZA</th>
+                        <td>{{ cambioaceite.maestranza }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">CAMBIO FILTROS</th>
+                        <td>{{ cambioaceite.cambio_filtros }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ACEITE</th>
+                        <td>{{ cambioaceite.aceite }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">CAJA</th>
+                        <td>{{ cambioaceite.caja }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">CORONA</th>
+                        <td>{{ cambioaceite.corona }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ENGRASE</th>
+                        <td>{{ cambioaceite.engrase }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">FECHA ENTRADA</th>
+                        <td>{{ cambioaceite.fecha_hora_entrada }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">HORA SALIDA</th>
+                        <td>{{ cambioaceite.hora_salida }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">UNIDAD</th>
+                        <td>{{ cambioaceite.unidad_id }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">ORDEN APROBADA</th>
+                        <td>{{ cambioaceite.aprobado }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger" type="button" onclick="cerrar_modal_detalle();">
+                Volver  <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</div>

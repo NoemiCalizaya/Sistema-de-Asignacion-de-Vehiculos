@@ -20,11 +20,11 @@ function listadoVehiculos() {
                 // fila += '<td>' + response[i]["fields"]['numero_chasis'] + '</td>';
                 // fila += '<td>' + response[i]["fields"]['estado_vehiculo'] + '</td>';
                 // fila += '<td>' + response[i]["fields"]['observaciones'] + '</td>';
-                fila += '<td><button type = "button" class="btn btn-info btn-sm tableButton"';
-                fila += ' onclick = "abrir_modal_detalle(\'/principal/detalle/' + response[i]['pk']+'/vehiculo\');"> DETALLE </button>';
-                fila += '<a href="/principal/actualizar/' + response[i]['pk'] + '/vehiculo" class="btn btn-primary" role="button"> EDITAR </a>';
-                fila += '<button type = "button" class = "btn btn-danger tableButton  btn-sm" ';
-                fila += 'onclick = "abrir_modal_eliminacion(\'/principal/eliminar/' + response[i]['pk'] + '/vehiculo\');"> ELIMINAR </buttton></td>';
+                fila += '<td><button type="button" class="btn btn-success btn-sm tableButton"';
+                fila += ' onclick="abrir_modal_detalle(\'/principal/detalle/' + response[i]['pk']+'/vehiculo\');"><i class="fa fa-eye" aria-hidden="true"></i></button>';
+                fila += '<a href="/principal/actualizar/' + response[i]['pk'] + '/vehiculo" class="btn btn-primary" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
+                fila += '<button type="button" class="btn btn-danger tableButton  btn-sm"';
+                fila += 'onclick="abrir_modal_eliminacion(\'/principal/eliminar/' + response[i]['pk'] + '/vehiculo\');"><i class="fa fa-trash" aria-hidden="true"></i></buttton></td>';
                 fila += '</tr>';
                 $('#datatable-keytable').append(fila);
             }

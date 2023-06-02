@@ -1,0 +1,57 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block extracss %}
+<!---Custom CSS-->
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block titulo1 %}
+<h2 class="title-app">
+    <strong>
+        <i class="fa fa-car" aria-hidden="true"></i> INFORMACIÓN DE CAMBIO DE ACEITE
+    </strong>
+</h2>
+{% endblock %}
+
+{% block cuerpo %}
+<div class="row">
+    <div style="float: right;">
+        <a href="/asignacion/registrar/cambioaceite" class="btn btn-primary create" role="button">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            Crear Nuevo
+        </a>
+    </div>
+</div>
+<div class="table-responsive">
+    <table id="datatable-keytable" class="table table-striped table-bordered">
+        <thead>
+            <tr class="table-enc">
+                <th class="centered">Nro.</th>
+                <th class="centered">Vehiculo</th>
+                <th class="centered">Mecánico</th>
+                <th class="centered">Maestranza</th>
+                <th class="centered">Chofer</th>
+                <th class="centered">Unidad</th>
+                <th class="centered">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="edicion" role="dialog">
+
+</div>
+<div class="modal fade" id="detalle" role="dialog" >
+
+</div>
+{% endblock %}
+
+{% block extrajs %}
+    <!---Custom JS-->
+    <script src="{% static 'js/cambioaceite/cambioaceite.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+{% endblock %}

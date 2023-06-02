@@ -5,19 +5,19 @@ function listadoAsignaciones() {
         dataType: "json",
         success: function (response) {
             $('#datatable-keytable').html("");
-            //console.log(response)
             for (let i = 0; i < response.length; i++) {
                 let fila = '<tr>';
                 fila += '<td>' + (i + 1) + '</td>';
-                fila += '<td>' + response[i]['fields']['persona_id'] + '</td>';
+                fila += '<td>' + response[i]['fields']['chofer_id'] + '</td>';
                 fila += '<td>' + response[i]['fields']['vehiculo_id'][0] + '</td>';
                 fila += '<td>' + response[i]['fields']['vehiculo_id'][1] + '</td>';
                 fila += '<td>' + response[i]['fields']['unidad_id'] + '</td>';
-                fila += '<td><button type = "button" class="btn btn-info btn-sm tableButton"';
-                fila += ' onclick = "abrir_modal_detalle(\'/asignacion/detalle/' + response[i]['pk']+'/asignacion\');"> DETALLE </button>';
-                fila += '<a href="/asignacion/actualizar/' + response[i]['pk'] + '/asignacion" class="btn btn-primary" role="button"> EDITAR </a>';
-                fila += '<button type = "button" class = "btn btn-danger tableButton  btn-sm" ';
-                fila += 'onclick = "abrir_modal_eliminacion(\'/asignacion/eliminar/' + response[i]['pk'] + '/asignacion\');"> ELIMINAR </buttton></td>';
+                fila += '<td><button type="button" class="btn btn-success btn-sm tableButton"';
+                fila += ' onclick="abrir_modal_detalle(\'/asignacion/detalle/' + response[i]['pk']+'/asignacion\');"><i class="fa fa-eye" aria-hidden="true"></i></button>';
+                fila += '<a href="/asignacion/actualizar/' + response[i]['pk'] + '/asignacion" class="btn btn-primary" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Asignación</a>';
+                fila += '<a href="/asignacion/devolucion/' + response[i]['pk'] + '/asignacion" class="btn btn-primary" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Devolución</a>';
+                fila += '<button type="button" class="btn btn-danger tableButton  btn-sm" ';
+                fila += 'onclick="abrir_modal_eliminacion(\'/asignacion/eliminar/' + response[i]['pk'] + '/asignacion\');"><i class="fa fa-trash" aria-hidden="true"></i></buttton></td>';
                 fila += '</tr>';
                 $('#datatable-keytable').append(fila);
             }
@@ -78,10 +78,33 @@ function registrar() {
 function editar() {
     activarBoton();
     var data = new FormData($('#form_edicion').get(0));
-    console.log(data)
     $.ajax({        
         url: $('#form_edicion').attr('action'),
         type: $('#form_edicion').attr('method'), 
+        data: data,
+        cache: false,
+        processData: false,
+        contentType: false, 
+        success: function (response) {
+            notificacionSuccess(response.mensaje);
+            setTimeout(function() { 
+                window.location.replace(response.url)
+            }, 1800);
+        },
+        error: function (error) {
+            notificacionError(error.responseJSON.mensaje);
+            mostrarErroresEdicion(error);
+            activarBoton();
+        },        
+    });
+}
+
+function editar_devolucion() {
+    activarBoton();
+    var data = new FormData($('#form_devolucion').get(0));
+    $.ajax({      
+        url: $('#form_devolucion').attr('action'),
+        type: $('#form_devolucion').attr('method'),
         data: data,
         cache: false,
         processData: false,

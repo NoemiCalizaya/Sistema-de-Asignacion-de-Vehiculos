@@ -9,58 +9,58 @@
 <form id="form_creacion" action="{% url 'principal-registrar-vehiculo' %}" method="POST">
     {% csrf_token %}
     <div class="form-row">
-        <div class="form-group col-md-4 col-sm-8 col-xs-12">
-            <label for="proveedor">CLASE DE VEHÍCULO:</label>
+        <div class="form-group col-md-4 col-sm-6 col-xs-12">
+            <label for="id_clase_vehiculo">CLASE DE VEHÍCULO:</label>
             {{ form.clase_vehiculo }}
         </div>
-        <div class="form-group col-md-4 col-sm-8 col-xs-12">
-            <label for="producto">MARCA:</label>
+        <div class="form-group col-md-4 col-sm-6 col-xs-12">
+            <label for="id_marca">MARCA:</label>
             {{ form.marca }}
         </div>
-        <div class="form-group col-md-4 col-sm-8 col-xs-12">
-            <label for="direccion">TIPO DE VEHÍCULO:</label>
+        <div class="form-group col-md-4 col-sm-6 col-xs-12">
+            <label for="id_tipo_vehiculo">TIPO DE VEHÍCULO:</label>
             {{ form.tipo_vehiculo }}
         </div>
     </div>
     <div class="form-row">
-        <div class="form-group col-md-4 col-sm-8 col-xs-12">
-            <label for="proveedor">PROCEDENCIA:</label>
+        <div class="form-group col-md-4 col-sm-6 col-xs-12">
+            <label for="id_procedencia">PROCEDENCIA:</label>
             {{ form.procedencia }}
         </div>
-        <div class="form-group col-md-4 col-sm-8 col-xs-12">
-            <label for="producto">MODELO DEL VEHÍCULO:</label>
+        <div class="form-group col-md-4 col-sm-6 col-xs-12">
+            <label for="id_modelo">MODELO DEL VEHÍCULO:</label>
             {{ form.modelo}}
         </div>
-        <div class="form-group col-md-4 col-sm-8 col-xs-12">
-            <label for="direccion">COLOR:</label>
+        <div class="form-group col-md-4 col-sm-6 col-xs-12">
+            <label for="id_color">COLOR:</label>
             {{ form.color }}
         </div>
     </div>
     <div class="form-row">
-        <div class="form-group col-md-4 col-sm-8 col-xs-12">
-            <label for="proveedor">PLACA:</label>
+        <div class="form-group col-md-4 col-sm-6 col-xs-12">
+            <label for="id_placa">PLACA:</label>
             {{ form.placa }}
         </div>
-        <div class="form-group col-md-4 col-sm-8 col-xs-12">
-            <label for="producto">CILINDRADA:</label>
+        <div class="form-group col-md-4 col-sm-6 col-xs-12">
+            <label for="id_cilindrada">CILINDRADA:</label>
             {{ form.cilindrada }}
         </div>
-        <div class="form-group col-md-4 col-sm-8 col-xs-12">
-            <label for="direccion">NÚMERO DE MOTOR:</label>
+        <div class="form-group col-md-4 col-sm-6 col-xs-12">
+            <label for="id_numero_motor">NÚMERO DE MOTOR:</label>
             {{ form.numero_motor }}
         </div>
     </div>
     <div class="form-row">
-        <div class="form-group col-md-4 col-sm-8 col-xs-12">
-            <label for="proveedor">NÚMERO DE CHASIS:</label>
+        <div class="form-group col-md-4 col-sm-6 col-xs-12">
+            <label for="id_numero_chasis">NÚMERO DE CHASIS:</label>
             {{ form.numero_chasis }}
         </div>
-        <div class="form-group col-md-4 col-sm-8 col-xs-12">
-            <label for="producto">ESTADO DEL VEHÍCULO:</label>
+        <div class="form-group col-md-4 col-sm-6 col-xs-12">
+            <label for="id_estado_vehiculo">ESTADO DEL VEHÍCULO:</label>
             {{ form.estado_vehiculo }}
         </div>
-        <div class="form-group col-md-4 col-sm-8 col-xs-12">
-            <label for="direccion">OBSERVACIONES:</label>
+        <div class="form-group col-md-4 col-sm-6 col-xs-12">
+            <label for="id_observaciones">OBSERVACIONES:</label>
             {{ form.observaciones }}
         </div>
     </div>

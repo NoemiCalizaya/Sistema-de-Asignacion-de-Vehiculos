@@ -7,19 +7,26 @@
 {% endblock %}
 
 {% block titulo1 %}
-<h2><strong>LISTA DE VEHÍCULOS</strong></h2>
+<h2 class="title-app">
+    <strong>
+        <i class="fa fa-car" aria-hidden="true"></i>  INFORMACIÓN DE VEHÍCULOS
+    </strong>
+</h2>
 {% endblock %}
 
 {% block cuerpo %}
 <div class="row">
-    <div style="float: left;">
-        <a href="/principal/registrar/vehiculo" class="btn btn-primary" role="button">REGISTRAR VEHÍCULO</a>
+    <div style="float: right;">
+        <a href="/principal/registrar/vehiculo" class="btn btn-primary create" role="button">
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            Crear Nuevo
+        </a>
     </div>
 </div>
 <div class="table-responsive">
     <table id="datatable-keytable" class="table table-striped table-bordered">
         <thead>
-            <tr>
+            <tr class="table-enc">
                 <th class="centered">Nro.</th>
                 <th class="centered">Clase de Vehículo</th>
                 <th class="centered">Marca de Vehículo</th>

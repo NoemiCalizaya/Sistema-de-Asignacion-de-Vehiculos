@@ -7,9 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>S.A.V.</title>
-
+    <title>SICOVE</title>
     <!-- Bootstrap -->
     <link href="{% static 'vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- Font Awesome -->
@@ -27,10 +25,16 @@
     <link href="{% static 'vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css' %}" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="{% static 'build/css/custom.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Paytone+One&display=swap" rel="stylesheet">
     {% endblock %}
 
     {% block extracss %}
-
+    
     {% endblock %}
   </head>
 
@@ -41,84 +45,63 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="{% static 'index.html' %}" class="site_title"><i class="fa fa-paw"></i> <span>S.A.V.</span></a>
+              <div class="site_title">
+                <i class="fa fa-university" aria-hidden="true"></i>
+                <span>SICOVE</span>
+              </div>
             </div>
-
             <div class="clearfix"></div>
-
             <!-- menu profile quick info -->
             {% include 'includes/menu.html' %}
             <!-- /menu profile quick info -->
-
             <br/>
-
             <!-- sidebar menu -->
             {% include 'includes/navbar.html' %}
             <!-- /sidebar menu -->
-
-            <!-- /menu footer buttons -->
-            {% include 'includes/menu_footer.html' %}
-            <!-- /menu footer buttons -->
           </div>
         </div>
-
         <!-- top navigation -->
         {% include 'includes/nav_menu.html' %}
         <!-- /top navigation -->
-        
         <!-- page content -->
         <div class="right_col" role="main">
-          <div class="">
-            <!-- <div class="page-title">
-              <div class="title_left">
-                {%block titulo%}
-                <h3>Contenido</h3>
-                {%endblock%}
-              </div>
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                  </div>
+          <div class="row" style="min-height: 680px">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="x_panel">
+                <div class="x_title">
+                  {%block titulo1%}
+                    <h2 class="titulo-si">SICOVE</h2>
+                  {%endblock%}
+                  <ul class="nav navbar-right panel_toolbox">
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                  </ul>
+                  <div class="clearfix"></div>
                 </div>
-              </div>
-            </div> -->
-
-            <div class="clearfix"></div>
-
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    {%block titulo1%}
-                      <h2>Plain Page</h2>
-                    {%endblock%}
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
+                <div class="x_content">
+                  {%block cuerpo%}
+                  <div class="col-md-8 col-sm-12 contenedor-der">
+                    <img src="{% static 'images/auto.jpg' %}" alt="auto">
+                    <div class="index-b">Bienvenid@ al Sistema Web de Control de Choferes y Vehículos</div>
                   </div>
-                  <div class="x_content">
-                    {%block cuerpo%}
-
-                    {%endblock%}
+                  <div class="col-md-4 col-sm-12 contenedor-iz">
+                    <div>
+                      <img src="{% static 'images/logog.png' %}" alt="logo-gob">
+                    </div>
                   </div>
+                  {%endblock%}
                 </div>
               </div>
             </div>
           </div>
         </div>
         <!-- /page content -->
+        <div class="clearfix"></div>
+        <!-- footer content -->
+        {% include 'includes/footer.html' %}
+        <!-- /footer content -->
       </div>
-      <!-- footer content -->
-      {% include 'includes/footer.html' %}
-      <!-- /footer content -->
     </div>
-    
     <!-- jQuery -->
     <script src="{% static 'vendors/jquery/dist/jquery.min.js' %}"></script>
     <!-- Bootstrap -->

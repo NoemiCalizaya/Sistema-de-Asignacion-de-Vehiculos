@@ -1,0 +1,99 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block titulo1 %}
+<h2><strong>REGISTRO DE CAMBIO DE ACEITE</strong></h2>
+{% endblock %}
+
+{% block cuerpo %}
+<form id="form_creacion" action="{% url 'asignacion-registrar-cambioaceite' %}" method="post">
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label for="id_vehiculo_id">VEHÍCULO:</label>
+            {{ form.vehiculo_id }}
+        </div>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label for="id_chofer_id">CHOFER:</label>
+            {{ form.chofer_id }}
+        </div>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label for="id_mecanico_id">MECÁNICO:</label>
+            {{ form.mecanico_id }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label for="id_km_actual">KM ACTUAL:</label>
+            {{ form.km_actual }}
+        </div>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label for="id_proximo_cambio">PRÓXIMO CAMBIO:</label>
+            {{ form.proximo_cambio }}
+        </div>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label for="id_maestranza">MAESTRANZA:</label>
+            {{ form.maestranza }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2 col-sm-3 col-xs-12">
+            <label for="id_cambio_filtros">CAMBIO FILTROS:</label>
+            {{ form.cambio_filtros }}
+        </div>
+        <div class="form-group col-md-3 col-sm-2 col-xs-12">
+            <label for="id_aceite">ACEITE:</label>
+            {{ form.aceite }}
+        </div>
+        <div class="form-group col-md-3 col-sm-2 col-xs-12">
+            <label for="id_caja">CAJA:</label>
+            {{ form.caja }}
+        </div>
+        <div class="form-group col-md-2 col-sm-2 col-xs-12">
+            <label for="id_corona">CORONA:</label>
+            {{ form.corona }}
+        </div>
+        <div class="form-group col-md-2 col-sm-3 col-xs-12">
+            <label for="id_engrase">ENGRASE:</label>
+            {{ form.engrase }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-2 col-sm-2 col-xs-12">
+            <label for="id_fecha_hora_entrada">FECHA ENTRADA:</label>
+            {{ form.fecha_hora_entrada }}
+        </div>
+        <div class="form-group col-md-2 col-sm-2 col-xs-12">
+            <label for="id_hora_salida">HORA SALIDA:</label>
+            {{ form.hora_salida }}
+        </div>
+        <div class="form-group col-md-6 col-sm-5 col-xs-12">
+            <label for="id_unidad_id">UNIDAD:</label>
+            {{ form.unidad_id }}
+        </div>
+        <div class="form-group col-md-2 col-sm-3 col-xs-12">
+            <label for="id_aprobado">ORDEN APROBADA:</label>
+            {{ form.aprobado }}
+        </div>
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12 form-group">
+        <button id="boton_creacion" class="btn btn-primary" type="button" onclick="registrar();">Confirmar</button>
+        <a href="/asignacion/listar/cambioaceite" class="btn btn-danger" role="button">Cancelar</a>
+    </div>
+</form>
+{% endblock %}
+{% block extrajs %}
+    <!---Custom JS-->
+    <script src="{% static 'js/cambioaceite/cambioaceite.js' %}"></script>
+    <script>
+        $(document).ready(function () 
+        {
+            // var currentDate = new Date();
+            // var year = currentDate.getFullYear();
+            // var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+            // var day = currentDate.getDate().toString().padStart(2, '0');
+            // var formattedDate = `${year}-${month}-${day}`;
+            // $("#birthdatepicker").val(formattedDate);
+        });
+    </script>
+{% endblock %}

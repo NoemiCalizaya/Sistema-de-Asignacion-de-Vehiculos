@@ -1,0 +1,95 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block titulo1 %}
+<h2><strong>Edición de devolución: {{ object }}</strong></h2>
+{% endblock %}
+
+{% block cuerpo %}
+<form id="form_devolucion" action="{% url 'actualizar-devolucion' object.id %}" method="POST">
+    {% csrf_token %}
+    <div class="form-row">
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label for="id_verificacion_entrega">VERIFICACIÓN ENTREGA:</label>
+            {{ form.verificacion_entrega }}
+        </div>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label for="id_entrega">ENTREGA:</label>
+            {{ form.entrega }}
+        </div>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label for="birthdatepicker">FECHA DE ASIGNACIÓN:</label>
+            {{ form.fecha }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label for="id_verificacion_devolucion">VERIFICACIÓN DEVOLUCIÓN:</label>
+            {{ form.verificacion_devolucion }}
+        </div>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label for="id_devolucion">DEVOLUCIÓN:</label>
+            {{ form.devolucion }}
+        </div>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label for="birthdatepicker2">FECHA DE DEVOLUCIÓN:</label>
+            {{ form.fecha_devolucion }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+            <label for="id_id_senape">ID. SENAPE:</label>
+            {{ form.id_senape }}
+        </div>
+        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+            <label for="id_cod_vsiaf">COD. VSIAF:</label>
+            {{ form.cod_vsiaf }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4 col-sm-12 col-xs-12">
+            <label for="id_chofer_id">CHOFER:</label>
+            {{ form.chofer_id }}
+        </div>
+        <div class="form-group col-md-4 col-sm-12 col-xs-12">
+            <label for="id_vehiculo_id">VEHÍCULO:</label>
+            {{ form.vehiculo_id }}
+        </div>
+        <div class="form-group col-md-4 col-sm-12 col-xs-12">
+            <label for="id_unidad_id">UNIDAD:</label>
+            {{ form.unidad_id }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+            <button id="boton_creacion" class="btn btn-primary" type="button" onclick="editar_devolucion();">Confirmar</button>
+            <a href="/asignacion/listar/asignaciones" class="btn btn-danger" role="button">Cancelar</a>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block extrajs %}
+    <!---Custom JS-->
+    <script src="{% static 'js/asignacion/asignacion.js' %}"></script>
+    <script>
+        $(document).ready(function () 
+        {
+            $("#id_verificacion_devolucion").prop("checked", true);
+            $("#id_devolucion").prop("checked", true);
+
+            // $("#id_id_senape").prop("disabled", true);
+            // $("#id_cod_vsiaf").prop("disabled", true);
+            // $("#id_chofer_id").prop("disabled", true);
+            // $("#id_vehiculo_id").prop("disabled", true);
+            // $("#id_unidad_id").prop("disabled", true);
+            
+            var currentDate = new Date();
+            var year = currentDate.getFullYear();
+            var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+            var day = currentDate.getDate().toString().padStart(2, '0');
+            var formattedDate = `${year}-${month}-${day}`;
+            $("#birthdatepicker2").val(formattedDate);
+        });
+    </script>
+{% endblock %}

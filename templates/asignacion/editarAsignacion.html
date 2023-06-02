@@ -8,9 +8,46 @@
 {% block cuerpo %}
 <form id="form_edicion" action="{% url 'actualizar-asignacion' object.id %}" method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
+    <div class="form-row">
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label for="id_verificacion">VERIFICACIÓN ENTREGA:</label>
+            {{ form.verificacion_entrega }}
+        </div>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label for="id_entrega">ENTREGA:</label>
+            {{ form.entrega }}
+        </div>
+        <div class="form-group col-md-4 col-sm-4 col-xs-12">
+            <label for="birthdatepicker">FECHA DE ASIGNACIÓN:</label>
+            {{ form.fecha }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+            <label for="id_id_senape">ID. SENAPE:</label>
+            {{ form.id_senape }}
+        </div>
+        <div class="form-group col-md-6 col-sm-6 col-xs-12">
+            <label for="id_cod_vsiaf">COD. VSIAF:</label>
+            {{ form.cod_vsiaf }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4 col-sm-12 col-xs-12">
+            <label for="id_chofer_id">CHOFER:</label>
+            {{ form.chofer_id }}
+        </div>
+        <div class="form-group col-md-4 col-sm-12 col-xs-12">
+            <label for="id_vehiculo_id">VEHÍCULO:</label>
+            {{ form.vehiculo_id }}
+        </div>
+        <div class="form-group col-md-4 col-sm-12 col-xs-12">
+            <label for="id_unidad_id">UNIDAD:</label>
+            {{ form.unidad_id }}
+        </div>
+    </div>
     <div class="row">
-        <div class="col-md-4 col-sm-12 col-xs-12 form-group">
+        <div class="col-md-12 col-sm-12 col-xs-12 form-group">
             <button id="boton_creacion" class="btn btn-primary" type="button" onclick="editar();">Confirmar</button>
             <a href="/asignacion/listar/asignaciones" class="btn btn-danger" role="button">Cancelar</a>
         </div>

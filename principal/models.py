@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Secretaria(models.Model):
-    nombre_secretaria = models.CharField(max_length=150, unique=True)
+    nombre_secretaria = models.CharField(max_length=200, unique=True)
     direccion = models.CharField(max_length=50)
     estado = models.BooleanField(default = True, verbose_name = 'Estado')
 
@@ -14,7 +14,7 @@ class Secretaria(models.Model):
         return self.nombre_secretaria
 
 class Unidad(models.Model):
-    nombre_unidad = models.CharField(max_length=150, unique=True)
+    nombre_unidad = models.CharField(max_length=200, unique=True)
     secretaria_id = models.ForeignKey(Secretaria, on_delete=models.CASCADE)
     estado = models.BooleanField(default = True, verbose_name = 'Estado')
 
@@ -74,7 +74,7 @@ class Vehiculo(models.Model):
     marca = models.CharField(max_length=15)
     tipo_vehiculo = models.CharField(max_length=15)
     procedencia = models.CharField(max_length=30)
-    modelo = models.CharField(max_length=4)
+    modelo = models.PositiveIntegerField()
     color = models.CharField(max_length=10)
     placa = models.CharField(max_length=15, unique=True)
     cilindrada = models.PositiveIntegerField()
@@ -82,7 +82,7 @@ class Vehiculo(models.Model):
     numero_chasis = models.CharField(max_length=10)
     estado_vehiculo = models.CharField(max_length=7, choices=ESTADO_CHOICES, default='', help_text='Seleccione el estado del vehículo')
     observaciones = models.TextField(null=True, blank=True)
-    estado = models.BooleanField(default = True, verbose_name = 'Estado')
+    estado = models.BooleanField(default = True, verbose_name='Estado')
 
     def natural_key(self):
         return [self.clase_vehiculo, self.placa]
@@ -92,21 +92,3 @@ class Vehiculo(models.Model):
     
     class Meta:
         ordering = ['clase_vehiculo', 'marca', 'tipo_vehiculo']
-
-#detalle en modal
-#Modelo cambio de aceite
-#idvehiculo foreignkey
-#kilometraje int 0defecto
-#proximocambioaceite int +5000defecto
-#estado defecto pendiente, aprobado, checkbox
-
-class Cliente(models.Model):
-    usuario = models.OneToOneField(User, on_delete=models.RESTRICT)
-    ci = models.CharField(max_length=10, unique=True)
-    sexo = models.CharField(max_length=1, default='M')
-    telefono = models.CharField(max_length=20)
-    fecha_nacimiento = models.DateField(null=True)
-    direccion = models.TextField()
-
-    def __str__(self):
-        return self.ci

@@ -22,7 +22,7 @@
                 <tbody>
                     <tr>
                         <th scope="row">CHOFER</th>
-                        <td>{{ asignacion.persona_id }}</td>
+                        <td>{{ asignacion.chofer_id }}</td>
                     </tr>
                     <tr>
                         <th scope="row">VEHÍCULO</th>
@@ -33,12 +33,16 @@
                         <td>{{ asignacion.unidad_id }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">VERIFICACIÓN</th>
-                        <td>{{ asignacion.verificacion }}</td>
+                        <th scope="row">VERIFICACIÓN ENTREGA</th>
+                        <td>{{ asignacion.verificacion_entrega }}</td>
                     </tr>
                     <tr>
                         <th scope="row">ENTREGA</th>
                         <td>{{ asignacion.entrega }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">VERIFICACIÓN DEVOLUCIÓN</th>
+                        <td>{{ asignacion.verificacion_devolucion }}</td>
                     </tr>
                     <tr>
                         <th scope="row">DEVOLUCIÓN</th>
@@ -64,7 +68,9 @@
             </table>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-danger" type="button" onclick="cerrar_modal_detalle();">Volver</button>
+            <button class="btn btn-danger" type="button" onclick="cerrar_modal_detalle();">
+                Volver  <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
+            </button>
         </div>
     </div>
 </div>
