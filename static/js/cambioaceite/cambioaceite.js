@@ -15,7 +15,8 @@ function listadoCambioAceite(){
                 fila += '<td>'+response[i]["fields"]['unidad_id']+'</td>';
                 fila += '<td><button type="button" class="btn btn-success btn-sm tableButton"';
                 fila += ' onclick="abrir_modal_detalle(\'/asignacion/detalle/' + response[i]['pk']+'/cambioaceite\');"><i class="fa fa-eye" aria-hidden="true"></i></button>';
-                fila += '<a href="/asignacion/actualizar/' + response[i]['pk'] + '/cambioaceite" class="btn btn-primary" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>';
+                fila += '<a href="/asignacion/actualizar/' + response[i]['pk'] + '/cambioaceite" class="btn btn-primary" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
+                fila += '<a href="/asignacion/reporte/' + response[i]['pk'] + '/cambioaceite" class="btn btn-info" role="button" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></td>';
                 fila += '</tr>';
                 $('#datatable-keytable').append(fila);
             }

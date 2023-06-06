@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'principal.apps.PrincipalConfig',
     'asignacion.apps.AsignacionConfig',
-    'usuario.apps.UsuarioConfig'
+    'usuario.apps.UsuarioConfig',
+    'reportlab',
 ]
 
 MIDDLEWARE = [

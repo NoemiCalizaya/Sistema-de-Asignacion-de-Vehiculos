@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block cuerpo %}
-<form id="form_creacion" action="{% url 'asignacion-registrar-cambioaceite' %}" method="post">
+<form id="form_creacion" action="{% url 'registrar-asignacion' %}" method="post">
     {% csrf_token %}
     <div class="form-row">
         <div class="form-group col-md-3 col-sm-3 col-xs-12">

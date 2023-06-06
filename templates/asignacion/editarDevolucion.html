@@ -2,13 +2,13 @@
 {% load static %}
 
 {% block titulo1 %}
-<h2><strong>Edición de devolución: {{ object }}</strong></h2>
+<h2><strong>Edición de devolución: <span style="color: #2a3f54;">Chofer: {{ object }}</span> <br><span style="margin-left: 205px; color: #2a3f54;">Vehículo: {{ object.vehiculo_id }}</span> <br><span style="margin-left: 205px; color: #2a3f54;">Unidad: {{ object.unidad_id }}</span></strong></h2>
 {% endblock %}
 
 {% block cuerpo %}
 <form id="form_devolucion" action="{% url 'actualizar-devolucion' object.id %}" method="POST">
     {% csrf_token %}
-    <div class="form-row">
+    <div id="grupo1" class="form-row">
         <div class="form-group col-md-4 col-sm-4 col-xs-12">
             <label for="id_verificacion_entrega">VERIFICACIÓN ENTREGA:</label>
             {{ form.verificacion_entrega }}
@@ -36,7 +36,7 @@
             {{ form.fecha_devolucion }}
         </div>
     </div>
-    <div class="form-row">
+    <div id="grupo3" class="form-row">
         <div class="form-group col-md-6 col-sm-6 col-xs-12">
             <label for="id_id_senape">ID. SENAPE:</label>
             {{ form.id_senape }}
@@ -46,7 +46,7 @@
             {{ form.cod_vsiaf }}
         </div>
     </div>
-    <div class="form-row">
+    <div id="grupo4" class="form-row">
         <div class="form-group col-md-4 col-sm-12 col-xs-12">
             <label for="id_chofer_id">CHOFER:</label>
             {{ form.chofer_id }}
@@ -77,12 +77,6 @@
         {
             $("#id_verificacion_devolucion").prop("checked", true);
             $("#id_devolucion").prop("checked", true);
-
-            // $("#id_id_senape").prop("disabled", true);
-            // $("#id_cod_vsiaf").prop("disabled", true);
-            // $("#id_chofer_id").prop("disabled", true);
-            // $("#id_vehiculo_id").prop("disabled", true);
-            // $("#id_unidad_id").prop("disabled", true);
             
             var currentDate = new Date();
             var year = currentDate.getFullYear();
@@ -90,6 +84,15 @@
             var day = currentDate.getDate().toString().padStart(2, '0');
             var formattedDate = `${year}-${month}-${day}`;
             $("#birthdatepicker2").val(formattedDate);
+
+            // Obtener el elemento del div por su ID
+            const div1 = document.getElementById("grupo1");
+            // Ocultar el div estableciendo el valor de display en "none"
+            div1.style.display = "none";
+            const div3 = document.getElementById("grupo3");
+            div3.style.display = "none";
+            const div4 = document.getElementById("grupo4");
+            div4.style.display = "none";
         });
     </script>
 {% endblock %}
