@@ -170,7 +170,7 @@ class ReporteAsignacionVehiculo(View):
         pdf.roundRect(20,196,752,390,4,stroke=1, fill=0)
         pdf.roundRect(16,190,760,400,4,stroke=1, fill=0)
 
-    def header(self, pdf):
+    def header(self, pdf, asignacion):
         archivo_imagen = settings.MEDIA_ROOT+'/images/logo.png'
         imagen_auto = settings.MEDIA_ROOT+'/images/autopdf.png'
         imagen_escudob = settings.MEDIA_ROOT+'/images/escudo_boliviajpg.jpg'
@@ -182,7 +182,10 @@ class ReporteAsignacionVehiculo(View):
         pdf.setFont("Helvetica", 10)
         pdf.drawString(178, 520, u"ACTIVOS FIJOS - BIENES INMUEBLES Y SERVICIOS")
         pdf.setFont("Helvetica", 14)
-        pdf.drawString(300, 480, u"ASIGNACIÓN DE VEHÍCULO")  
+        if asignacion.verificacion_devolucion == False:
+            pdf.drawString(300, 480, u"ASIGNACIÓN DE VEHÍCULO")
+        else:
+            pdf.drawString(300, 480, u"DEVOLUCIÓN DE VEHÍCULO")
         pdf.drawImage(archivo_imagen, 650, 495, 110, 80,preserveAspectRatio=True)
         pdf.drawImage(imagen_auto, 540, 446, 110, 80,preserveAspectRatio=True)
         self.border(pdf)
@@ -324,10 +327,8 @@ class ReporteAsignacionVehiculo(View):
         # Crear el documento PDF
         buffer = BytesIO()
         pdf = canvas.Canvas(
-                buffer,
-                #pagesize=portrait((letter[0],letter[1]/2)),                       
+                buffer,                      
                 pagesize=landscape((612.0, 792.0))
-                #pagesize=(8.5*inch, 5.5*inch)
         )
 
         # Obtener los datos del modelo
@@ -341,7 +342,7 @@ class ReporteAsignacionVehiculo(View):
         pdf.setFont("Helvetica", 10)
         pdf.drawString(580, 40, u"Vo.Bo.")
 
-        self.header(pdf)
+        self.header(pdf, asignacion)
         self.tabla(pdf, 600, asignacion, vehiculo)
         pdf.showPage()
         pdf.save()
@@ -534,7 +535,6 @@ class EditarCambioAceite(UpdateView):
             return redirect('asignacion-inicio-cambioaceite')
 
 class ReporteCambioAceite(View):
-
     def border(self,pdf):
         pdf.roundRect(20,155,752,430,4,stroke=1, fill=0)
         pdf.roundRect(16,150,760,440,4,stroke=1, fill=0)
@@ -766,10 +766,8 @@ class ReporteCambioAceite(View):
         # Crear el documento PDF
         buffer = BytesIO()
         pdf = canvas.Canvas(
-                buffer,
-                #pagesize=portrait((letter[0],letter[1]/2)),                       
+                buffer,                      
                 pagesize=landscape((612.0, 792.0))
-                #pagesize=(8.5*inch, 5.5*inch)
         )
 
         # Obtener los datos del modelo

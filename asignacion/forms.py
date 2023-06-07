@@ -213,7 +213,8 @@ class CambioAceiteForm(forms.ModelForm):
 			'proximo_cambio': forms.NumberInput(
                 attrs={
                     'class':'form-control', 
-                    'placeholder' : 'Introduzca el próximo cambio', 
+                    'placeholder' : 'Introduzca el próximo cambio',
+                    'readonly': 'readonly',
                     'required': 'true'
                 }
             ),
