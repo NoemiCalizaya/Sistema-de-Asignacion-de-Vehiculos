@@ -16,9 +16,9 @@ function listadoAsignaciones() {
                 fila += ' onclick="abrir_modal_detalle(\'/asignacion/detalle/' + response[i]['pk']+'/asignacion\');"><i class="fa fa-eye" aria-hidden="true"></i></button>';
                 fila += '<a href="/asignacion/actualizar/' + response[i]['pk'] + '/asignacion" class="btn btn-primary" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Asignación</a>';
                 fila += '<a href="/asignacion/devolucion/' + response[i]['pk'] + '/asignacion" class="btn btn-primary" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Devolución</a>';
+                fila += '<a href="/asignacion/reporte/' + response[i]['pk'] + '/asignacion" class="btn btn-info" role="button" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>';
                 fila += '<button type="button" class="btn btn-danger tableButton  btn-sm" ';
-                fila += 'onclick="abrir_modal_eliminacion(\'/asignacion/eliminar/' + response[i]['pk'] + '/asignacion\');"><i class="fa fa-trash" aria-hidden="true"></i></button>';
-                fila += '<a href="/asignacion/reporte/' + response[i]['pk'] + '/asignacion" class="btn btn-info" role="button" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></td>';
+                fila += 'onclick="abrir_modal_eliminacion(\'/asignacion/eliminar/' + response[i]['pk'] + '/asignacion\');"><i class="fa fa-trash" aria-hidden="true"></i></button></td>';
                 fila += '</tr>';
                 $('#datatable-keytable').append(fila);
             }

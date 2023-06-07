@@ -30,6 +30,10 @@ class Login(FormView):
         login(self.request, form.get_user())
         return super(Login, self).form_valid(form)
 
+    def form_invalid(self, form):
+        # Agregar mensaje de error
+        form.add_error(None, "Error al iniciar sesión. Verifica tus credenciales.")
+        return super(Login, self).form_invalid(form)
 
 def logoutUsuario(request):
     logout(request)

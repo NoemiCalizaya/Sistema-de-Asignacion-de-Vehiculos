@@ -88,12 +88,49 @@
     <script>
         $(document).ready(function () 
         {
-            // var currentDate = new Date();
-            // var year = currentDate.getFullYear();
-            // var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-            // var day = currentDate.getDate().toString().padStart(2, '0');
-            // var formattedDate = `${year}-${month}-${day}`;
-            // $("#birthdatepicker").val(formattedDate);
+            var currentDate = new Date();
+            var year = currentDate.getFullYear();
+            var month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+            var day = currentDate.getDate().toString().padStart(2, '0');
+            var formattedDate = `${year}-${month}-${day}`;
+            $("#id_fecha_hora_entrada").val(formattedDate);
+
+            // Obtener referencia al elemento de entrada
+            var $inputHoraActual = $('#id_hora_salida');
+
+            // Función para obtener la hora actual y asignarla al campo de entrada
+            function obtenerHoraActual() {
+                // Crear un objeto de fecha y hora
+                var fechaHora = new Date();
+
+                // Obtener las partes de la hora
+                var horas = fechaHora.getHours();
+                var minutos = fechaHora.getMinutes();
+                var segundos = fechaHora.getSeconds();
+
+                // Formatear las partes de la hora para tener dos dígitos
+                if (horas < 10) {
+                horas = '0' + horas;
+                }
+                if (minutos < 10) {
+                minutos = '0' + minutos;
+                }
+                if (segundos < 10) {
+                segundos = '0' + segundos;
+                }
+
+                // Crear una cadena con el formato hh:mm:ss
+                var horaActual = horas + ':' + minutos;
+
+                // Asignar la hora actual al campo de entrada utilizando val()
+                $inputHoraActual.val(horaActual);
+            }
+
+            // Llamar a la función inicialmente para mostrar la hora actual
+            obtenerHoraActual();
+
+            // Actualizar la hora cada segundo
+            setInterval(obtenerHoraActual, 1000);
         });
     </script>
 {% endblock %}

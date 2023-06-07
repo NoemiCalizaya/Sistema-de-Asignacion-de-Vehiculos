@@ -182,7 +182,7 @@ class ReporteAsignacionVehiculo(View):
         pdf.setFont("Helvetica", 10)
         pdf.drawString(178, 520, u"ACTIVOS FIJOS - BIENES INMUEBLES Y SERVICIOS")
         pdf.setFont("Helvetica", 14)
-        pdf.drawString(230, 480, u"ACTA DE INVENTARIACIÓN DE VEHÍCULOS")  
+        pdf.drawString(300, 480, u"ASIGNACIÓN DE VEHÍCULO")  
         pdf.drawImage(archivo_imagen, 650, 495, 110, 80,preserveAspectRatio=True)
         pdf.drawImage(imagen_auto, 540, 446, 110, 80,preserveAspectRatio=True)
         self.border(pdf)
@@ -313,7 +313,7 @@ class ReporteAsignacionVehiculo(View):
                 ('VALIGN', (0, 0), (-1, -1), 'MIDDLE')
         ]))
         table.wrapOn(pdf, 700, 200)
-        table.drawOn(pdf, 40, 235)
+        table.drawOn(pdf, 40, 225)
 
     def get(self, request, *args, **kwargs):
         # Obtener el PK
@@ -335,11 +335,11 @@ class ReporteAsignacionVehiculo(View):
         vehiculo = asignacion.vehiculo_id
 
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(150, 60, u"BIENES INMUEBLES Y VEHÍCULOS")
-        pdf.drawString(192, 45, u"SELLO Y FIRMA")
+        pdf.drawString(150, 40, u"BIENES INMUEBLES Y VEHÍCULOS")
+        pdf.drawString(192, 25, u"SELLO Y FIRMA")
 
         pdf.setFont("Helvetica", 10)
-        pdf.drawString(580, 60, u"Vo.Bo.")
+        pdf.drawString(580, 40, u"Vo.Bo.")
 
         self.header(pdf)
         self.tabla(pdf, 600, asignacion, vehiculo)

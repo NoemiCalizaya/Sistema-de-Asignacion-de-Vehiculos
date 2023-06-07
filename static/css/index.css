@@ -67,7 +67,7 @@ img[alt="logo-gobernacion"]{
 
 .form-login{
     width: 430px;
-    margin-top: 100px;
+    margin-top: 150px;
     background-color: #DDEAEE;
     padding: 10px;
     border-radius: 10px;
@@ -76,7 +76,7 @@ img[alt="logo-gobernacion"]{
 
 .text-login{
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 #id_username, #id_password{
