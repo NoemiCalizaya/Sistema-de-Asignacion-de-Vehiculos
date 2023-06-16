@@ -1,6 +1,6 @@
-function listadoCambioAceite(){
+function listadoUsuarios(){
     $.ajax({
-        url: "/asignacion/listar/cambioaceite",
+        url: "/usuario/lista/usuarios",
         type: "get",
         dataType: "json",
         success: function(response){
@@ -8,16 +8,22 @@ function listadoCambioAceite(){
             for(let i=0; i<response.length; i++){
                 let fila = '<tr>';
                 fila += '<td>'+(i+1)+'</td>';
-                fila += '<td>'+response[i]["fields"]['vehiculo_id'][0]+'</td>';
-                fila += '<td>'+response[i]["fields"]['vehiculo_id'][1]+'</td>';
-                fila += '<td>'+response[i]["fields"]['mecanico_id']+'</td>';
-                fila += '<td>'+response[i]["fields"]['maestranza']+'</td>';
-                fila += '<td>'+response[i]["fields"]['chofer_id']+'</td>';
-                fila += '<td>'+response[i]["fields"]['unidad_id']+'</td>';
-                fila += '<td><button type="button" class="btn btn-success btn-sm tableButton"';
-                fila += ' onclick="abrir_modal_detalle(\'/asignacion/detalle/' + response[i]['pk']+'/cambioaceite\');"><i class="fa fa-eye" aria-hidden="true"></i></button>';
-                fila += '<a href="/asignacion/actualizar/' + response[i]['pk'] + '/cambioaceite" class="btn btn-primary" role="button"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
-                fila += '<a href="/asignacion/reporte/' + response[i]['pk'] + '/cambioaceite" class="btn btn-info" role="button" target="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></td>';
+                fila += '<td>'+response[i]["fields"]['first_name']+'</td>';
+                fila += '<td>'+response[i]["fields"]['last_name']+'</td>';
+                fila += '<td>'+response[i]["fields"]['email']+'</td>';
+                fila += '<td>'+response[i]["fields"]['username']+'</td>';
+                if (response[i]["fields"]['is_active']){
+                    response[i]["fields"]['is_active'] = "activo";
+                    fila += '<td>'+response[i]["fields"]['is_active']+'</td>';
+                }
+                else{
+                    response[i]["fields"]['is_active'] = "inactivo";
+                    fila += '<td>'+response[i]["fields"]['is_active']+'</td>';
+                }
+                fila += '<td><button type="button" class="btn btn-primary btn-sm tableButton"';
+                fila += ' onclick="abrir_modal_edicion(\'/usuario/editar/'+ response[i]['pk']+'/usuario\');"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>';
+                fila += '<button type="button" class = "btn btn-danger btn-sm tableButton"';
+                fila += ' onclick="abrir_modal_eliminacion(\'/usuario/eliminar/' + response[i]['pk']+'/usuario\');"><i class="fa fa-trash" aria-hidden="true"></i></button></td>';
                 fila += '</tr>';
                 $('#datatable-keytable').append(fila);
             }
@@ -55,48 +61,22 @@ function listadoCambioAceite(){
     });
 }
 
-function registrar() {
+function editar(){
     activarBoton();
     $.ajax({
-        data: $('#form_creacion').serialize(),
-        url: $('#form_creacion').attr('action'),
-        type: $('#form_creacion').attr('method'),
-        success: function (response) {
-            notificacionSuccess(response.mensaje);
-            limpiarForm();
-            setTimeout(function() { 
-                window.location.replace(response.url)
-            }, 1800);
-        },
-        error: function (error) {
-            notificacionError(error.responseJSON.mensaje);
-            mostrarErroresCreacion(error);
-            activarBoton();
-        }
-    });
-}
-
-function editar() {
-    activarBoton();
-    var data = new FormData($('#form_edicion').get(0));
-    $.ajax({        
+        data: $('#form_edicion').serialize(),
         url: $('#form_edicion').attr('action'),
-        type: $('#form_edicion').attr('method'), 
-        data: data,
-        cache: false,
-        processData: false,
-        contentType: false, 
+        type: $('#form_edicion').attr('method'),
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            setTimeout(function() { 
-                window.location.replace(response.url)
-            }, 1800);
+            listadoUsuarios();
+            cerrar_modal_edicion();
         },
         error: function (error) {
             notificacionError(error.responseJSON.mensaje);
             mostrarErroresEdicion(error);
             activarBoton();
-        },        
+        }
     });
 }
 
@@ -105,11 +85,11 @@ function eliminar(pk) {
         data:{
             csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").val()
         },
-        url: '/principal/eliminar/'+pk+'/chofer',
+        url: '/usuario/eliminar/'+pk+'/usuario',
         type: 'post',
         success: function (response) {
             notificacionSuccess(response.mensaje);
-            listadoChoferes();
+            listadoUsuarios();
             cerrar_modal_eliminacion();
         },
         error: function (error) {
@@ -119,6 +99,6 @@ function eliminar(pk) {
 }
 
 $(document).ready(function(){
-    listadoCambioAceite();
+    listadoUsuarios();
     limMessErr();
 });

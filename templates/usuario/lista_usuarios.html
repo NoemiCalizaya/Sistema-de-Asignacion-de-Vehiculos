@@ -9,18 +9,21 @@
 {% block titulo1 %}
 <h2 class="title-app">
     <strong>
-        <i class="fa fa-car" aria-hidden="true"></i> INFORMACIÓN DE CAMBIO DE ACEITE
+        <i class="fa fa-users" aria-hidden="true"></i> INFORMACIÓN DE USUARIOS
     </strong>
 </h2>
 {% endblock %}
 
 {% block cuerpo %}
-<div class="row">
-    <div style="float: right;">
-        <a href="/asignacion/registrar/cambioaceite" class="btn btn-primary create" role="button">
-            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-            Crear Nuevo
-        </a>
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div style="float: right;">
+                <a href="/usuario/registrar/usuario" class="btn btn-primary create" role="button">
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i> Crear Nuevo
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 <div class="table-responsive">
@@ -28,12 +31,11 @@
         <thead>
             <tr class="table-enc">
                 <th class="centered">Nro.</th>
-                <th class="centered">Vehiculo</th>
-                <th class="centered">Placa</th>
-                <th class="centered">Mecánico</th>
-                <th class="centered">Maestranza</th>
-                <th class="centered">Chofer</th>
-                <th class="centered">Unidad</th>
+                <th class="centered">Nombres</th>
+                <th class="centered">Apellidos</th>
+                <th class="centered">Correo Electrónico</th>
+                <th class="centered">Nombre de Usuario</th>
+                <th class="centered">Estado</th>
                 <th class="centered">Opciones</th>
             </tr>
         </thead>
@@ -43,16 +45,22 @@
     </table>
 </div>
 
+<div class="modal fade" id="creacion" role="dialog" >
+
+</div>
 <div class="modal fade" id="edicion" role="dialog">
 
 </div>
 <div class="modal fade" id="detalle" role="dialog" >
 
 </div>
+<div class="modal fade" id="eliminacion" rol="dialog">
+
+</div>
 {% endblock %}
 
 {% block extrajs %}
     <!---Custom JS-->
-    <script src="{% static 'js/cambioaceite/cambioaceite.js' %}"></script>
+    <script src="{% static 'js/usuario/usuario.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

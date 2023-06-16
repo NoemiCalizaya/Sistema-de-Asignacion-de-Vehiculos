@@ -1,0 +1,114 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block extracss %}
+<!---Custom CSS-->
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block titulo1 %}
+<h2><strong>REGISTRO DE USUARIOS</strong></h2>
+{% endblock %}
+
+{% block cuerpo %}
+<form method="post" action="{% url 'registrar-usuario' %}">
+    <div class="card card-primary">
+        <div class="card-body">
+            {% csrf_token %}                         
+            <div class="row">
+                <div class="form-row">
+                    <div class="form-group col-md-4">    
+                        {{ form.first_name.label_tag }}
+                        {{ form.first_name.as_widget }}
+                        {% if form.first_name.errors %}
+                            <ul class="error-reg">
+                            {% for error in form.first_name.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                        {{ form.last_name.label_tag }}
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <ul class="error-reg">
+                            {% for error in form.last_name.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                    <div class="form-group col-md-4">
+                        {{ form.email.label_tag }}
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <ul class="error-reg">
+                            {% for error in form.email.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="ln_solid"></div>
+            <div class="row">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        {{ form.username.label_tag }}
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <ul class="error-reg">
+                            {% for error in form.username.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                    <div class="form-group col-md-3">
+                        {{ form.password.label_tag }}
+                        {{ form.password.as_widget }}
+                        {% if form.password.errors %}
+                            <ul class="error-reg">
+                            {% for error in form.password.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                    <div class="form-group {% if valor_name %} has-error {%endif%} col-md-3">
+                        {{ second_form.name.label_tag }}
+                        {{ second_form.name.as_widget }}
+                        {% if second_form.name.errors %}
+                            <ul class="error-reg">
+                            {% for error in second_form.name.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="form-group">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div style="text-align: center;">
+                        <button type="submit" class="btn btn-success">Crear</button>
+                        <a class="btn btn-danger btn-lg fa fa-undo" data-original-title="Edit" data-placement="top" href="/usuario/lista/usuarios">
+                            Cancelar
+                        </a>
+                    </div>                                
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block extrajs %}
+    <!---Custom JS-->
+    
+{% endblock %}

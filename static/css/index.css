@@ -197,3 +197,7 @@ a[class="btn btn-primary create"]{
 #table-detalle td{
     width: 400px;
 }
+
+.error-reg {
+    color: red;
+}
