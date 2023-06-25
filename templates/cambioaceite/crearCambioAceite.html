@@ -1,6 +1,11 @@
 {% extends 'index.html' %}
 {% load static %}
 
+{% block extracss %}
+<!---Custom CSS-->
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
 {% block titulo1 %}
 <h2><strong>REGISTRO DE CAMBIO DE ACEITE</strong></h2>
 {% endblock %}
@@ -32,7 +37,7 @@
             {{ form.proximo_cambio }}
         </div>
         <div class="form-group col-md-4 col-sm-4 col-xs-12">
-            <label for="id_maestranza">MAESTRANZA:</label>
+            <label for="id_maestranza">MAESTRANZA:</label> <!--por defecto maestranza en el modelo-->
             {{ form.maestranza }}
         </div>
     </div>
@@ -76,6 +81,7 @@
             {{ form.aprobado }}
         </div>
     </div>
+    <div id="error-message"></div>
     <div class="col-md-12 col-sm-12 col-xs-12 form-group">
         <button id="boton_creacion" class="btn btn-primary" type="button" onclick="registrar();">Confirmar</button>
         <a href="/asignacion/listar/cambioaceite" class="btn btn-danger" role="button">Cancelar</a>
@@ -131,7 +137,121 @@
 
             // Actualizar la hora cada segundo
             setInterval(obtenerHoraActual, 1000);
-            //cuando cambie oa clase de vehiculo que vaya aumentando el proximocambio mas km actual y campo proximo cambio de solo lectura
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            let parteSeleccionada;
+            $('#id_vehiculo_id').on('input', function() {
+                var vehiculoId = $('#id_vehiculo_id').val();
+                let texto = $(this).find('option:selected').text();
+                let partes = texto.split('-');
+                //Sino funciona utilizar un for 
+                parteSeleccionada = partes[2];
+
+                $.ajax({
+                    url: '/asignacion/obtener_ultimo_proximo_cambio/',
+                    type: 'GET',
+                    data: {
+                        'vehiculo_id': vehiculoId,
+                    },
+                    success: function(response) {
+                        $('#id_km_actual').val(response.proximo_cambio);
+                        if (parteSeleccionada !== NaN){
+                            if (parteSeleccionada === "MOTOCICLETA"){
+                                $('#id_proximo_cambio').val(1000);
+                                let kmActual = parseInt($('#id_km_actual').val());
+                                let proximocambio = parseInt($('#id_proximo_cambio').val());
+                                let suma = kmActual + proximocambio;
+                                $('#id_proximo_cambio').val(suma);
+                            }
+                            else{
+                                $('#id_proximo_cambio').val(5000);
+                                let kmActual = parseInt($('#id_km_actual').val());
+                                let proximocambio = parseInt($('#id_proximo_cambio').val());
+                                let suma = kmActual + proximocambio;
+                                $('#id_proximo_cambio').val(suma);
+                            }
+                        }
+                    },
+                    error: function(xhr, errmsg, err) {
+                        mostrarError('No existe ningún registro de cambio de aceite del vehículo.');
+                        if (parteSeleccionada !== NaN){
+                            if (parteSeleccionada === "MOTOCICLETA"){
+                                $('#id_km_actual').val(0);
+                                $('#id_proximo_cambio').val(1000);
+                            }
+                            else{
+                                $('#id_km_actual').val(0);
+                                $('#id_proximo_cambio').val(5000);
+                            }
+                        }
+                    }
+                });
+            });
+
+            function mostrarError(mensaje) {
+                $('#error-message').text(mensaje);
+                $('#error-message').fadeIn();
+                setTimeout(function() {
+                    $('#error-message').fadeOut();
+                }, 3000); // Tiempo en milisegundos para que el mensaje de error se muestre antes de desaparecer
+            }
+
+            $('#id_km_actual').on('input', function() {
+                if (parteSeleccionada !== NaN){
+                    if (parteSeleccionada === "MOTOCICLETA"){
+                        if ($(this).val() !== '') {
+                            let valor1 = $(this).val();
+                            // Aumentar el valor en 1000
+                            let valor2 = parseInt(valor1) + 1000;
+                            // Asignar el valor aumentado al segundo input
+                            $('#id_proximo_cambio').val(valor2);
+                        }
+                    }
+                    else{
+                        if ($(this).val() !== '') {
+                            let valor1 = $(this).val();
+                            // Aumentar el valor en 5000
+                            let valor2 = parseInt(valor1) + 5000;
+                            // Asignar el valor aumentado al segundo input
+                            $('#id_proximo_cambio').val(valor2);
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#id_vehiculo_id').on('input', function() {
+                let vehiculoId = $(this).val();
+                $.ajax({
+                    url: '/asignacion/obtener-chofer-unidad/' + vehiculoId + '/',
+                    type: 'GET',
+                    success: function(data) {
+                        let chofer = data.chofer.nombres;
+                        let nombreUnidad = data.unidad.nombre_unidad;
+                        // Buscar y seleccionar la opción de unidad correspondiente
+                        $('#id_chofer_id option').each(function() {
+                            if ($(this).text().trim() === chofer.trim()) {
+                                $(this).prop('selected', true);
+                                return false; // Salir del bucle each() una vez encontrada la opción
+                            }
+                        });
+                        $('#id_unidad_id option').each(function() {
+                            if ($(this).text().trim() === nombreUnidad.trim()) {
+                                $(this).prop('selected', true);
+                                return false;
+                            }
+                        });
+                    },
+                    error: function() {
+                        $('#id_chofer_id').val('');
+                        $('#id_unidad_id').val('');
+                    }
+                });
+            });
         });
     </script>
 {% endblock %}

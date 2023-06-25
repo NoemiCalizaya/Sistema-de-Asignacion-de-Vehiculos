@@ -1,5 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 # Create your models here.
 class Secretaria(models.Model):
@@ -27,6 +26,7 @@ class Unidad(models.Model):
 
 class Chofer(models.Model):
     CATEGORIA_CHOICES = (
+        ('','----Seleccione----'),
         ('A', 'A'),
         ('B', 'B'),
         ('C', 'C'),
@@ -66,11 +66,21 @@ class Chofer(models.Model):
 
 class Vehiculo(models.Model):
     ESTADO_CHOICES = (
+        ('','----Seleccione----'),
         ('BUENO', 'BUENO'),
         ('REGULAR', 'REGULAR'),
         ('MALO', 'MALO')
     )
-    clase_vehiculo = models.CharField(max_length=30)
+    CLASE_VEHICULO = (
+        ('','----Seleccione----'),
+        ('MOTOCICLETA', 'MOTOCICLETA'),
+        ('CAMIONETA', 'CAMIONETA'),
+        ('VAGONETA', 'VAGONETA'),
+        ('CISTERNA', 'CISTERNA'),
+        ('CAMIÓN FRIGORÍFICO', 'CAMIÓN FRIGORÍFICO'),
+        ('MAQUINARIA PESADA', 'MAQUINARIA PESADA')
+    )
+    clase_vehiculo = models.CharField(max_length=18, choices=CLASE_VEHICULO, help_text='Seleccione la clase de vehículo')
     marca = models.CharField(max_length=15)
     tipo_vehiculo = models.CharField(max_length=15)
     procedencia = models.CharField(max_length=30)
@@ -88,7 +98,7 @@ class Vehiculo(models.Model):
         return [self.clase_vehiculo, self.placa]
 
     def __str__(self):
-        return self.clase_vehiculo+'-'+self.marca+'-'+self.tipo_vehiculo
+        return self.placa+'-'+self.clase_vehiculo+'-'+self.marca+'-'+self.tipo_vehiculo
     
     class Meta:
         ordering = ['clase_vehiculo', 'marca', 'tipo_vehiculo']

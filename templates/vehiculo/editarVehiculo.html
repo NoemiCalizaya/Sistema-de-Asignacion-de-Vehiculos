@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block titulo1 %}
-<h2><strong>Edición de: {{ object }}</strong></h2>
+<h2><strong>Edición de vehículo: {{ object }}</strong></h2>
 {% endblock %}
 
 {% block cuerpo %}
@@ -77,4 +77,38 @@
 {% block extrajs %}
     <!---Custom JS-->
     <script src="{% static 'js/vehiculo/vehiculo.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#id_marca').on('keyup', function() {
+                let inputVal = $(this).val();
+                let uppercaseVal = inputVal.toUpperCase();
+                $(this).val(uppercaseVal);
+            });
+            $('#id_tipo_vehiculo').on('keyup', function() {
+                let inputVal = $(this).val();
+                let uppercaseVal = inputVal.toUpperCase();
+                $(this).val(uppercaseVal);
+            });
+            $('#id_procedencia').on('keyup', function() {
+                let inputVal = $(this).val();
+                let uppercaseVal = inputVal.toUpperCase();
+                $(this).val(uppercaseVal);
+            });
+            $('#id_placa').on('keyup', function() {
+                let inputVal = $(this).val();
+                let uppercaseVal = inputVal.toUpperCase();
+                $(this).val(uppercaseVal);
+            });
+            $('#id_numero_motor').on('keyup', function() {
+                let inputVal = $(this).val();
+                let uppercaseVal = inputVal.toUpperCase();
+                $(this).val(uppercaseVal);
+            });
+            $('#id_numero_chasis').on('keyup', function() {
+                let inputVal = $(this).val();
+                let uppercaseVal = inputVal.toUpperCase();
+                $(this).val(uppercaseVal);
+            });
+        });
+    </script>
 {% endblock %}

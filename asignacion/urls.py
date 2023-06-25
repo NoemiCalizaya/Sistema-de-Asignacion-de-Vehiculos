@@ -26,5 +26,7 @@ urlpatterns = [
     path('listar/cambioaceite', login_required(ListadoCambioAceite.as_view()), name='asignacion-index-cambioaceite'),
     path('detalle/<int:pk>/cambioaceite', login_required(CambioAceiteDetailView.as_view()), name='asignacion-detalle-cambioaceite'),
     path('actualizar/<int:pk>/cambioaceite', login_required(EditarCambioAceite.as_view()), name='asignacion-actualizar-cambioaceite'),
-    path('reporte/<int:pk>/cambioaceite', login_required(ReporteCambioAceite.as_view()), name='reporte-cambioaceite'),
+    path('obtener_ultimo_proximo_cambio/', login_required(obtener_ultimo_proximo_cambio), name='obtener_ultimo_proximo_cambio'),
+    path('obtener-chofer-unidad/<int:vehiculo_id>/', login_required(obtener_chofer_unidad), name='obtener_chofer_unidad'),
+    path('reporte/<int:pk>/cambioaceite', login_required(ReporteCambioAceite.as_view()), name='reporte-cambioaceite')
 ]

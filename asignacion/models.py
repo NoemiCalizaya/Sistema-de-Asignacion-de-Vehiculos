@@ -54,11 +54,11 @@ class Cambio_Aceite(models.Model):
     corona = models.BooleanField(default=False)
     engrase = models.BooleanField(default=False)
     fecha_hora_entrada = models.DateField()
-    maestranza = models.CharField(max_length=100)
+    maestranza = models.CharField(max_length=100, default="Maestranza")
     hora_salida = models.TimeField(null=True, blank=True)
     chofer_id = models.ForeignKey(Chofer, on_delete=models.CASCADE)
     unidad_id = models.ForeignKey(Unidad, on_delete=models.CASCADE)
-    aprobado =  models.BooleanField(default=False)#crear - editar - detalle solo mostrar los autorizados
+    aprobado =  models.BooleanField(default=False)
 
     def __str__(self):
         return f"Vehículo {self.vehiculo_id}"

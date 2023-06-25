@@ -117,12 +117,8 @@ class VehiculoForm(forms.ModelForm):
                 'placa', 'cilindrada', 'numero_motor', 'numero_chasis',
                 'estado_vehiculo', 'observaciones']
         widgets = {
-            'clase_vehiculo' : forms.TextInput(
-                attrs={
-                    'class':'form-control', 
-                    'placeholder' : 'Introduzca la clase de vehículo', 
-                    'required': 'true'
-                }
+            'clase_vehiculo' : forms.Select(
+                attrs={'class':'form-control'}
             ),
             'marca' : forms.TextInput(
                 attrs={
@@ -194,10 +190,3 @@ class VehiculoForm(forms.ModelForm):
                 attrs={'class':'form-control','rows':2}
             ),
         }
-
-    # ci = forms.CharField(label='CI',max_length=10)
-    # nombre = forms.CharField(label='Nombres',max_length=20,required=True)
-    # apellido_paterno = forms.CharField(label='Apellido Paterno',max_length=20,required=True)
-    # apellido_materno = forms.CharField(label='Apellido Materno',max_length=20,required=True)
-    # direccion = forms.CharField(label='Direccion',widget=forms.Textarea)
-    # telefono = forms.CharField(label='Telefono',max_length=10)

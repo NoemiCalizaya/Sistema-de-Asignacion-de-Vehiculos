@@ -201,3 +201,14 @@ a[class="btn btn-primary create"]{
 .error-reg {
     color: red;
 }
+
+#error-message {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background-color: rgba(228, 138, 138, 0.8); /* Cambia el valor alpha para ajustar la transparencia */
+    color: white;
+    padding: 25px;
+    border-radius: 5px;
+    display: none;
+}

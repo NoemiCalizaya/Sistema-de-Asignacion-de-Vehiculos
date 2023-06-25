@@ -214,10 +214,14 @@ class ReporteAsignacionVehiculo(View):
             line14.hAlign = 'CENTER'  # Centrar la imagen en la celda
         else:
             line14 = Paragraph(' ', style)
-        text = 'FECHA DE ASIGNACIÓN: '+str(asignacion.fecha)
+        text = 'FECHA DE ASIGNACIÓN'
         line15 = Paragraph(text, style)
-        text = 'ID. SENAPE: '+str(asignacion.id_senape)
+        text = str(asignacion.fecha)
         line16 = Paragraph(text, style)
+        text = 'ID. SENAPE'
+        line17 = Paragraph(text, style)
+        text = str(asignacion.id_senape)
+        line18 = Paragraph(text, style)
         text = 'VERIFICACIÓN DEVOLUCIÓN'
         line21 = Paragraph(text, style)
         if asignacion.verificacion_devolucion == True:
@@ -236,10 +240,16 @@ class ReporteAsignacionVehiculo(View):
             line24.hAlign = 'CENTER'  # Centrar la imagen en la celda
         else:
             line24 = Paragraph(' ', style)
-        text = 'FECHA DE DEVOLUCIÓN: '+str(asignacion.fecha_devolucion)
+        text = 'FECHA DE DEVOLUCIÓN'
         line25 = Paragraph(text, style)
-        text = 'COD. VSIAF: '+str(asignacion.cod_vsiaf)
+        if asignacion.fecha_devolucion is None:
+            asignacion.fecha_devolucion = " "
+        text = str(asignacion.fecha_devolucion)
         line26 = Paragraph(text, style)
+        text = 'COD. VSIAF'
+        line27 = Paragraph(text, style)
+        text = str(asignacion.cod_vsiaf)
+        line28 = Paragraph(text, style)
         if asignacion.chofer_id.apellido_materno is None:
             text = 'ASIGNADO A: '+asignacion.chofer_id.nombres+' '+asignacion.chofer_id.apellido_paterno+' '+' '
         else:
@@ -252,19 +262,21 @@ class ReporteAsignacionVehiculo(View):
         text = 'UNIDAD: '+asignacion.unidad_id.nombre_unidad
         line35 = Paragraph(text, style)
         line36 = Paragraph(' ', style)
+        line37 = Paragraph(' ', style)
+        line38 = Paragraph(' ', style)
 
         data = [
-            [line11, line12, line13, line14, line15, line16],
-            [line21, line22, line23, line24, line25, line26],
-            [line31, line32, line33, line34, line35, line36]
+            [line11, line12, line13, line14, line15, line16, line17, line18],
+            [line21, line22, line23, line24, line25, line26, line27, line28],
+            [line31, line32, line33, line34, line35, line36, line37, line38]
         ]
-        table = Table(data, colWidths=(168, 50, 98, 50, 194, 148), rowHeights=(20, 20, 40))
+        table = Table(data, colWidths=(157, 29, 88, 29, 138, 88, 76, 101), rowHeights=(20, 20, 40))
         table.setStyle(TableStyle([
                 ('BOX', (0, 0), (-1, -1), 1, colors.black),
                 ('INNERGRID', (0, 0), (-1, -1), 0.20, colors.black),
                 ('SPAN', (0, 2), (1, 2)),
                 ('SPAN', (2, 2), (3, 2)),
-                ('SPAN', (4, 2), (5, 2)),
+                ('SPAN', (4, 2), (7, 2)),
                 ('VALIGN', (0, 0), (-1, -1), 'MIDDLE')
         ]))
         table.wrapOn(pdf, 700, 200)
@@ -275,44 +287,83 @@ class ReporteAsignacionVehiculo(View):
         pdf.drawString(40, 330, u"IDENTIFICACIÓN DEL VEHÍCULO")
 
         style = ParagraphStyle(name='Normal')
-        text = 'CLASE: '+vehiculo.clase_vehiculo
+        text = 'CLASE'
         line11 = Paragraph(text, style)
-        text = 'PROCEDENCIA: '+vehiculo.procedencia
+        text = vehiculo.clase_vehiculo
         line12 = Paragraph(text, style)
-        text = 'CILINDRADA: '+str(vehiculo.cilindrada)
-        line13 = Paragraph(text, style)
-        text = 'MARCA: '+vehiculo.marca
+        line13 = Paragraph(' ', style)
+        text = 'PROCEDENCIA'
+        line14 = Paragraph(text, style)
+        text = vehiculo.procedencia
+        line15 = Paragraph(text, style)
+        line16 = Paragraph(' ', style)
+        text = 'CILINDRADA'
+        line17 = Paragraph(text, style)
+        text = str(vehiculo.cilindrada)
+        line18 = Paragraph(text, style)
+        text = 'MARCA'
         line21 = Paragraph(text, style)
-        text = 'MODELO: '+str(vehiculo.modelo)
+        text = vehiculo.marca
         line22 = Paragraph(text, style)
-        text = 'N° MOTOR: '+vehiculo.numero_motor
-        line23 = Paragraph(text, style)
-        text = 'TIPO: '+vehiculo.tipo_vehiculo
+        line23 = Paragraph(' ', style)
+        text = 'MODELO'
+        line24 = Paragraph(text, style)
+        text = str(vehiculo.modelo)
+        line25 = Paragraph(text, style)
+        line26 = Paragraph(' ', style)
+        text = 'N° MOTOR'
+        line27 = Paragraph(text, style)
+        text = vehiculo.numero_motor
+        line28 = Paragraph(text, style)
+        text = 'TIPO DE VEHÍCULO'
         line31 = Paragraph(text, style)
-        text = 'COLOR: '+vehiculo.color
+        text = vehiculo.tipo_vehiculo
         line32 = Paragraph(text, style)
-        text = 'N° CHASIS: '+vehiculo.numero_chasis
-        line33 = Paragraph(text, style)
-        text = 'PLACA: '+vehiculo.placa
+        line33 = Paragraph(' ', style)
+        text = 'COLOR'
+        line34 = Paragraph(text, style)
+        text = vehiculo.color
+        line35 = Paragraph(text, style)
+        line36 = Paragraph(' ', style)
+        text = 'N° CHASIS'
+        line37 = Paragraph(text, style)
+        text = vehiculo.numero_chasis
+        line38 = Paragraph(text, style)
+        text = 'PLACA'
         line41 = Paragraph(text, style)
-        text = 'ESTADO: '+vehiculo.estado_vehiculo
+        text = vehiculo.placa
         line42 = Paragraph(text, style)
-        if vehiculo.observaciones is None:
-            text = 'OBSERVACIONES: '+' '
-        else:
-            text = 'OBSERVACIONES: '+vehiculo.observaciones
+        text = 'ESTADO'
         line43 = Paragraph(text, style)
+        text = vehiculo.estado_vehiculo
+        line44 = Paragraph(text, style)
+        text = 'OBSERVACIONES'
+        line45 = Paragraph(text, style)
+        if vehiculo.observaciones is None:
+            text = ' '
+        else:
+            text = vehiculo.observaciones
+        line46 = Paragraph(text, style)
+        line47 = Paragraph(' ', style)
+        line48 = Paragraph(' ', style)
 
         data = [
-            [line11, line12, line13],
-            [line21, line22, line23],
-            [line31, line32, line33],
-            [line41, line42, line43]
+            [line11, line12, line13, line14, line15, line16, line17, line18],
+            [line21, line22, line23, line24, line25, line26, line27, line28],
+            [line31, line32, line33, line34, line35, line36, line37, line38],
+            [line41, line42, line43, line44, line45, line46, line47, line48]
         ]
-        table = Table(data, colWidths=(230, 200, 280))
+        table = Table(data, colWidths=(108, 110, 58, 88, 105, 51, 88, 101))
         table.setStyle(TableStyle([
                 ('BOX', (0, 0), (-1, -1), 1, colors.black),
                 ('INNERGRID', (0, 0), (-1, -1), 0.20, colors.black),
+                ('SPAN', (1, 0), (2, 0)),
+                ('SPAN', (1, 1), (2, 1)),
+                ('SPAN', (1, 2), (2, 2)),
+                ('SPAN', (4, 0), (5, 0)),
+                ('SPAN', (4, 1), (5, 1)),
+                ('SPAN', (4, 2), (5, 2)),
+                ('SPAN', (5, 3), (7, 3)),
                 ('VALIGN', (0, 0), (-1, -1), 'MIDDLE')
         ]))
         table.wrapOn(pdf, 700, 200)
@@ -534,6 +585,34 @@ class EditarCambioAceite(UpdateView):
         else:
             return redirect('asignacion-inicio-cambioaceite')
 
+def obtener_ultimo_proximo_cambio(request):
+    vehiculo_id = request.GET['vehiculo_id']
+    ultimo_proximo_cambio = Cambio_Aceite.objects.filter(vehiculo_id=vehiculo_id).latest('proximo_cambio')
+    data = {
+        'proximo_cambio': ultimo_proximo_cambio.proximo_cambio,
+    }
+    return JsonResponse(data)
+
+def obtener_chofer_unidad(request, vehiculo_id):
+    try:
+        asignacion = Asignacion_Vehiculo.objects.get(vehiculo_id=vehiculo_id)
+        chofer = asignacion.chofer_id
+        unidad = asignacion.unidad_id
+        # Aquí puedes realizar las operaciones que necesites con el chofer y la unidad
+        if chofer.apellido_materno is None:
+            chofer.apellido_materno = " "
+        data = {
+            'chofer': {
+                'nombres': chofer.nombres+' '+chofer.apellido_paterno+' '+chofer.apellido_materno
+            },
+            'unidad': {
+                'nombre_unidad': unidad.nombre_unidad
+            }
+        }
+        return JsonResponse(data)
+    except Asignacion_Vehiculo.DoesNotExist:
+        return JsonResponse({'error': 'Asignación de vehículo no encontrada'}, status=404)
+
 class ReporteCambioAceite(View):
     def border(self,pdf):
         pdf.roundRect(20,155,752,430,4,stroke=1, fill=0)
@@ -592,7 +671,7 @@ class ReporteCambioAceite(View):
         ]))
 
         table.wrapOn(pdf, 700, 100)
-        #Para dibujar la tabla en una posición específica del PDF, en este caso, en las coordenadas (20, 410).
+        #Para dibujar la tabla en una posición específica del PDF, en este caso, en las coordenadas (20, 420).
         table.drawOn(pdf, 40, 420)
 
         pdf.setFont("Helvetica", 12)

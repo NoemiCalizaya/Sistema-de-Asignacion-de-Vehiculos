@@ -1,11 +1,11 @@
 <div class="modal-dialog modal-default nk-red">
     <div class="modal-content">
         <div class="modal-header">
-            Eliminación de {{ object }}.
+            Eliminación del vehículo {{ object }}.
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body text-center">{% csrf_token %}
-            <h3><strong>¿Desea eliminar {{ object }} ?</strong></h3>
+            <h3><strong>¿Desea eliminar al vehículo {{ object }} ?</strong></h3>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-align="rigth"

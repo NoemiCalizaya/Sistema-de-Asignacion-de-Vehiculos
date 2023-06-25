@@ -31,9 +31,6 @@ urlpatterns = [
     path('listar/unidades', login_required(views.ListadoUnidades.as_view()), name='principal-index-unidad'),
     path('actualizar/<int:pk>/unidad', login_required(views.EditarUnidad.as_view()), name='principal-actualizar-unidad'),
     path('eliminar/<int:pk>/unidad', login_required(views.EliminarUnidad.as_view()), name='principal-eliminar-unidad'),
-    path('crearUsuario', views.crearUsuario, name='crearUsuario'),
-    #path('actualizar/cliente', views.actualizarCliente, name='actualizar/cliente'),
-    #path('cuenta/usuario', views.cuentaUsuario, name='cuenta/usuario')
 ]
 
 #URLS DE VISTAS IMPLÍCITAS

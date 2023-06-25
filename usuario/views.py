@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
 from django.contrib.auth import login, logout
@@ -42,9 +42,7 @@ def logoutUsuario(request):
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView
-from django.urls import reverse_lazy
 from .forms import UserForm, GroupForm
-from django.shortcuts import render
 from django.shortcuts import redirect
 
 class InicioUsuario(TemplateView):
@@ -103,7 +101,6 @@ class RegistroUsuario(LoginRequiredMixin, CreateView):
         return self.render_to_response(context)
 
     #corregir inputs a mayusculas solo a campos necesarios con style en form
-    #motocicleta 1000 lo demas 5000 con javascript
 
 class ListaUsuarios(ListView):
     model = User

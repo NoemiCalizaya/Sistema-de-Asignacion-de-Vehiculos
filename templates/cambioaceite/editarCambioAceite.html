@@ -88,4 +88,122 @@
 {% block extrajs %}
     <!---Custom JS-->
     <script src="{% static 'js/cambioaceite/cambioaceite.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            let texto = $('#id_vehiculo_id').find('option:selected').text();
+            let partes = texto.split('-');
+            let parteSeleccionada = partes[2];
+            
+            let isChecked = $('#id_aprobado').is(":checked");
+            if (isChecked){
+                $("input[type=text], input[type=number], input[type=date], input[type=time]").prop("readonly", isChecked);
+                $("#id_vehiculo_id").prop("disabled", true);
+                $("#id_chofer_id").prop("disabled", true);
+                $("#id_mecanico_id").prop("disabled", true);
+                $("#id_cambio_filtros").prop("disabled", true);
+                $("#id_aceite").prop("disabled", true);
+                $("#id_caja").prop("disabled", true);
+                $("#id_corona").prop("disabled", true);
+                $("#id_engrase").prop("disabled", true);
+                $("#id_unidad_id").prop("disabled", true);
+                $("#id_aprobado").prop("disabled", true);
+            }
+            else{
+                $("#id_vehiculo_id").on('mousedown', function(e) {
+                    e.preventDefault();
+                    this.blur();
+                    window.focus();
+                }).on('click', function(e) {
+                    e.preventDefault();
+                    this.blur();
+                    window.focus();
+                });
+                $("#id_chofer_id").on('mousedown', function(e) {
+                    e.preventDefault();
+                    this.blur();
+                    window.focus();
+                }).on('click', function(e) {
+                    e.preventDefault();
+                    this.blur();
+                    window.focus();
+                });
+                $("#id_unidad_id").on('mousedown', function(e) {
+                    e.preventDefault();
+                    this.blur();
+                    window.focus();
+                }).on('click', function(e) {
+                    e.preventDefault();
+                    this.blur();
+                    window.focus();
+                });
+            }
+            $('#id_km_actual').on('input', function() {
+                var kmActual = parseInt($(this).val());
+                var proximoCambio = parseInt($('#id_proximo_cambio').val());
+                var longitudActual = $(this).val().length;
+                if (parteSeleccionada !== NaN){
+                    if (parteSeleccionada === "MOTOCICLETA"){
+                        if (longitudActual === 0){
+                            $('#id_proximo_cambio').val(longitudActual + 1000);
+                        }
+                        else if(longitudActual === 1 && kmActual >= proximoCambio){
+                            $('#id_proximo_cambio').val(1000);
+                            kmActual = parseInt($(this).val());
+                            let pc1 = parseInt($('#id_proximo_cambio').val());
+                            var suma = kmActual + pc1;
+                            $('#id_proximo_cambio').val(suma);
+                        }
+                        else if(longitudActual === 2 && kmActual >= proximoCambio){
+                            $('#id_proximo_cambio').val(1000);
+                            kmActual = parseInt($(this).val());
+                            let pc2 = parseInt($('#id_proximo_cambio').val());
+                            var suma = kmActual + pc2;
+                            $('#id_proximo_cambio').val(suma);
+                        }
+                        else if(longitudActual === 3 && kmActual >= proximoCambio){
+                            $('#id_proximo_cambio').val(1000);
+                            kmActual = parseInt($(this).val());
+                            let pc3 = parseInt($('#id_proximo_cambio').val());
+                            var suma = kmActual + pc3;
+                            $('#id_proximo_cambio').val(suma);
+                        }
+                        else if( longitudActual >= 4 && kmActual >= proximoCambio){
+                            $('#id_proximo_cambio').val(1000);
+                            kmActual = parseInt($(this).val());
+                            let pc4 = parseInt($('#id_proximo_cambio').val());
+                            var suma = kmActual + pc4;
+                            $('#id_proximo_cambio').val(suma);
+                            console.log('aqui');
+                        }
+                    }
+                    else{
+                        if (longitudActual === 0){
+                            $('#id_proximo_cambio').val(longitudActual + 5000);
+                        }
+                        else if(longitudActual === 1 && kmActual >= proximoCambio){
+                            $('#id_proximo_cambio').val(5000);
+                            let pc = $('#id_proximo_cambio').val();
+                            kmActual = parseInt($(this).val());
+                            var suma = kmActual + parseInt(pc);
+                            $('#id_proximo_cambio').val(suma);
+                        }
+                        else if(longitudActual === 2 && kmActual >= proximoCambio){
+                            $('#id_proximo_cambio').val(5000);
+                            let pc = $('#id_proximo_cambio').val();
+                            kmActual = parseInt($(this).val());
+                            var suma = kmActual + parseInt(pc);
+                            $('#id_proximo_cambio').val(suma);
+                        }
+                        else if(longitudActual >= 3 && kmActual >= proximoCambio){
+                            $('#id_proximo_cambio').val(5000);
+                            let pc = $('#id_proximo_cambio').val();
+                            kmActual = parseInt($(this).val());
+                            var suma = kmActual + parseInt(pc);
+                            $('#id_proximo_cambio').val(suma);
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 {% endblock %}
