@@ -3,6 +3,7 @@
         <h3>GENERAL</h3>
         <ul class="nav side-menu">
             <li><a href="{% url 'index' %}" ><i class="fa fa-home"></i>Inicio</a></li>
+            {% if user.is_superuser %}
             <li><a><i class="fa fa-briefcase" aria-hidden="true"></i>Administrador<span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
                     <li><a href="{% url 'inicio-usuario' %}">Usuarios</a></li>
@@ -10,6 +11,7 @@
                     <li><a href="{% url 'principal-inicio-unidad' %}">Unidades</a></li>
                 </ul>
             </li>
+            {% endif %}
             <li><a><i class="fa fa-sort-amount-asc"></i>Asignación de vehículo<span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu">
                     <li><a href="{% url 'principal-inicio-chofer' %}">Choferes</a></li>

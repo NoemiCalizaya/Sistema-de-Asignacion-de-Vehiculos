@@ -100,8 +100,6 @@ class RegistroUsuario(LoginRequiredMixin, CreateView):
 
         return self.render_to_response(context)
 
-    #corregir inputs a mayusculas solo a campos necesarios con style en form
-
 class ListaUsuarios(ListView):
     model = User
     

@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'sav.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db_vehiculos',
+        'NAME': 'db_sicove',
         'USER': 'postgres',
         'PASSWORD': 'noemipg',
         'HOST': 'localhost',
